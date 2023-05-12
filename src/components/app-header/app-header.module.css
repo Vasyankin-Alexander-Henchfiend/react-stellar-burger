@@ -1,0 +1,30 @@
+.header {
+    margin: 40px;
+    display: flex;
+    align-items: center;
+    max-width: 1920px;
+    min-height: 88px;
+    background-color: #1C1C21;
+    padding: 24px 340px;
+    justify-content: space-between;
+    position: relative;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.container_type_small {
+    composes: container;
+    gap: 49px;
+}
+
+.logo {
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%);
+}

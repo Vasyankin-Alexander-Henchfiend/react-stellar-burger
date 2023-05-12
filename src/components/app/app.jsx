@@ -6,7 +6,7 @@ function App() {
   return (
     <div className={styles.app}>
       <pre style={{
-      	margin: "auto",
+        margin: 0,
       	fontSize: "1.5rem"
       }}>
       	<AppHeader  />
