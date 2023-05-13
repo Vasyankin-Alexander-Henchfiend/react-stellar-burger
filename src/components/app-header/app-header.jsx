@@ -35,4 +35,4 @@ class AppHeader extends React.Component {
   }
 }
 
-export default AppHeader
+export default AppHeader;
