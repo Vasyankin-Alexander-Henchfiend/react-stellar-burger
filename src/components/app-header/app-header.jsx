@@ -10,24 +10,26 @@ import styles from './app-header.module.css';
 class AppHeader extends React.Component {
   render() {
     return (
-      <header className={styles.header}>
+      <header className={`pt-6 pb-6 m-10 ${styles.header}`}>
         <div className={styles.logo}>
-        <Logo />
+          <Logo />
         </div>
-        <div className={styles.container_type_small}>
+        <nav className={styles.items}>
           <div className={styles.container}>
-            <BurgerIcon className="" type="primary" />
-            <p className="text text_type_main-default">Конструктор</p>
+            <a href="#" className={styles.link}>
+              <BurgerIcon type="primary" />
+              <span className="text text_type_main-default">Конструктор</span>
+            </a>
+            <a href="#" className={styles[`link-inactive`]}>
+              <ListIcon type="secondary" />
+              <span className="text text_type_main-default">Лента заказов</span>
+            </a>
           </div>
-          <div className={styles.container}>
-            <ListIcon className="" type="secondary" />
-            <p className="text text_type_main-default">Лента заказов</p>
-          </div>
-        </div>
-        <div className={styles.container}>
-          <ProfileIcon className="" type="secondary" />
-          <p className="text text_type_main-default">Личный кабинет</p>
-        </div>
+          <a href="#" className={styles[`link-inactive`]}>
+            <ProfileIcon type="secondary" />
+            <span className="text text_type_main-default">Личный кабинет</span>
+          </a>
+        </nav>
       </header>
     );
   }
