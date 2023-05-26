@@ -13,7 +13,7 @@ const BurgerIngredient = ({ingredient}) => {
         <span className="text text_type_digits-default">{ingredient.price}</span>
         <CurrencyIcon type="primary" />
       </div>
-      <h3 className="text text_type_main-default">{ingredient.name}</h3>
+      <h3 className={`${styles.name} text text_type_main-default`}>{ingredient.name}</h3>
     </div>
   );
 };

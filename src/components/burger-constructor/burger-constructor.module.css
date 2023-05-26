@@ -1,0 +1,17 @@
+.list {
+    display: flex;
+    flex-Direction: column;
+    gap: 16px;
+    list-style: none;
+    padding: 0;
+}
+
+.item {
+    white-space: normal;
+}
+
+.itemus {
+    composes: list;
+    height: 466px;
+    overflow-y: scroll;
+}

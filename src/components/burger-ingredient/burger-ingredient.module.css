@@ -18,3 +18,7 @@
     position: absolute;
     top: 0;
 }
+
+.name {
+    white-space: normal;
+}
