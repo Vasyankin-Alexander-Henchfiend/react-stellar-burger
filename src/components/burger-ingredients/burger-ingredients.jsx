@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link, animateScroll as scroll } from "react-scroll";
 import {
     Tab
 } from '@ya.praktikum/react-developer-burger-ui-components';

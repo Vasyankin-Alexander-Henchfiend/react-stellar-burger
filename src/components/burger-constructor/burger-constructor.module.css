@@ -1,17 +1,38 @@
+.constructor-container {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: end;
+}
+
 .list {
     display: flex;
     flex-Direction: column;
     gap: 16px;
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 .item {
     white-space: normal;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-.itemus {
+.list-wrapper {
     composes: list;
     height: 466px;
     overflow-y: scroll;
+}
+
+.price-container {
+    display: flex;
+    align-items: center;
+}
+
+.price-icon svg {
+    width: 33px;
+    height: 33px;
 }
