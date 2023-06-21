@@ -3,10 +3,17 @@
     height: 912px;
 }
 
+.tabs {
+    display: flex;
+}
+
 .grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, min(272px));
-    gap: 24px 32px;
+    gap: 32px 24px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 .scroll {

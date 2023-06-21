@@ -16,6 +16,7 @@ const BurgerConstructor = ({ data }) => {
           <ConstructorElement
             type="top"
             isLocked={true}
+            key={bun._id}
             text={bun.name}
             price={bun.price}
             thumbnail={bun.image}
@@ -42,6 +43,7 @@ const BurgerConstructor = ({ data }) => {
           <ConstructorElement
             type="bottom"
             isLocked={true}
+            key={bun._id}
             text={bun.name}
             price={bun.price}
             thumbnail={bun.image}
