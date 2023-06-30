@@ -11,3 +11,8 @@
   justify-content: center;
   gap: 40px;
 }
+
+.pre {
+  margin: 0;
+  font-size: "1.5rem";
+}
