@@ -5,11 +5,10 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css";
-import React from "react";
 
 const BurgerConstructor = ({ data }) => {
-  const bun = data.find((item) => item.type === "bun");
-  const ingredients = data.filter((item) => item.type !== "bun")
+  const bun = data.find(item => item.type === "bun");
+  const ingredients = data.filter(item => item.type !== "bun")
   const totalPrice = bun.price + ingredients.reduce((totalAll, item ) => totalAll + item.price, 0)
 
   return (

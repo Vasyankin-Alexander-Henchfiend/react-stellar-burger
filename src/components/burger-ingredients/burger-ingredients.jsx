@@ -23,26 +23,20 @@ const BurgerIngredients = ({ data }) => {
       <div className={`${styles.scroll} custom-scroll`}>
         <h2 className="text text_type_main-large mb-6">Булки</h2>
         <ul className={styles[`grid-container`]}>
-          {data.map((item) => {
-            if (item.type === "bun") {
-              return <BurgerIngredient key={item._id} ingredient={item} />;
-            } else return null;
+          {data.map(item => {
+            return (item.type === "bun") ? <BurgerIngredient key={item._id} ingredient={item} /> : null;
           })}
         </ul>
         <h2 className="text text_type_main-large mt-10 mb-6">Соусы</h2>
         <ul className={styles[`grid-container`]}>
-          {data.map((item) => {
-            if (item.type === "sauce") {
-              return <BurgerIngredient key={item._id} ingredient={item} />;
-            } else return null;
+          {data.map(item => {
+            return (item.type === "sauce") ? <BurgerIngredient key={item._id} ingredient={item} /> : null;
           })}
         </ul>
         <h2 className="text text_type_main-large mt-10 mb-6">Начинки</h2>
         <ul className={styles[`grid-container`]}>
-          {data.map((item) => {
-            if (item.type === "main") {
-              return <BurgerIngredient key={item._id} ingredient={item} />;
-            } else return null;
+          {data.map(item => {
+            return (item.type === "main") ? <BurgerIngredient key={item._id} ingredient={item} /> : null;
           })}
         </ul>
       </div>
