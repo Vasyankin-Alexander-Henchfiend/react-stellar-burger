@@ -5,10 +5,8 @@ import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 
-const URL = 'https://norma.nomoreparties.space/api/ingredients';
-
-
 function App() {
+  const URL = 'https://norma.nomoreparties.space/api/ingredients';
 
   const[data, setData] = React.useState([])
 
@@ -31,7 +29,7 @@ function App() {
       	<AppHeader  />
         <main className={styles.main}>
           <BurgerIngredients data={data}/>
-          <BurgerConstructor data={constructorData}/>
+          <BurgerConstructor data={data}/>
         </main>
       </pre>
     </div>

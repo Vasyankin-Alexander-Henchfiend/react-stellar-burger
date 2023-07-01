@@ -5,9 +5,11 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css";
+import PropTypes from "prop-types";
+import dataPropTypes from "../../utils/utils";
 
 const BurgerConstructor = ({ data }) => {
-  const bun = data.find(item => item.type === "bun");
+  const bun = data.length > 0 && data.find(item => item.type === "bun");
   const ingredients = data.filter(item => item.type !== "bun")
   const totalPrice = bun.price + ingredients.reduce((totalAll, item ) => totalAll + item.price, 0)
 
@@ -64,5 +66,9 @@ const BurgerConstructor = ({ data }) => {
     </section>
   );
 };
+
+BurgerConstructor.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.shape(dataPropTypes)).isRequired
+}
 
 export default BurgerConstructor;
