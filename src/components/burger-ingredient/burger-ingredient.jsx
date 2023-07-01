@@ -3,6 +3,8 @@ import {
     CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredient.module.css';
+import PropTypes from "prop-types";
+import dataPropTypes from "../../utils/utils";
 
 const BurgerIngredient = ({ingredient}) => {
   return (
@@ -17,5 +19,7 @@ const BurgerIngredient = ({ingredient}) => {
     </li>
   );
 };
+
+BurgerIngredient.propTypes = dataPropTypes
 
 export default BurgerIngredient
