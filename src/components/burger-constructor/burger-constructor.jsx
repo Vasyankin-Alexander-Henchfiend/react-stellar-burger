@@ -7,11 +7,24 @@ import {
 import styles from "./burger-constructor.module.css";
 import PropTypes from "prop-types";
 import dataPropTypes from "../../utils/utils";
+import Modal from "../modal/modal";
+import React from 'react';
 
 const BurgerConstructor = ({ data }) => {
+
+  const[modalActive, setModalActive] = React.useState({visible: false});
+  const openModal = () => {setModalActive({visible: true})};
+  const closeModal = () => {setModalActive({visible: false})};
+
+  const modal = (
+    <Modal onClose={closeModal}>
+      <h2>Привет я ваш  Лаваш</h2>
+    </Modal>
+  );
+
   const bun = data.length > 0 && data.find(item => item.type === "bun");
-  const ingredients = data.filter(item => item.type !== "bun")
-  const totalPrice = bun.price + ingredients.reduce((totalAll, item ) => totalAll + item.price, 0)
+  const ingredients = data.filter(item => item.type !== "bun");
+  const totalPrice = bun.price + ingredients.reduce((totalAll, item) => totalAll + item.price, 0);
 
   return (
     <section className={`mt-15 ${styles[`constructor-container`]}`}>
@@ -57,12 +70,13 @@ const BurgerConstructor = ({ data }) => {
       <div className={`pr-6 ${styles[`price-container`]}`}>
         <span className="text text_type_digits-medium">{totalPrice}</span>
         <div className={`ml-2 mr-10 ${styles[`price-icon`]}`}>
-        <CurrencyIcon />
+          <CurrencyIcon />
         </div>
-        <Button htmlType="button" type="primary" size="large">
+        <Button htmlType="button" type="primary" size="large" onClick={openModal}>
           Оформить заказ
         </Button>
       </div>
+      {modalActive.visible && modal}
     </section>
   );
 };
