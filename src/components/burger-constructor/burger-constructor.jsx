@@ -8,23 +8,17 @@ import styles from "./burger-constructor.module.css";
 import PropTypes from "prop-types";
 import dataPropTypes from "../../utils/utils";
 import Modal from "../modal/modal";
-import React from 'react';
+import React from "react";
+import OrderDetails from "../order-details/order-details";
 
 const BurgerConstructor = ({ data }) => {
+  const [modalActive, setModalActive] = React.useState(false);
 
-  const[modalActive, setModalActive] = React.useState({visible: false});
-  const openModal = () => {setModalActive({visible: true})};
-  const closeModal = () => {setModalActive({visible: false})};
-
-  const modal = (
-    <Modal onClose={closeModal}>
-      <h2>Привет я ваш  Лаваш</h2>
-    </Modal>
-  );
-
-  const bun = data.length > 0 && data.find(item => item.type === "bun");
-  const ingredients = data.filter(item => item.type !== "bun");
-  const totalPrice = bun.price + ingredients.reduce((totalAll, item) => totalAll + item.price, 0);
+  const bun = data.length > 0 && data.find((item) => item.type === "bun");
+  const ingredients = data.filter((item) => item.type !== "bun");
+  const totalPrice =
+    bun.price +
+    ingredients.reduce((totalAll, item) => totalAll + item.price, 0);
 
   return (
     <section className={`mt-15 ${styles[`constructor-container`]}`}>
@@ -72,17 +66,26 @@ const BurgerConstructor = ({ data }) => {
         <div className={`ml-2 mr-10 ${styles[`price-icon`]}`}>
           <CurrencyIcon />
         </div>
-        <Button htmlType="button" type="primary" size="large" onClick={openModal}>
+        <Button
+          htmlType="button"
+          type="primary"
+          size="large"
+          onClick={() => {setModalActive(true)}}
+        >
           Оформить заказ
         </Button>
       </div>
-      {modalActive.visible && modal}
+      {modalActive && (
+        <Modal  onClose={() => {setModalActive(false)}}>
+          <OrderDetails  orderId="034536" />
+        </Modal>
+      )}
     </section>
   );
 };
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape(dataPropTypes)).isRequired
-}
+  data: PropTypes.arrayOf(PropTypes.shape(dataPropTypes)).isRequired,
+};
 
 export default BurgerConstructor;
