@@ -4,12 +4,17 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-ingredient.module.css";
 import PropTypes from "prop-types";
-import dataPropTypes from "../../utils/utils";
+import ingredientPropType from "../../utils/prop-types";
 
 const BurgerIngredient = ({ ingredient, openIngredientDetails }) => {
   const number = 0;
   return (
-    <li className={styles.card} onClick={() => {openIngredientDetails(ingredient)}}>
+    <li
+      className={styles.card}
+      onClick={() => {
+        openIngredientDetails(ingredient);
+      }}
+    >
       {number > 0 ? (
         <Counter count={number} size="default" extraClass={styles.counter} />
       ) : null}
@@ -31,6 +36,9 @@ const BurgerIngredient = ({ ingredient, openIngredientDetails }) => {
   );
 };
 
-BurgerIngredient.propTypes = dataPropTypes;
+BurgerIngredient.propTypes = {
+  ingredient: ingredientPropType.isRequired,
+  openIngredientDetails: PropTypes.func.isRequired,
+};
 
 export default BurgerIngredient;

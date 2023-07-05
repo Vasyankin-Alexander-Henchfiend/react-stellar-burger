@@ -6,19 +6,28 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css";
 import PropTypes from "prop-types";
-import dataPropTypes from "../../utils/utils";
 import Modal from "../modal/modal";
-import React from "react";
+import { useMemo, useState } from "react";
 import OrderDetails from "../order-details/order-details";
+import ingredientPropType from "../../utils/prop-types";
 
 const BurgerConstructor = ({ data }) => {
-  const [modalActive, setModalActive] = React.useState(false);
+  const [modalActive, setModalActive] = useState(false);
 
-  const bun = data.length > 0 && data.find((item) => item.type === "bun");
-  const ingredients = data.filter((item) => item.type !== "bun");
-  const totalPrice =
-    bun.price +
-    ingredients.reduce((totalAll, item) => totalAll + item.price, 0);
+  const bun = useMemo(() => {
+    return data.length > 0 && data.find((item) => item.type === "bun");
+  }, [data]);
+
+  const ingredients = useMemo(() => {
+    return data.filter((item) => item.type !== "bun");
+  }, [data]);
+
+  const totalPrice = useMemo(() => {
+    return (
+      bun.price +
+      ingredients.reduce((totalAll, item) => totalAll + item.price, 0)
+    );
+  }, [data]);
 
   return (
     <section className={`mt-15 ${styles[`constructor-container`]}`}>
@@ -70,14 +79,21 @@ const BurgerConstructor = ({ data }) => {
           htmlType="button"
           type="primary"
           size="large"
-          onClick={() => {setModalActive(true)}}
+          onClick={() => {
+            setModalActive(true);
+          }}
         >
           Оформить заказ
         </Button>
       </div>
       {modalActive && (
-        <Modal  onClose={() => {setModalActive(false)}}>
-          <OrderDetails  orderId="034536" />
+        <Modal
+          title=""
+          onClose={() => {
+            setModalActive(false);
+          }}
+        >
+          <OrderDetails orderId="034536" />
         </Modal>
       )}
     </section>
@@ -85,7 +101,7 @@ const BurgerConstructor = ({ data }) => {
 };
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape(dataPropTypes)).isRequired,
+  data: PropTypes.arrayOf(ingredientPropType.isRequired),
 };
 
 export default BurgerConstructor;
