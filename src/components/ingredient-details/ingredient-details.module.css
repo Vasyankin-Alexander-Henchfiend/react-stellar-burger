@@ -1,0 +1,24 @@
+.ingredient-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.image {
+    width: 480px;
+    height: 240px;
+}
+
+.list {
+    display: flex;
+    gap: 20px;
+    padding: 0;
+    margin-top: 0;
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
