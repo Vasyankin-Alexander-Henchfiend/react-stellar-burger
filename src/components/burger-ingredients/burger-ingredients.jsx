@@ -9,7 +9,6 @@ import ingredientPropType from "../../utils/prop-types";
 
 const BurgerIngredients = ({ data }) => {
   const [current, setCurrent] = useState("bun");
-  // const [modalActive, setModalActive] = useState(false);
   const [activeIngredient, setActiveIngredient] = useState({state:false, value:{} });
 
   const openIngredientDetails = (ingredient) => {
