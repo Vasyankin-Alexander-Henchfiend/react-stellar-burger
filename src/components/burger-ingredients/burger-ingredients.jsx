@@ -9,12 +9,11 @@ import ingredientPropType from "../../utils/prop-types";
 
 const BurgerIngredients = ({ data }) => {
   const [current, setCurrent] = useState("bun");
-  const [modalActive, setModalActive] = useState(false);
-  const [activeIngredient, setActiveIngredient] = useState();
+  // const [modalActive, setModalActive] = useState(false);
+  const [activeIngredient, setActiveIngredient] = useState({state:false, value:{} });
 
   const openIngredientDetails = (ingredient) => {
-    setModalActive(true);
-    setActiveIngredient(ingredient);
+    setActiveIngredient({state: true, value: ingredient });
   };
 
   return (
@@ -69,14 +68,14 @@ const BurgerIngredients = ({ data }) => {
           })}
         </ul>
       </div>
-      {modalActive && (
+      {activeIngredient.state && (
         <Modal
           title="Детали ингредиента"
           onClose={() => {
-            setModalActive(false);
+            setActiveIngredient({state:false, value:{}});
           }}
         >
-          <IngredientDetails data={activeIngredient} />
+          <IngredientDetails data={activeIngredient.value} />
         </Modal>
       )}
     </section>
@@ -84,7 +83,7 @@ const BurgerIngredients = ({ data }) => {
 };
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ingredientPropType.isRequired),
+  data: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
 };
 
 export default BurgerIngredients;
