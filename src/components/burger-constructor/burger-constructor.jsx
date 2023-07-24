@@ -11,10 +11,12 @@ import { useMemo, useState, useContext } from "react";
 import OrderDetails from "../order-details/order-details";
 // import ingredientPropType from "../../utils/prop-types";
 import { ApiDataContext } from "../../services/appContext";
+import { getOrderId } from "../../utils/consts";
 
 const BurgerConstructor = () => {
   const { data } = useContext(ApiDataContext);
   const [modalActive, setModalActive] = useState(false);
+  const [orderId, setOrderId] = useState(null);
 
   const bun = useMemo(() => {
     return data.length > 0 && data.find((item) => item.type === "bun");
@@ -30,6 +32,7 @@ const BurgerConstructor = () => {
       ingredients.reduce((totalAll, item) => totalAll + item.price, 0)
     );
   }, [data]);
+
 
   return (
     <section className={`mt-15 ${styles[`constructor-container`]}`}>
@@ -82,7 +85,7 @@ const BurgerConstructor = () => {
           type="primary"
           size="large"
           onClick={() => {
-            setModalActive(true);
+            getOrderId(bun, ingredients, setOrderId, setModalActive);
           }}
         >
           Оформить заказ
@@ -95,7 +98,7 @@ const BurgerConstructor = () => {
             setModalActive(false);
           }}
         >
-          <OrderDetails orderId="034536" />
+          <OrderDetails orderId={orderId} />
         </Modal>
       )}
     </section>

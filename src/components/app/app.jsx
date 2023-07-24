@@ -3,14 +3,14 @@ import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import { URL, getData } from "../../utils/consts";
+import { getData } from "../../utils/consts";
 import { ApiDataContext } from '../../services/appContext';
 
 function App() {
   const [data, setData] = React.useState([]);
 
   useEffect(() => {
-    getData(URL, setData);
+    getData(setData);
   }, []);
 
   return (
