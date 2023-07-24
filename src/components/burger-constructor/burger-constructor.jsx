@@ -5,13 +5,15 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import Modal from "../modal/modal";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useContext } from "react";
 import OrderDetails from "../order-details/order-details";
-import ingredientPropType from "../../utils/prop-types";
+// import ingredientPropType from "../../utils/prop-types";
+import { ApiDataContext } from "../../services/appContext";
 
-const BurgerConstructor = ({ data }) => {
+const BurgerConstructor = () => {
+  const { data } = useContext(ApiDataContext);
   const [modalActive, setModalActive] = useState(false);
 
   const bun = useMemo(() => {
@@ -24,7 +26,7 @@ const BurgerConstructor = ({ data }) => {
 
   const totalPrice = useMemo(() => {
     return (
-      bun.price +
+      bun.price * 2 +
       ingredients.reduce((totalAll, item) => totalAll + item.price, 0)
     );
   }, [data]);
@@ -37,7 +39,7 @@ const BurgerConstructor = ({ data }) => {
             type="top"
             isLocked={true}
             key={bun._id}
-            text={bun.name}
+            text={bun.name + " (верх)"}
             price={bun.price}
             thumbnail={bun.image}
           />
@@ -64,7 +66,7 @@ const BurgerConstructor = ({ data }) => {
             type="bottom"
             isLocked={true}
             key={bun._id}
-            text={bun.name}
+            text={bun.name + " (низ)"}
             price={bun.price}
             thumbnail={bun.image}
           />
@@ -100,8 +102,8 @@ const BurgerConstructor = ({ data }) => {
   );
 };
 
-BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(ingredientPropType.isRequired),
-};
+// BurgerConstructor.propTypes = {
+//   data: PropTypes.arrayOf(ingredientPropType.isRequired),
+// };
 
 export default BurgerConstructor;

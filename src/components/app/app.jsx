@@ -4,6 +4,7 @@ import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import { URL, getData } from "../../utils/consts";
+import { ApiDataContext } from '../../services/appContext';
 
 function App() {
   const [data, setData] = React.useState([]);
@@ -17,8 +18,10 @@ function App() {
       <pre className={styles.pre}>
         <AppHeader />
         <main className={styles.main}>
-          <BurgerIngredients data={data} />
-          <BurgerConstructor data={data} />
+          <ApiDataContext.Provider value={{data}}>
+            <BurgerIngredients />
+            <BurgerConstructor />
+          </ApiDataContext.Provider>
         </main>
       </pre>
     </div>

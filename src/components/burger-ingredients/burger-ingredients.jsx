@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import styles from "./burger-ingredients.module.css";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import ingredientPropType from "../../utils/prop-types";
+// import ingredientPropType from "../../utils/prop-types";
+import { ApiDataContext } from "../../services/appContext";
 
-const BurgerIngredients = ({ data }) => {
+const BurgerIngredients = () => {
+
+  const {data} = useContext(ApiDataContext);
   const [current, setCurrent] = useState("bun");
   const [activeIngredient, setActiveIngredient] = useState({state:false, value:{} });
 
@@ -81,8 +84,8 @@ const BurgerIngredients = ({ data }) => {
   );
 };
 
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
-};
+// BurgerIngredients.propTypes = {
+//   data: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
+// };
 
 export default BurgerIngredients;
