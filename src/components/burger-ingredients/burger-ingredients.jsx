@@ -1,22 +1,70 @@
-import { useContext, useState } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import styles from "./burger-ingredients.module.css";
-// import PropTypes from "prop-types";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-// import ingredientPropType from "../../utils/prop-types";
-import { ApiDataContext } from "../../services/appContext";
+import { useDispatch, useSelector } from "react-redux";
+import { getItems } from "../../services/actions/burger-ingredients";
+import { SET_CURRENT_INGREDIENT, DELETE_CURRENT_INGREDIENT } from "../../services/actions/ingredient-details";
 
 const BurgerIngredients = () => {
-
-  const {data} = useContext(ApiDataContext);
   const [current, setCurrent] = useState("bun");
-  const [activeIngredient, setActiveIngredient] = useState({state:false, value:{} });
+
+  const data = useSelector((store) => store.items.items);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getItems());
+  }, []);
+
+  const currentIngredient = useSelector((store) => store.currentIngredient.currentIngredient)
 
   const openIngredientDetails = (ingredient) => {
-    setActiveIngredient({state: true, value: ingredient });
+    dispatch({ type: SET_CURRENT_INGREDIENT, currentIngredient: ingredient})
   };
+
+  const buns = useMemo(() => {
+    return data.map((item) => {
+      if (item.type === "bun") {
+        return (
+          <BurgerIngredient
+            key={item._id}
+            ingredient={item}
+            openIngredientDetails={openIngredientDetails}
+          />
+        );
+      }
+    });
+  }, [data]);
+
+  const sauces = useMemo(() => {
+    return data.map((item) => {
+      if (item.type === "sauce") {
+        return (
+          <BurgerIngredient
+            key={item._id}
+            ingredient={item}
+            openIngredientDetails={openIngredientDetails}
+          />
+        );
+      }
+    });
+  }, [data]);
+
+  const mains = useMemo(() => {
+    return data.map((item) => {
+      if (item.type === "main") {
+        return (
+          <BurgerIngredient
+            key={item._id}
+            ingredient={item}
+            openIngredientDetails={openIngredientDetails}
+          />
+        );
+      }
+    });
+  }, [data]);
 
   return (
     <section className={styles[`ingredients-list`]}>
@@ -34,58 +82,24 @@ const BurgerIngredients = () => {
       </div>
       <div className={`${styles.scroll} custom-scroll`}>
         <h2 className="text text_type_main-medium mb-6">Булки</h2>
-        <ul className={styles[`grid-container`]}>
-          {data.map((item) => {
-            return item.type === "bun" ? (
-              <BurgerIngredient
-                key={item._id}
-                ingredient={item}
-                openIngredientDetails={openIngredientDetails}
-              />
-            ) : null;
-          })}
-        </ul>
+        <ul className={styles[`grid-container`]}>{buns}</ul>
         <h2 className="text text_type_main-medium mt-10 mb-6">Соусы</h2>
-        <ul className={styles[`grid-container`]}>
-          {data.map((item) => {
-            return item.type === "sauce" ? (
-              <BurgerIngredient
-                key={item._id}
-                ingredient={item}
-                openIngredientDetails={openIngredientDetails}
-              />
-            ) : null;
-          })}
-        </ul>
+        <ul className={styles[`grid-container`]}>{sauces}</ul>
         <h2 className="text text_type_main-medium mt-10 mb-6">Начинки</h2>
-        <ul className={styles[`grid-container`]}>
-          {data.map((item) => {
-            return item.type === "main" ? (
-              <BurgerIngredient
-                key={item._id}
-                ingredient={item}
-                openIngredientDetails={openIngredientDetails}
-              />
-            ) : null;
-          })}
-        </ul>
+        <ul className={styles[`grid-container`]}>{mains}</ul>
       </div>
-      {activeIngredient.state && (
+      {currentIngredient && (
         <Modal
           title="Детали ингредиента"
           onClose={() => {
-            setActiveIngredient({state:false, value:{}});
+            dispatch({type: DELETE_CURRENT_INGREDIENT});
           }}
         >
-          <IngredientDetails data={activeIngredient.value} />
+          <IngredientDetails />
         </Modal>
       )}
     </section>
   );
 };
-
-// BurgerIngredients.propTypes = {
-//   data: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
-// };
 
 export default BurgerIngredients;

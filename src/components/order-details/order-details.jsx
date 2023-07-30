@@ -1,8 +1,11 @@
 import styles from "./order-details.module.css";
 import done from "../../images/done.png";
-import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 
-const OrderDetails = ({ orderId }) => {
+const OrderDetails = () => {
+
+  const orderId = useSelector(store => store.orderID.number)
+
   return (
     <div className={styles[`order-details`]}>
       <p className="mb-8 mt-4 text text_type_digits-large">{orderId}</p>
@@ -18,8 +21,5 @@ const OrderDetails = ({ orderId }) => {
   );
 };
 
-OrderDetails.propTypes = {
-  orderId: PropTypes.number.isRequired,
-};
 
 export default OrderDetails;

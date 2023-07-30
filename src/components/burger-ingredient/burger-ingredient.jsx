@@ -7,16 +7,15 @@ import PropTypes from "prop-types";
 import ingredientPropType from "../../utils/prop-types";
 
 const BurgerIngredient = ({ ingredient, openIngredientDetails }) => {
-  const number = 0;
+  const number = ingredient.__v;
   return (
-    <li
-      className={styles.card}
-      onClick={() => {
-        openIngredientDetails(ingredient);
-      }}
-    >
+    <li className={styles.card}>
       {number > 0 ? (
-        <Counter count={number} size="default" extraClass={styles.counter} />
+        <Counter
+          count={ingredient.__v}
+          size="default"
+          extraClass={styles.counter}
+        />
       ) : null}
       <img
         src={ingredient.image}
@@ -29,7 +28,12 @@ const BurgerIngredient = ({ ingredient, openIngredientDetails }) => {
         </span>
         <CurrencyIcon type="primary" />
       </div>
-      <h3 className={`${styles.name} text text_type_main-default`}>
+      <h3
+        className={`${styles.name} text text_type_main-default`}
+        onClick={() => {
+          openIngredientDetails(ingredient);
+        }}
+      >
         {ingredient.name}
       </h3>
     </li>

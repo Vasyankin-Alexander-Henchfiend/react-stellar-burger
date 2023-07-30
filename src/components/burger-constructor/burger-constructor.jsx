@@ -4,35 +4,41 @@ import {
   ConstructorElement,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "./burger-constructor.module.css";
-// import PropTypes from "prop-types";
 import Modal from "../modal/modal";
-import { useMemo, useState, useContext } from "react";
 import OrderDetails from "../order-details/order-details";
-// import ingredientPropType from "../../utils/prop-types";
+import styles from "./burger-constructor.module.css";
+import { useMemo, useContext, useCallback } from "react";
 import { ApiDataContext } from "../../services/appContext";
-import { getOrderId } from "../../utils/consts";
+import { getOrderId } from '../../services/actions/order-details';
+import { DELETE_ORDER_ID} from "../../services/actions/order-details";
+import { useDispatch, useSelector } from "react-redux";
+
 
 const BurgerConstructor = () => {
   const { data } = useContext(ApiDataContext);
-  const [modalActive, setModalActive] = useState(false);
-  const [orderId, setOrderId] = useState(null);
 
+  const orderId = useSelector(store => store.orderID.number);
+  const dispatch = useDispatch();
+  
+  
   const bun = useMemo(() => {
     return data.length > 0 && data.find((item) => item.type === "bun");
   }, [data]);
-
+  
   const ingredients = useMemo(() => {
     return data.filter((item) => item.type !== "bun");
   }, [data]);
-
+  
   const totalPrice = useMemo(() => {
     return (
       bun.price * 2 +
       ingredients.reduce((totalAll, item) => totalAll + item.price, 0)
-    );
-  }, [data]);
-
+      );
+    }, [data]);
+  
+  const placeAnOrder = useCallback(() => {
+    dispatch(getOrderId(bun, ingredients))
+  }, [dispatch, bun, ingredients])
 
   return (
     <section className={`mt-15 ${styles[`constructor-container`]}`}>
@@ -84,29 +90,23 @@ const BurgerConstructor = () => {
           htmlType="button"
           type="primary"
           size="large"
-          onClick={() => {
-            getOrderId(bun, ingredients, setOrderId, setModalActive);
-          }}
+          onClick={placeAnOrder}
         >
           Оформить заказ
         </Button>
       </div>
-      {modalActive && (
+      {orderId && (
         <Modal
           title=""
           onClose={() => {
-            setModalActive(false);
+            dispatch({type: DELETE_ORDER_ID});
           }}
         >
-          <OrderDetails orderId={orderId} />
+          <OrderDetails/>
         </Modal>
       )}
     </section>
   );
 };
-
-// BurgerConstructor.propTypes = {
-//   data: PropTypes.arrayOf(ingredientPropType.isRequired),
-// };
 
 export default BurgerConstructor;
