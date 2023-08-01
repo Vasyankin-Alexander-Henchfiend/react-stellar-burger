@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import styles from "./burger-ingredients.module.css";
@@ -9,20 +9,41 @@ import { getItems } from "../../services/actions/burger-ingredients";
 import { SET_CURRENT_INGREDIENT, DELETE_CURRENT_INGREDIENT } from "../../services/actions/ingredient-details";
 
 const BurgerIngredients = () => {
+  const data = useSelector((store) => store.items.items);
+  const currentIngredient = useSelector((store) => store.currentIngredient.currentIngredient);
+
+  const sausesRef = useRef();
+  const mainsRef = useRef();
+  const ingredientsListRef = useRef();
+
   const [current, setCurrent] = useState("bun");
 
-  const data = useSelector((store) => store.items.items);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getItems());
   }, []);
 
-  const currentIngredient = useSelector((store) => store.currentIngredient.currentIngredient)
 
   const openIngredientDetails = (ingredient) => {
     dispatch({ type: SET_CURRENT_INGREDIENT, currentIngredient: ingredient})
   };
+
+  useEffect(() => {
+    ingredientsListRef.current.addEventListener('scroll', () => {
+      const sausesTitle = sausesRef.current.getBoundingClientRect().top;
+      const mainTitle = mainsRef.current.getBoundingClientRect().top;
+      const tabsPanel = Math.abs(ingredientsListRef.current.getBoundingClientRect().top + 80);
+
+      if (sausesTitle > tabsPanel) {
+        setCurrent("bun");
+      } else if (mainTitle > tabsPanel) {
+        setCurrent("sauce");
+      } else  {
+        setCurrent("main");
+      }
+    });
+  }, []);
 
   const buns = useMemo(() => {
     return data.map((item) => {
@@ -69,7 +90,7 @@ const BurgerIngredients = () => {
   return (
     <section className={styles[`ingredients-list`]}>
       <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
-      <div className={`mb-10 ${styles.tabs}`}>
+      <div  className={`mb-10 ${styles.tabs}`}>
         <Tab value="bun" active={current === "bun"} onClick={setCurrent}>
           Булки
         </Tab>
@@ -80,12 +101,12 @@ const BurgerIngredients = () => {
           Начинки
         </Tab>
       </div>
-      <div className={`${styles.scroll} custom-scroll`}>
+      <div ref={ingredientsListRef} className={`${styles.scroll} custom-scroll`}>
         <h2 className="text text_type_main-medium mb-6">Булки</h2>
         <ul className={styles[`grid-container`]}>{buns}</ul>
-        <h2 className="text text_type_main-medium mt-10 mb-6">Соусы</h2>
+        <h2 ref={sausesRef} className="text text_type_main-medium mt-10 mb-6">Соусы</h2>
         <ul className={styles[`grid-container`]}>{sauces}</ul>
-        <h2 className="text text_type_main-medium mt-10 mb-6">Начинки</h2>
+        <h2 ref={mainsRef} className="text text_type_main-medium mt-10 mb-6">Начинки</h2>
         <ul className={styles[`grid-container`]}>{mains}</ul>
       </div>
       {currentIngredient && (
