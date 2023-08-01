@@ -7,34 +7,31 @@ import {
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import styles from "./burger-constructor.module.css";
-import { useMemo, useContext, useCallback } from "react";
-import { ApiDataContext } from "../../services/appContext";
+import { useCallback } from "react";
 import { getOrderId } from '../../services/actions/order-details';
 import { DELETE_ORDER_ID} from "../../services/actions/order-details";
 import { useDispatch, useSelector } from "react-redux";
+import { GET_ITEM } from "../../services/actions/burger-constructor";
+import { useDrop } from "react-dnd";
 
 
 const BurgerConstructor = () => {
-  const { data } = useContext(ApiDataContext);
-
+  const bun = useSelector((store) => store.selectedItems.selectedItems.bun);
+  const ingredients = useSelector((store) => store.selectedItems.selectedItems.ingredients);
   const orderId = useSelector(store => store.orderID.number);
   const dispatch = useDispatch();
+
+  const [{ isOver }, dropTarget] = useDrop({
+    accept: "ingredient",
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+    }),
+    drop: (ingredient) => {
+      dispatch({type: GET_ITEM, newIngredient: ingredient});
+    },
+  });
   
-  
-  const bun = useMemo(() => {
-    return data.length > 0 && data.find((item) => item.type === "bun");
-  }, [data]);
-  
-  const ingredients = useMemo(() => {
-    return data.filter((item) => item.type !== "bun");
-  }, [data]);
-  
-  const totalPrice = useMemo(() => {
-    return (
-      bun.price * 2 +
-      ingredients.reduce((totalAll, item) => totalAll + item.price, 0)
-      );
-    }, [data]);
+  const totalPrice = 0
   
   const placeAnOrder = useCallback(() => {
     dispatch(getOrderId(bun, ingredients))
@@ -42,19 +39,19 @@ const BurgerConstructor = () => {
 
   return (
     <section className={`mt-15 ${styles[`constructor-container`]}`}>
-      <ul className={`${styles.list}`}>
+      <ul ref={dropTarget} className={`${styles.list}`}>
         <li className={`ml-8 pl-4 pr-4 ${styles.item}`}>
-          <ConstructorElement
+        {bun && (<ConstructorElement
             type="top"
             isLocked={true}
             key={bun._id}
             text={bun.name + " (верх)"}
             price={bun.price}
             thumbnail={bun.image}
-          />
+          />)}
         </li>
-        <ul className={`${styles[`list-wrapper`]} custom-scroll`}>
-          {data.map((item) => {
+        {ingredients.length > 0 && (<ul className={`${styles[`list-wrapper`]} custom-scroll`}>
+          {ingredients.map((item) => {
             if (item.type !== "bun") {
               return (
                 <li className={`pl-4 pr-4 ${styles.item}`}>
@@ -69,8 +66,8 @@ const BurgerConstructor = () => {
               );
             } else return null;
           })}
-        </ul>
-        <li className={`ml-8 pl-4 pr-4 ${styles.item}`}>
+        </ul>)}
+        {bun && (<li className={`ml-8 pl-4 pr-4 ${styles.item}`}>
           <ConstructorElement
             type="bottom"
             isLocked={true}
@@ -79,7 +76,7 @@ const BurgerConstructor = () => {
             price={bun.price}
             thumbnail={bun.image}
           />
-        </li>
+        </li>)}
       </ul>
       <div className={`pr-6 ${styles[`price-container`]}`}>
         <span className="text text_type_digits-medium">{totalPrice}</span>

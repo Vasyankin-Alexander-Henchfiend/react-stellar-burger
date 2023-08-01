@@ -5,11 +5,26 @@ import {
 import styles from "./burger-ingredient.module.css";
 import PropTypes from "prop-types";
 import ingredientPropType from "../../utils/prop-types";
+import { useDrag } from "react-dnd";
 
 const BurgerIngredient = ({ ingredient, openIngredientDetails }) => {
+  const [{ opacity }, dragRef] = useDrag({
+    type: "ingredient",
+    item: ingredient,
+    collect: (monitor) => ({
+      opacity: monitor.isDragging() ? 0.5 : 1,
+    }),
+  });
   const number = ingredient.__v;
   return (
-    <li className={styles.card}>
+    <li
+      ref={dragRef}
+      style={{ opacity }}
+      className={styles.card}
+      onClick={() => {
+        openIngredientDetails(ingredient);
+      }}
+    >
       {number > 0 ? (
         <Counter
           count={ingredient.__v}
@@ -28,12 +43,7 @@ const BurgerIngredient = ({ ingredient, openIngredientDetails }) => {
         </span>
         <CurrencyIcon type="primary" />
       </div>
-      <h3
-        className={`${styles.name} text text_type_main-default`}
-        onClick={() => {
-          openIngredientDetails(ingredient);
-        }}
-      >
+      <h3 className={`${styles.name} text text_type_main-default`}>
         {ingredient.name}
       </h3>
     </li>

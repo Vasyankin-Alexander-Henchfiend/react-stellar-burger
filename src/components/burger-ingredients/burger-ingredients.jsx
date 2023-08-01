@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getItems } from "../../services/actions/burger-ingredients";
 import { SET_CURRENT_INGREDIENT, DELETE_CURRENT_INGREDIENT } from "../../services/actions/ingredient-details";
 
+
 const BurgerIngredients = () => {
   const data = useSelector((store) => store.items.items);
   const currentIngredient = useSelector((store) => store.currentIngredient.currentIngredient);
@@ -33,17 +34,18 @@ const BurgerIngredients = () => {
     ingredientsListRef.current.addEventListener('scroll', () => {
       const sausesTitle = sausesRef.current.getBoundingClientRect().top;
       const mainTitle = mainsRef.current.getBoundingClientRect().top;
-      const tabsPanel = Math.abs(ingredientsListRef.current.getBoundingClientRect().top + 80);
+      const ingredientsListPanel = Math.abs(ingredientsListRef.current.getBoundingClientRect().top + 80);
 
-      if (sausesTitle > tabsPanel) {
+      if (sausesTitle > ingredientsListPanel) {
         setCurrent("bun");
-      } else if (mainTitle > tabsPanel) {
+      } else if (mainTitle > ingredientsListPanel) {
         setCurrent("sauce");
       } else  {
         setCurrent("main");
       }
     });
   }, []);
+
 
   const buns = useMemo(() => {
     return data.map((item) => {
@@ -86,6 +88,8 @@ const BurgerIngredients = () => {
       }
     });
   }, [data]);
+
+  
 
   return (
     <section className={styles[`ingredients-list`]}>

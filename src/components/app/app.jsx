@@ -1,28 +1,21 @@
-import React, { useEffect } from "react";
 import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import { getData } from "../../utils/consts";
-import { ApiDataContext } from '../../services/appContext';
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 function App() {
-  const [data, setData] = React.useState([]);
-
-  useEffect(() => {
-    getData(setData);
-  }, []);
-
   return (
     <div className={styles.app}>
       <pre className={styles.pre}>
         <AppHeader />
-        <main className={styles.main}>
-          <ApiDataContext.Provider value={{data}}>
+        <DndProvider backend={HTML5Backend}>
+          <main className={styles.main}>
             <BurgerIngredients />
             <BurgerConstructor />
-          </ApiDataContext.Provider>
-        </main>
+          </main>
+        </DndProvider>
       </pre>
     </div>
   );

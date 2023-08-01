@@ -13,35 +13,30 @@ const initialState = {
 
 export const orderDetailsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_ORDER_ID_REQUEST: {
+    case GET_ORDER_ID_REQUEST:
       return {
         ...state,
         numberRequest: true,
       };
-    }
-    case GET_ORDER_ID_SUCCESS: {
+    case GET_ORDER_ID_SUCCESS:
       return {
         ...state,
         number: action.number,
         numberRequest: false,
         numberFailed: false,
       };
-    }
-    case GET_ORDER_ID_FAILED: {
+    case GET_ORDER_ID_FAILED:
       return {
         ...state,
         numberRequest: false,
         numberFailed: true,
       };
-    }
-    case DELETE_ORDER_ID: {
+    case DELETE_ORDER_ID:
       return {
         ...state,
         number: null,
       };
-    }
-    default: {
+    default:
       return state;
-    }
   }
 };

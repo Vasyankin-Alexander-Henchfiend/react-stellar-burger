@@ -9,18 +9,6 @@ export const checkResponse = (res) => {
   return Promise.reject(`Возникла ошибка ${res.status}`);
 };
 
-export const getData = async (setData) => {
-  let item = [];
-  try {
-    const res = await fetch(URL);
-    return res.ok
-      ? ((item = await res.json()), setData(item.data))
-      : checkResponse(res);
-  } catch (e) {
-    return console.log(`'Что-то пошло не так ${e}'`);
-  }
-};
-
 export const ingredientsId = (bun, ingredients) => {
   let ingredientsId = [];
   ingredientsId.push(bun._id,
