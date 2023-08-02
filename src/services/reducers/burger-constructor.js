@@ -10,12 +10,20 @@ const initialState = {
 export const burgerConstructorReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_ITEM:
-      if (action.newIngredient.type === "bun") {
+      if (action.newIngredient.length > 0) {
         return {
           ...state,
           selectedItems: {
             ...state.selectedItems,
-            bun: action.newIngredient
+            ingredients: action.newIngredient,
+          },
+        };
+      } else if (action.newIngredient.type === "bun") {
+        return {
+          ...state,
+          selectedItems: {
+            ...state.selectedItems,
+            bun: action.newIngredient,
           },
         };
       } else {
@@ -23,7 +31,10 @@ export const burgerConstructorReducer = (state = initialState, action) => {
           ...state,
           selectedItems: {
             ...state.selectedItems,
-            ingredients: [...state.selectedItems.ingredients, action.newIngredient],
+            ingredients: [
+              ...state.selectedItems.ingredients,
+              action.newIngredient,
+            ],
           },
         };
       }
@@ -32,8 +43,10 @@ export const burgerConstructorReducer = (state = initialState, action) => {
         ...state,
         selectedItems: {
           ...state.selectedItems,
-          ingredients: [...state.selectedItems.ingredients].filter(item => item.uniqueId !== action.id)
-        }
+          ingredients: [...state.selectedItems.ingredients].filter(
+            (item) => item.uniqueId !== action.id
+          ),
+        },
       };
     default:
       return state;

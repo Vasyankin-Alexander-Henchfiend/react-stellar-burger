@@ -3,31 +3,57 @@ import {
     DragIcon
   } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './burger-constructor-item.module.css';
-import { DELETE_ITEM } from '../../services/actions/burger-constructor';
-import { useDispatch } from "react-redux";
-import { useDrag } from "react-dnd";
+import { useRef } from 'react'
+import { DELETE_ITEM, GET_ITEM } from '../../services/actions/burger-constructor';
+import { useDispatch, useSelector } from "react-redux";
+import { useDrag, useDrop } from "react-dnd";
 
 
-const BurgerConstructorItem = ({item}) => {
-    const dispatch = useDispatch();
-
+const BurgerConstructorItem = ({ingredient}) => {
+  const ingredients = useSelector((store) => store.selectedItems.selectedItems.ingredients)
+  const index = ingredients.findIndex((item) => item.uniqueId === ingredient.uniqueId)
+  const dispatch = useDispatch();
+  console.log(index)
+  
+  const ref = useRef(null);
+  
+  const moveCard = (dragIndex, hoverIndex) => {
+    const dragCard = ingredients[dragIndex]
+    const newCards = [...ingredients];
+    newCards.splice(dragIndex, 1)
+    newCards.splice(hoverIndex, 0, dragCard)
+    dispatch({type: GET_ITEM, newIngredient:[...newCards]})
+  }
+    const [, dropRef] = useDrop({
+      accept: "item",
+      hover: (item, monitor) => {
+        const dragIndex = item.index;
+        const hoverIndex = index;
+        moveCard(dragIndex, hoverIndex)
+      }
+    })
+    
     const [{ opacity }, dragRef] = useDrag({
-        type: "ingredient",
-        item: item,
-        collect: (monitor) => ({
-          opacity: monitor.isDragging() ? 0.5 : 1,
-        }),
-      });
-
+      type: "item",
+      item: () => {
+        const id = ingredient._id
+        return {id, index}
+      },
+      collect: (monitor) => ({
+        opacity: monitor.isDragging() ? 0 : 1,
+      }),
+    });
+    
+    dragRef(dropRef(ref));
     return (
-      <li ref={dragRef} style={{ opacity }} className={`pl-4 pr-4 ${styles.item}`}>
+      <li ref={ref} style={{ opacity }} className={`pl-4 pr-4 ${styles.item}`}>
         <DragIcon type="primary" />
         <ConstructorElement
-          text={item.name}
-          price={item.price}
-          thumbnail={item.image}
+          text={ingredient.name}
+          price={ingredient.price}
+          thumbnail={ingredient.image}
           handleClose={() => {
-            dispatch({ type: DELETE_ITEM, id: item.uniqueId });
+            dispatch({ type: DELETE_ITEM, id: ingredient.uniqueId });
           }}
         />
       </li>
