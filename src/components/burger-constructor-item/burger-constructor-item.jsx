@@ -27,9 +27,26 @@ const BurgerConstructorItem = ({ingredient}) => {
     const [, dropRef] = useDrop({
       accept: "item",
       hover: (item, monitor) => {
+        if (!ref.current) {
+          return;
+        }
         const dragIndex = item.index;
         const hoverIndex = index;
+        if (dragIndex === hoverIndex) {
+          return
+        }
+        const hoverBoundingRect = ref.current?.getBoundingClientRect();
+        const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+        const clientOffcet = monitor.getClientOffset();
+        const hoverClientY = clientOffcet.y - hoverBoundingRect.top
+        if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+          return;
+        }
+        if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+          return;
+        }
         moveCard(dragIndex, hoverIndex)
+        item.index = hoverIndex;
       }
     })
     
