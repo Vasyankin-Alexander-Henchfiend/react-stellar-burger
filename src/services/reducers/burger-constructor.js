@@ -30,6 +30,10 @@ export const burgerConstructorReducer = (state = initialState, action) => {
     case DELETE_ITEM:
       return {
         ...state,
+        selectedItems: {
+          ...state.selectedItems,
+          ingredients: [...state.selectedItems.ingredients].filter(item => item._id !== action.id)
+        }
       };
     default:
       return state;

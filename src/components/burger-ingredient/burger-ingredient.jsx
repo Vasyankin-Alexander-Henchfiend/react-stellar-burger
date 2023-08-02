@@ -3,11 +3,18 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-ingredient.module.css";
+import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import ingredientPropType from "../../utils/prop-types";
 import { useDrag } from "react-dnd";
+import { useMemo } from "react";
 
 const BurgerIngredient = ({ ingredient, openIngredientDetails }) => {
+
+  const { bun, ingredients } = useSelector(
+    (store) => store.selectedItems.selectedItems
+  );
+
   const [{ opacity }, dragRef] = useDrag({
     type: "ingredient",
     item: ingredient,
@@ -15,7 +22,18 @@ const BurgerIngredient = ({ ingredient, openIngredientDetails }) => {
       opacity: monitor.isDragging() ? 0.5 : 1,
     }),
   });
-  const number = ingredient.__v;
+
+  const countNumder = useMemo(() =>{
+    const a = ingredients.filter((item) => item.name === ingredient.name)
+    if (ingredient === bun) {
+      return 2
+    } else if (ingredients.includes(ingredient)) {
+      return a.length
+    }
+    else return 0
+  }, [bun, ingredients, ingredient])
+
+
   return (
     <li
       ref={dragRef}
@@ -25,9 +43,9 @@ const BurgerIngredient = ({ ingredient, openIngredientDetails }) => {
         openIngredientDetails(ingredient);
       }}
     >
-      {number > 0 ? (
+      {countNumder > 0 ? (
         <Counter
-          count={ingredient.__v}
+          count={countNumder}
           size="default"
           extraClass={styles.counter}
         />
