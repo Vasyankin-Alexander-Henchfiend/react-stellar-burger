@@ -32,7 +32,7 @@ export const burgerConstructorReducer = (state = initialState, action) => {
         ...state,
         selectedItems: {
           ...state.selectedItems,
-          ingredients: [...state.selectedItems.ingredients].filter(item => item._id !== action.id)
+          ingredients: [...state.selectedItems.ingredients].filter(item => item.uniqueId !== action.id)
         }
       };
     default:

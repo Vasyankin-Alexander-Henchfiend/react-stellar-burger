@@ -3,17 +3,21 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-ingredient.module.css";
-import { useSelector } from "react-redux";
-import PropTypes from "prop-types";
+import { useSelector, useDispatch } from "react-redux";
 import ingredientPropType from "../../utils/prop-types";
 import { useDrag } from "react-dnd";
 import { useMemo } from "react";
+import { SET_CURRENT_INGREDIENT } from "../../services/actions/ingredient-details";
 
-const BurgerIngredient = ({ ingredient, openIngredientDetails }) => {
-
+const BurgerIngredient = ({ ingredient }) => {
   const { bun, ingredients } = useSelector(
     (store) => store.selectedItems.selectedItems
   );
+  const dispatch = useDispatch();
+
+  const openIngredientDetails = () => {
+    dispatch({ type: SET_CURRENT_INGREDIENT, currentIngredient: ingredient });
+  };
 
   const [{ opacity }, dragRef] = useDrag({
     type: "ingredient",
@@ -23,25 +27,23 @@ const BurgerIngredient = ({ ingredient, openIngredientDetails }) => {
     }),
   });
 
-  const countNumder = useMemo(() =>{
-    const a = ingredients.filter((item) => item.name === ingredient.name)
-    if (ingredient === bun) {
-      return 2
-    } else if (ingredients.includes(ingredient)) {
-      return a.length
-    }
-    else return 0
-  }, [bun, ingredients, ingredient])
-
+  const countNumder = useMemo(() => {
+    if (bun && ingredient._id === bun._id) {
+      return 2;
+    } else if (ingredients.length > 0) {
+      const ingredientArray = ingredients.filter(
+        (item) => item._id === ingredient._id
+      );
+      return ingredientArray.length;
+    } else return 0;
+  }, [bun, ingredients, ingredient]);
 
   return (
     <li
       ref={dragRef}
       style={{ opacity }}
       className={styles.card}
-      onClick={() => {
-        openIngredientDetails(ingredient);
-      }}
+      onClick={() => openIngredientDetails()}
     >
       {countNumder > 0 ? (
         <Counter
@@ -70,7 +72,6 @@ const BurgerIngredient = ({ ingredient, openIngredientDetails }) => {
 
 BurgerIngredient.propTypes = {
   ingredient: ingredientPropType.isRequired,
-  openIngredientDetails: PropTypes.func.isRequired,
 };
 
 export default BurgerIngredient;

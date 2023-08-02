@@ -12,7 +12,7 @@ export const ingredientDetailsReducer = (state = initialState, action) => {
     case SET_CURRENT_INGREDIENT:
       return {
         ...state,
-        currentIngredient: action.currentngredient,
+        currentIngredient: action.currentIngredient,
       };
     case DELETE_CURRENT_INGREDIENT:
       return {

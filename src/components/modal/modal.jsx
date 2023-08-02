@@ -5,8 +5,6 @@ import styles from "./modal.module.css";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import PropTypes from "prop-types";
 
-const modalRoot = document.getElementById("modal-root");
-
 const Modal = ({ children, title, onClose }) => {
   useEffect(() => {
     const closeByEscape = (e) => {
@@ -31,7 +29,7 @@ const Modal = ({ children, title, onClose }) => {
       </div>
       <ModalOverlay onClose={onClose} />
     </div>,
-    modalRoot
+    document.getElementById("modal-root"),
   );
 };
 
