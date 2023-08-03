@@ -1,4 +1,4 @@
-import { URL, checkResponse } from "../../utils/consts";
+import { BASE_URL, checkResponse } from "../../utils/consts";
 
 export const GET_ITEMS_REQUEST = "GET_ITEMS_REQUEST";
 export const GET_ITEMS_SUCCESS = "GET_ITEMS_SUCCESS";
@@ -7,7 +7,7 @@ export const GET_ITEMS_FAILED = "GET_ITEMS_FAILED";
 export function getItems() {
   return function (dispatch) {
     dispatch({ type: GET_ITEMS_REQUEST });
-    fetch(URL)
+    fetch(BASE_URL + '/ingredients')
       .then((res) => checkResponse(res))
       .then((data) => {
         dispatch({

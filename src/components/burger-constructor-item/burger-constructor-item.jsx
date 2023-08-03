@@ -13,7 +13,6 @@ const BurgerConstructorItem = ({ingredient}) => {
   const ingredients = useSelector((store) => store.selectedItems.selectedItems.ingredients)
   const index = ingredients.findIndex((item) => item.uniqueId === ingredient.uniqueId)
   const dispatch = useDispatch();
-  console.log(index)
   
   const ref = useRef(null);
   

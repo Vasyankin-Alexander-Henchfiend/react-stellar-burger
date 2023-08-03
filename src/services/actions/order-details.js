@@ -1,4 +1,4 @@
-import { POSTURL, ingredientsId, checkResponse } from "../../utils/consts";
+import { BASE_URL, ingredientsId, checkResponse } from "../../utils/consts";
 
 export const DELETE_ORDER_ID = "DELETE_ORDER_ID";
 export const GET_ORDER_ID_REQUEST = "GET_ORDER_ID_REQUEST";
@@ -8,7 +8,7 @@ export const GET_ORDER_ID_FAILED = "GET_ORDER_ID_FAILED";
 export function getOrderId(bun, ingredients) {
   return function (dispatch) {
     dispatch({ type: GET_ORDER_ID_REQUEST });
-    fetch(POSTURL, {
+    fetch(BASE_URL + '/orders', {
       method: "POST",
       headers: {
         "Content-type": "application/json",

@@ -10,7 +10,7 @@ import { useCallback, useMemo } from "react";
 import { getOrderId } from "../../services/actions/order-details";
 import { DELETE_ORDER_ID } from "../../services/actions/order-details";
 import { useDispatch, useSelector } from "react-redux";
-import { addUniqueId } from "../../services/actions/burger-constructor";
+import { addIngredient } from "../../services/actions/burger-constructor";
 import { useDrop } from "react-dnd";
 import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
 
@@ -27,7 +27,7 @@ const BurgerConstructor = () => {
       isHover: monitor.isOver(),
     }),
     drop: (ingredient) => {
-      dispatch(addUniqueId(ingredient));
+      dispatch(addIngredient(ingredient));
     },
   });
 
