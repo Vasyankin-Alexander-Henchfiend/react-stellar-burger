@@ -1,6 +1,7 @@
 .ingredients-list {
     width: 600px;
     height: 912px;
+    overflow: hidden;
 }
 
 .tabs {
