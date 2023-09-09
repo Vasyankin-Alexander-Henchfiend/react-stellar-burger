@@ -6,16 +6,16 @@ import HomePage from "../../pages/home";
 function App() {
   return (
     <div className={styles.app}>
-      <pre className={styles.pre}>
-        <AppHeader />
-        <main>
-          <BrowserRouter>
+      <BrowserRouter>
+        <pre className={styles.pre}>
+          <AppHeader />
+          <main>
             <Routes>
               <Route path="/" element={<HomePage />} />
             </Routes>
-          </BrowserRouter>
-        </main>
-      </pre>
+          </main>
+        </pre>
+      </BrowserRouter>
     </div>
   );
 }
