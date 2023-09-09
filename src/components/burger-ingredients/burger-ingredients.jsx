@@ -1,19 +1,72 @@
-import { useState } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
-import styles from "./burger-ingredients.module.css";
-import PropTypes from "prop-types";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import ingredientPropType from "../../utils/prop-types";
+import styles from "./burger-ingredients.module.css";
+import { useState, useMemo, useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getItems } from "../../services/actions/burger-ingredients";
+import { DELETE_CURRENT_INGREDIENT } from "../../services/actions/ingredient-details";
 
-const BurgerIngredients = ({ data }) => {
+const BurgerIngredients = () => {
+  const data = useSelector((store) => store.items.items);
+  const currentIngredient = useSelector(
+    (store) => store.currentIngredient.currentIngredient
+  );
+
+  const sausesRef = useRef();
+  const mainsRef = useRef();
+  const ingredientsListRef = useRef();
+
   const [current, setCurrent] = useState("bun");
-  const [activeIngredient, setActiveIngredient] = useState({state:false, value:{} });
 
-  const openIngredientDetails = (ingredient) => {
-    setActiveIngredient({state: true, value: ingredient });
-  };
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getItems());
+  }, [dispatch]);
+
+  useEffect(() => {
+    ingredientsListRef.current.addEventListener("scroll", () => {
+      const sausesTitle = sausesRef.current.getBoundingClientRect().top;
+      const mainTitle = mainsRef.current.getBoundingClientRect().top;
+      const ingredientsListPanel = Math.abs(
+        ingredientsListRef.current.getBoundingClientRect().top + 80
+      );
+
+      if (sausesTitle > ingredientsListPanel) {
+        setCurrent("bun");
+      } else if (mainTitle > ingredientsListPanel) {
+        setCurrent("sauce");
+      } else {
+        setCurrent("main");
+      }
+    });
+  }, []);
+
+  const buns = useMemo(() => {
+    return data.map((item) => {
+      if (item.type === "bun") {
+        return <BurgerIngredient key={item._id} ingredient={item} />;
+      } else return null;
+    });
+  }, [data]);
+
+  const sauces = useMemo(() => {
+    return data.map((item) => {
+      if (item.type === "sauce") {
+        return <BurgerIngredient key={item._id} ingredient={item} />;
+      } else return null;
+    });
+  }, [data]);
+
+  const mains = useMemo(() => {
+    return data.map((item) => {
+      if (item.type === "main") {
+        return <BurgerIngredient key={item._id} ingredient={item} />;
+      } else return null;
+    });
+  }, [data]);
 
   return (
     <section className={styles[`ingredients-list`]}>
@@ -29,60 +82,33 @@ const BurgerIngredients = ({ data }) => {
           Начинки
         </Tab>
       </div>
-      <div className={`${styles.scroll} custom-scroll`}>
+      <div
+        ref={ingredientsListRef}
+        className={`${styles.scroll} custom-scroll`}
+      >
         <h2 className="text text_type_main-medium mb-6">Булки</h2>
-        <ul className={styles[`grid-container`]}>
-          {data.map((item) => {
-            return item.type === "bun" ? (
-              <BurgerIngredient
-                key={item._id}
-                ingredient={item}
-                openIngredientDetails={openIngredientDetails}
-              />
-            ) : null;
-          })}
-        </ul>
-        <h2 className="text text_type_main-medium mt-10 mb-6">Соусы</h2>
-        <ul className={styles[`grid-container`]}>
-          {data.map((item) => {
-            return item.type === "sauce" ? (
-              <BurgerIngredient
-                key={item._id}
-                ingredient={item}
-                openIngredientDetails={openIngredientDetails}
-              />
-            ) : null;
-          })}
-        </ul>
-        <h2 className="text text_type_main-medium mt-10 mb-6">Начинки</h2>
-        <ul className={styles[`grid-container`]}>
-          {data.map((item) => {
-            return item.type === "main" ? (
-              <BurgerIngredient
-                key={item._id}
-                ingredient={item}
-                openIngredientDetails={openIngredientDetails}
-              />
-            ) : null;
-          })}
-        </ul>
+        <ul className={styles[`grid-container`]}>{buns}</ul>
+        <h2 ref={sausesRef} className="text text_type_main-medium mt-10 mb-6">
+          Соусы
+        </h2>
+        <ul className={styles[`grid-container`]}>{sauces}</ul>
+        <h2 ref={mainsRef} className="text text_type_main-medium mt-10 mb-6">
+          Начинки
+        </h2>
+        <ul className={styles[`grid-container`]}>{mains}</ul>
       </div>
-      {activeIngredient.state && (
+      {currentIngredient && (
         <Modal
           title="Детали ингредиента"
           onClose={() => {
-            setActiveIngredient({state:false, value:{}});
+            dispatch({ type: DELETE_CURRENT_INGREDIENT });
           }}
         >
-          <IngredientDetails data={activeIngredient.value} />
+          <IngredientDetails />
         </Modal>
       )}
     </section>
   );
-};
-
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
 };
 
 export default BurgerIngredients;

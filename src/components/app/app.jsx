@@ -1,25 +1,21 @@
-import React, { useEffect } from "react";
 import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import { URL, getData } from "../../utils/consts";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 function App() {
-  const [data, setData] = React.useState([]);
-
-  useEffect(() => {
-    getData(URL, setData);
-  }, []);
-
   return (
     <div className={styles.app}>
       <pre className={styles.pre}>
         <AppHeader />
-        <main className={styles.main}>
-          <BurgerIngredients data={data} />
-          <BurgerConstructor data={data} />
-        </main>
+        <DndProvider backend={HTML5Backend}>
+          <main className={styles.main}>
+            <BurgerIngredients />
+            <BurgerConstructor />
+          </main>
+        </DndProvider>
       </pre>
     </div>
   );
