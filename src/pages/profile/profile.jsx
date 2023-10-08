@@ -4,21 +4,25 @@ import {
   EmailInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink } from "react-router-dom";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import styles from "./profile.module.css";
 
 const Profile = () => {
-  const [value, setValue] = useState("");
-  const onChange = (e) => {
-    setValue(e.target.value);
+  const [nameValue, setNameValue] = useState("");
+  const onChangeName = (e) => {
+    setNameValue(e.target.value)
+  }
+
+  const [emailValue, setEmailValue] = useState("");
+  const onChangeEmail = (e) => {
+    setEmailValue(e.target.value);
   };
 
-  const [state, setState] = useState("");
-  const inputRef = useRef(null);
-  const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0);
-    alert("Icon Click Callback");
+  const [passwordValue, setPasswordValue] = useState("");
+  const onChangePassword = (e) => {
+    setPasswordValue(e.target.value);
   };
+
 
   return (
     <div className={styles[`profile-container`]}>
@@ -32,26 +36,24 @@ const Profile = () => {
           В этом разделе вы можете изменить свои персональные данные
         </p>
       </div>
-      <form className={styles[`input-container`]}>
-        <Input
+      <form className={styles.form}>
+      <Input
           type={"text"}
           placeholder={"Имя"}
-          onChange={(e) => setState(e.target.value)}
-          icon={"EditIcon"}
-          value={state}
           name={"Имя"}
+          value={nameValue}
+          onChange={onChangeName}
+          icon={undefined}
+          onIconClick={undefined}
           error={false}
-          ref={inputRef}
-          onIconClick={onIconClick}
           errorText={"Ошибка"}
           size={"default"}
           extraClass="mb-6"
           required
         />
         <EmailInput
-          onChange={onChange}
-          icon={"EditIcon"}
-          value={null}
+          value={emailValue}
+          onChange={onChangeEmail}
           name={"email"}
           placeholder="E-mail"
           isIcon={false}
@@ -59,9 +61,8 @@ const Profile = () => {
           required
         />
         <PasswordInput
-          onChange={onChange}
-          icon={"EditIcon"}
-          value={value}
+          value={passwordValue}
+          onChange={onChangePassword}
           name={"Пароль"}
           extraClass="mb-6"
           required

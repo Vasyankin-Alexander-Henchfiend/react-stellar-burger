@@ -5,21 +5,24 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import styles from "./register.module.css";
 import { LOGIN_PAGE } from "../../utils/consts";
 
 const Register = () => {
-  const [value, setValue] = useState("");
-  const onChange = (e) => {
-    setValue(e.target.value);
+  const [nameValue, setNameValue] = useState("");
+  const onChangeName = (e) => {
+    setNameValue(e.target.value)
+  }
+
+  const [emailValue, setEmailValue] = useState("");
+  const onChangeEmail = (e) => {
+    setEmailValue(e.target.value);
   };
 
-  const [state, setState] = useState("");
-  const inputRef = useRef(null);
-  const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0);
-    alert("Icon Click Callback");
+  const [passwordValue, setPasswordValue] = useState("");
+  const onChangePassword = (e) => {
+    setPasswordValue(e.target.value);
   };
 
   return (
@@ -29,21 +32,20 @@ const Register = () => {
         <Input
           type={"text"}
           placeholder={"Имя"}
-          onChange={(e) => setState(e.target.value)}
-          icon={undefined}
-          value={state}
           name={"Имя"}
+          value={nameValue}
+          onChange={onChangeName}
+          icon={undefined}
+          onIconClick={undefined}
           error={false}
-          ref={inputRef}
-          onIconClick={onIconClick}
           errorText={"Ошибка"}
           size={"default"}
           extraClass="mb-6"
           required
         />
         <EmailInput
-          onChange={onChange}
-          value={null}
+          value={emailValue}
+          onChange={onChangeEmail}
           name={"email"}
           placeholder="E-mail"
           isIcon={false}
@@ -51,8 +53,8 @@ const Register = () => {
           required
         />
         <PasswordInput
-          onChange={onChange}
-          value={value}
+          value={passwordValue}
+          onChange={onChangePassword}
           name={"Пароль"}
           extraClass="mb-6"
           required

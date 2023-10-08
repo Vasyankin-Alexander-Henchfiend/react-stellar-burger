@@ -3,7 +3,7 @@ import {
   EmailInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import styles from "./login.module.css";
 import { FORGOT_PASSWORD_PAGE, REGISTER_PAGE } from "../../utils/consts";
@@ -18,8 +18,6 @@ const Login = () => {
   const onChangePassword = (e) => {
     setPasswordValue(e.target.value);
   };
-
-  const navigate = useNavigate();
 
   return (
     <div className={styles[`login-container`]}>
@@ -51,7 +49,7 @@ const Login = () => {
       </p>
       <p className="text text_type_main-default">
         Забыли пароль?{" "}
-        <Link Link to={FORGOT_PASSWORD_PAGE}>
+        <Link to={FORGOT_PASSWORD_PAGE}>
           Восстановить пароль
         </Link>
       </p>
