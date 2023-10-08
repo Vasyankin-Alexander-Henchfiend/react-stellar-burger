@@ -7,6 +7,14 @@ import Register from "../../pages/register/register";
 import ForgotPassword from "../../pages/forgot-password/forgot-password";
 import ResetPassword from "../../pages/reset-password/reset-password";
 import Profile from "../../pages/profile/profile";
+import {
+  FORGOT_PASSWORD_PAGE,
+  HOME,
+  LOGIN_PAGE,
+  PROFILE_PAGE,
+  REGISTER_PAGE,
+  RESET_PASSWORD_PAGE,
+} from "../../utils/consts";
 
 function App() {
   return (
@@ -16,12 +24,12 @@ function App() {
           <AppHeader />
           <main>
             <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/forgot-password" element={<ForgotPassword />} />
-              <Route path="/reset-password" element={<ResetPassword />} />
-              <Route path="/profile" element={<Profile />} />
+              <Route path={HOME} element={<HomePage />} />
+              <Route path={LOGIN_PAGE} element={<Login />} />
+              <Route path={REGISTER_PAGE} element={<Register />} />
+              <Route path={FORGOT_PASSWORD_PAGE} element={<ForgotPassword />} />
+              <Route path={RESET_PASSWORD_PAGE} element={<ResetPassword />} />
+              <Route path={PROFILE_PAGE} element={<Profile />} />
             </Routes>
           </main>
         </pre>

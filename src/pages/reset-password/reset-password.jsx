@@ -3,56 +3,69 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from "react-router-dom";
-import { useState, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import styles from "./reset-password.module.css";
+import { LOGIN_PAGE } from "../../utils/consts";
+import { useDispatch } from "react-redux";
+import { resetPasswordRequest } from "../../services/actions/reset-password";
 
 const ResetPassword = () => {
-  const [value, setValue] = useState(null);
-  const onChange = (e) => {
-    setValue(e.target.value);
+  const [passwordValue, setPasswordValue] = useState("");
+  const onChangePassword = (e) => {
+    setPasswordValue(e.target.value);
   };
 
-  const [state, setState] = useState(null)
-  const inputRef = useRef(null)
-  const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0)
-    alert('Icon Click Callback')
-  }
+  const [codeValue, setCodeValue] = useState("");
+  const onChangeCode = (e) => {
+    setCodeValue(e.target.value);
+  };
+
+  const navigate = useNavigate();
+  const dispath = useDispatch();
+  const sendNewPasswordData = (e) => {
+    e.preventDefault();
+    navigate(LOGIN_PAGE);
+    dispath(resetPasswordRequest(passwordValue, codeValue));
+  };
 
   return (
     <div className={styles[`reset-password-container`]}>
       <h2 className="text text_type_main-medium mb-6">Восстановление пароля</h2>
-      <div style={{ display: "flex", flexDirection: "column" }}>
+      <form className={styles.form}>
         <PasswordInput
-          onChange={onChange}
-          value={value}
-          name={"password"}
-          placeholder = {'Введите новый пароль'}
+          onChange={onChangePassword}
+          value={passwordValue}
+          name={"пароль"}
+          placeholder={"Введите новый пароль"}
           extraClass="mb-6"
           required
         />
         <Input
           type={"text"}
+          value={codeValue}
+          onChange={onChangeCode}
+          name={"код из письма"}
           placeholder={"Введите код из письма"}
-          onChange={(e) => setState(e.target.value)}
-          icon={undefined}
-          value={state}
-          name={"Имя"}
           error={false}
-          ref={inputRef}
-          onIconClick={onIconClick}
+          icon={undefined}
+          onIconClick={undefined}
           errorText={"Ошибка"}
           size={"default"}
           extraClass="mb-6"
           required
         />
-      </div>
-      <Button htmlType="button" type="primary" size="medium">
+      </form>
+      <Button
+        htmlType="button"
+        type="primary"
+        size="medium"
+        onClick={sendNewPasswordData}
+      >
         Сохранить
       </Button>
       <p className="text text_type_main-default mt-20">
-        Вспомнили пароль? <Link>Войти</Link>
+        Вспомнили пароль? <Link to={LOGIN_PAGE}>Войти</Link>
       </p>
     </div>
   );

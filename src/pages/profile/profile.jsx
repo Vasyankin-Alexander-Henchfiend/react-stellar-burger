@@ -8,12 +8,12 @@ import { useState, useRef } from "react";
 import styles from "./profile.module.css";
 
 const Profile = () => {
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState("");
   const onChange = (e) => {
     setValue(e.target.value);
   };
 
-  const [state, setState] = useState(null);
+  const [state, setState] = useState("");
   const inputRef = useRef(null);
   const onIconClick = () => {
     setTimeout(() => inputRef.current.focus(), 0);
@@ -24,11 +24,15 @@ const Profile = () => {
     <div className={styles[`profile-container`]}>
       <div className={styles[`link-container`]}>
         <NavLink className="mb-7 text text_type_main-medium">Профиль</NavLink>
-        <NavLink className="mb-7 text text_type_main-medium">История заказов</NavLink>
+        <NavLink className="mb-7 text text_type_main-medium">
+          История заказов
+        </NavLink>
         <NavLink className="mb-5 text text_type_main-medium">Выход</NavLink>
-        <p className="mt-20 text text_type_main-default">В этом разделе вы можете изменить свои персональные данные</p>
+        <p className="mt-20 text text_type_main-default">
+          В этом разделе вы можете изменить свои персональные данные
+        </p>
       </div>
-      <div className={styles[`input-container`]}>
+      <form className={styles[`input-container`]}>
         <Input
           type={"text"}
           placeholder={"Имя"}
@@ -62,7 +66,7 @@ const Profile = () => {
           extraClass="mb-6"
           required
         />
-      </div>
+      </form>
     </div>
   );
 };

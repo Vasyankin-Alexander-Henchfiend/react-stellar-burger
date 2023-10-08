@@ -1,4 +1,10 @@
 export const BASE_URL = 'https://norma.nomoreparties.space/api';
+export const HOME = '/';
+export const LOGIN_PAGE = '/login';
+export const FORGOT_PASSWORD_PAGE = '/forgot-password';
+export const RESET_PASSWORD_PAGE = '/reset-password';
+export const PROFILE_PAGE = '/profile';
+export const REGISTER_PAGE = '/register';
 
 export const checkResponse = (res) => {
   if (res.ok) {

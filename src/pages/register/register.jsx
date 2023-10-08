@@ -1,5 +1,5 @@
 import {
-  Input,  
+  Input,
   PasswordInput,
   EmailInput,
   Button,
@@ -7,14 +7,15 @@ import {
 import { Link } from "react-router-dom";
 import { useState, useRef } from "react";
 import styles from "./register.module.css";
+import { LOGIN_PAGE } from "../../utils/consts";
 
 const Register = () => {
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState("");
   const onChange = (e) => {
     setValue(e.target.value);
   };
 
-  const [state, setState] = useState(null);
+  const [state, setState] = useState("");
   const inputRef = useRef(null);
   const onIconClick = () => {
     setTimeout(() => inputRef.current.focus(), 0);
@@ -24,7 +25,7 @@ const Register = () => {
   return (
     <div className={styles[`register-container`]}>
       <h2 className="text text_type_main-medium mb-6">Регистрация</h2>
-      <div style={{ display: "flex", flexDirection: "column" }}>
+      <form className={styles.form}>
         <Input
           type={"text"}
           placeholder={"Имя"}
@@ -56,12 +57,12 @@ const Register = () => {
           extraClass="mb-6"
           required
         />
-      </div>
+      </form>
       <Button htmlType="button" type="primary" size="medium">
         Зарегистрироваться
       </Button>
       <p className="text text_type_main-default mb-4 mt-20">
-        Уже зарегистрированы? <Link>Войти</Link>
+        Уже зарегистрированы? <Link to={LOGIN_PAGE}>Войти</Link>
       </p>
     </div>
   );
