@@ -21,8 +21,7 @@ export function resetPasswordRequest(password, code) {
       .then((data) => {
         dispatch({
           type: RESET_PASSWORD_SUCCESS,
-          password: data.password,
-          code: data.code,
+          success: data.success,
         });
       })
       .catch((error) => {

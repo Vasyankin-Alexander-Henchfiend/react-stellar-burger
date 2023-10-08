@@ -8,8 +8,8 @@ const HomePage = () => {
   return (
     <div className={styles.main}>
       <DndProvider backend={HTML5Backend}>
-          <BurgerIngredients />
-          <BurgerConstructor />
+        <BurgerIngredients />
+        <BurgerConstructor />
       </DndProvider>
     </div>
   );

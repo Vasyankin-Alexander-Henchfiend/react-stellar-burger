@@ -3,13 +3,17 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./forgot-password.module.css";
 import { LOGIN_PAGE, RESET_PASSWORD_PAGE } from "../../utils/consts";
 import { forgotPasswordRequest } from "../../services/actions/forgot-password";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const ForgotPassword = () => {
+  const sendEmailDataSuccess = useSelector(
+    (store) => store.forgotPassword.emailSuccess
+  );
+  
   const [emailValue, setEmailValue] = useState("");
   const onChangeEmail = (e) => {
     setEmailValue(e.target.value);
@@ -20,9 +24,14 @@ const ForgotPassword = () => {
 
   const sendEmailData = (e) => {
     e.preventDefault();
-    navigate(RESET_PASSWORD_PAGE);
     dispath(forgotPasswordRequest(emailValue));
   };
+
+  useEffect(() => {
+    if (sendEmailDataSuccess) {
+      navigate(RESET_PASSWORD_PAGE);
+    }
+  }, [navigate, sendEmailDataSuccess]);
 
   return (
     <div className={styles[`forgot-password-container`]}>

@@ -13,14 +13,14 @@ export function forgotPasswordRequest(email) {
         "Content-type": "application/json",
       },
       body: JSON.stringify({
-        email: email,
+        email,
       }),
     })
       .then((res) => checkResponse(res))
       .then((data) => {
         dispatch({
           type: FORGOT_PASSWORD_SUCCESS,
-          email: data.email,
+          success: data.success,
         });
       })
       .catch((error) => {

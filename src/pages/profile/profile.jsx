@@ -10,8 +10,8 @@ import styles from "./profile.module.css";
 const Profile = () => {
   const [nameValue, setNameValue] = useState("");
   const onChangeName = (e) => {
-    setNameValue(e.target.value)
-  }
+    setNameValue(e.target.value);
+  };
 
   const [emailValue, setEmailValue] = useState("");
   const onChangeEmail = (e) => {
@@ -22,7 +22,6 @@ const Profile = () => {
   const onChangePassword = (e) => {
     setPasswordValue(e.target.value);
   };
-
 
   return (
     <div className={styles[`profile-container`]}>
@@ -37,7 +36,7 @@ const Profile = () => {
         </p>
       </div>
       <form className={styles.form}>
-      <Input
+        <Input
           type={"text"}
           placeholder={"Имя"}
           name={"Имя"}

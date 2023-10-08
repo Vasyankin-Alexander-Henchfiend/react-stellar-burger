@@ -4,13 +4,17 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./reset-password.module.css";
 import { LOGIN_PAGE } from "../../utils/consts";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { resetPasswordRequest } from "../../services/actions/reset-password";
 
 const ResetPassword = () => {
+  const resetPasswordSuccess = useSelector(
+    (store) => store.resetPassword.resetPasswordSuccess
+  );
+
   const [passwordValue, setPasswordValue] = useState("");
   const onChangePassword = (e) => {
     setPasswordValue(e.target.value);
@@ -25,9 +29,14 @@ const ResetPassword = () => {
   const dispath = useDispatch();
   const sendNewPasswordData = (e) => {
     e.preventDefault();
-    navigate(LOGIN_PAGE);
     dispath(resetPasswordRequest(passwordValue, codeValue));
   };
+
+  useEffect(() => {
+    if (resetPasswordSuccess) {
+      navigate(LOGIN_PAGE);
+    }
+  }, [navigate, resetPasswordSuccess]);
 
   return (
     <div className={styles[`reset-password-container`]}>

@@ -12,8 +12,8 @@ import { LOGIN_PAGE } from "../../utils/consts";
 const Register = () => {
   const [nameValue, setNameValue] = useState("");
   const onChangeName = (e) => {
-    setNameValue(e.target.value)
-  }
+    setNameValue(e.target.value);
+  };
 
   const [emailValue, setEmailValue] = useState("");
   const onChangeEmail = (e) => {

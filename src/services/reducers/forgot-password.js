@@ -5,7 +5,7 @@ import {
 } from "../actions/forgot-password";
 
 const initialState = {
-  email: "",
+  emailSuccess: false,
   emailRequest: false,
   emailFailed: false,
 };
@@ -20,7 +20,7 @@ export const forgotPasswordReduser = (state = initialState, action) => {
     case FORGOT_PASSWORD_SUCCESS:
       return {
         ...state,
-        email: action.email,
+        emailSuccess: action.success,
         emailRequest: false,
         emailFailed: false,
       };

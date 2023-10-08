@@ -49,9 +49,7 @@ const Login = () => {
       </p>
       <p className="text text_type_main-default">
         Забыли пароль?{" "}
-        <Link to={FORGOT_PASSWORD_PAGE}>
-          Восстановить пароль
-        </Link>
+        <Link to={FORGOT_PASSWORD_PAGE}>Восстановить пароль</Link>
       </p>
     </div>
   );
