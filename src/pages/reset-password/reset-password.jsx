@@ -15,27 +15,20 @@ const ResetPassword = () => {
     (store) => store.resetPassword.resetPasswordSuccess
   );
 
-  const [passwordValue, setPasswordValue] = useState("");
-  const onChangePassword = (e) => {
-    setPasswordValue(e.target.value);
-  };
-
-  const [codeValue, setCodeValue] = useState("");
-  const onChangeCode = (e) => {
-    setCodeValue(e.target.value);
+  const [ form, setValue ] = useState({ password: '', token: '' });
+  const onChange = e => {
+    setValue({ ...form, [e.target.name]: e.target.value });
   };
 
   const navigate = useNavigate();
   const dispath = useDispatch();
   const sendNewPasswordData = (e) => {
     e.preventDefault();
-    dispath(resetPasswordRequest(passwordValue, codeValue));
+    dispath(resetPasswordRequest(form.password, form.token));
   };
 
   useEffect(() => {
-    if (resetPasswordSuccess) {
-      navigate(LOGIN_PAGE);
-    }
+    return resetPasswordSuccess ? navigate(LOGIN_PAGE) : null;
   }, [navigate, resetPasswordSuccess]);
 
   return (
@@ -43,18 +36,18 @@ const ResetPassword = () => {
       <h2 className="text text_type_main-medium mb-6">Восстановление пароля</h2>
       <form className={styles.form}>
         <PasswordInput
-          onChange={onChangePassword}
-          value={passwordValue}
-          name={"пароль"}
+          onChange={onChange}
+          value={form.password}
+          name={"password"}
           placeholder={"Введите новый пароль"}
           extraClass="mb-6"
           required
         />
         <Input
           type={"text"}
-          value={codeValue}
-          onChange={onChangeCode}
-          name={"код из письма"}
+          value={form.token}
+          onChange={onChange}
+          name={"token"}
           placeholder={"Введите код из письма"}
           error={false}
           icon={undefined}

@@ -13,7 +13,7 @@ const ForgotPassword = () => {
   const sendEmailDataSuccess = useSelector(
     (store) => store.forgotPassword.emailSuccess
   );
-  
+
   const [emailValue, setEmailValue] = useState("");
   const onChangeEmail = (e) => {
     setEmailValue(e.target.value);
@@ -28,9 +28,7 @@ const ForgotPassword = () => {
   };
 
   useEffect(() => {
-    if (sendEmailDataSuccess) {
-      navigate(RESET_PASSWORD_PAGE);
-    }
+    return sendEmailDataSuccess ? navigate(RESET_PASSWORD_PAGE) : null;
   }, [navigate, sendEmailDataSuccess]);
 
   return (

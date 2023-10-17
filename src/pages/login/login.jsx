@@ -3,29 +3,42 @@ import {
   EmailInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./login.module.css";
 import { FORGOT_PASSWORD_PAGE, REGISTER_PAGE } from "../../utils/consts";
+import { loginRequest } from "../../services/actions/login";
 
 const Login = () => {
-  const [emailValue, setEmailValue] = useState("");
-  const onChangeEmail = (e) => {
-    setEmailValue(e.target.value);
+  const loginRequestSuccess = useSelector((store) => store.login.loginSuccess)
+  const [form, setValue] = useState({ email: '', password: '' });
+
+  const onChange = e => {
+    setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  const [passwordValue, setPasswordValue] = useState("");
-  const onChangePassword = (e) => {
-    setPasswordValue(e.target.value);
-  };
+  const dispath = useDispatch();
+  const navigate = useNavigate();
+
+  const sendLoginData = e => {
+    e.preventDefault();
+    dispath(loginRequest(form.email, form.password));
+  }
+
+  useEffect(() => {
+    return (
+      loginRequestSuccess ? navigate('/') : null
+    )
+  })
 
   return (
     <div className={styles[`login-container`]}>
       <h2 className="text text_type_main-medium mb-6">Вход</h2>
       <form className={styles.form}>
         <EmailInput
-          onChange={onChangeEmail}
-          value={emailValue}
+          onChange={onChange}
+          value={form.email}
           name={"email"}
           placeholder="E-mail"
           isIcon={false}
@@ -33,14 +46,14 @@ const Login = () => {
           required
         />
         <PasswordInput
-          onChange={onChangePassword}
-          value={passwordValue}
+          onChange={onChange}
+          value={form.password}
           name={"password"}
           extraClass="mb-6"
           required
         />
       </form>
-      <Button htmlType="button" type="primary" size="medium">
+      <Button htmlType="button" type="primary" size="medium" onClick={sendLoginData}>
         Войти
       </Button>
       <p className="text text_type_main-default mb-4 mt-20">

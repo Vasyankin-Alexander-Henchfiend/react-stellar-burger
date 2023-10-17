@@ -4,12 +4,18 @@ import {
   EmailInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import styles from "./register.module.css";
 import { LOGIN_PAGE } from "../../utils/consts";
+import { useDispatch, useSelector } from "react-redux";
+import { registerRequest } from "../../services/actions/register";
 
 const Register = () => {
+  const sendRegisterDataSuccess = useSelector(
+    (store) => store.register.registerSuccess
+  );
+
   const [nameValue, setNameValue] = useState("");
   const onChangeName = (e) => {
     setNameValue(e.target.value);
@@ -24,6 +30,18 @@ const Register = () => {
   const onChangePassword = (e) => {
     setPasswordValue(e.target.value);
   };
+
+  const dispath = useDispatch();
+  const navigate = useNavigate();
+
+  const sendRegisterData = (e) => {
+    e.preventDefault();
+    dispath(registerRequest(emailValue, passwordValue, nameValue));
+  };
+
+  useEffect(() => {
+    return sendRegisterDataSuccess ? navigate(LOGIN_PAGE) : null;
+  }, [navigate, sendRegisterDataSuccess]);
 
   return (
     <div className={styles[`register-container`]}>
@@ -60,7 +78,12 @@ const Register = () => {
           required
         />
       </form>
-      <Button htmlType="button" type="primary" size="medium">
+      <Button
+        htmlType="button"
+        type="primary"
+        size="medium"
+        onClick={sendRegisterData}
+      >
         Зарегистрироваться
       </Button>
       <p className="text text_type_main-default mb-4 mt-20">

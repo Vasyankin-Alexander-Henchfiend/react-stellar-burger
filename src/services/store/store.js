@@ -6,6 +6,9 @@ import { burgerConstructorReducer } from "../reducers/burger-constructor";
 import { forgotPasswordReduser } from "../reducers/forgot-password";
 import thunk from 'redux-thunk';
 import { resetPasswordReduser } from "../reducers/reset-password";
+import { registerReduser } from "../reducers/register";
+import { loginReduser } from "../reducers/login";
+import { profileReduser } from "../reducers/profile";
 
 const composeEnhancers =
   typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -22,7 +25,9 @@ export const rootreducer = combineReducers({
     selectedItems: burgerConstructorReducer,
     forgotPassword: forgotPasswordReduser,
     resetPassword: resetPasswordReduser,
-    
+    register: registerReduser,
+    login: loginReduser,
+    profile: profileReduser,
 })
 
 export const store = createStore(rootreducer, enhancer);

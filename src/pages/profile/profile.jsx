@@ -4,26 +4,31 @@ import {
   EmailInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./profile.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { profileRequest } from "../../services/actions/profile";
 
 const Profile = () => {
-  const [nameValue, setNameValue] = useState("");
-  const onChangeName = (e) => {
-    setNameValue(e.target.value);
+  const accessToken = useSelector((store) => store.login.accessToken);
+  const { userName, userEmail } = useSelector((store) => store.profile);
+
+  const dispath = useDispatch();
+
+  const [form, setValue] = useState({
+    name: userName,
+    email: userEmail,
+    password: "123456",
+  });
+  const onChange = (e) => {
+    setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  const [emailValue, setEmailValue] = useState("");
-  const onChangeEmail = (e) => {
-    setEmailValue(e.target.value);
-  };
+  useEffect(() => {
+    dispath(profileRequest(accessToken));
+  }, [dispath, accessToken]);
 
-  const [passwordValue, setPasswordValue] = useState("");
-  const onChangePassword = (e) => {
-    setPasswordValue(e.target.value);
-  };
-
-  return (
+  return userName && userEmail ? (
     <div className={styles[`profile-container`]}>
       <div className={styles[`link-container`]}>
         <NavLink className="mb-7 text text_type_main-medium">Профиль</NavLink>
@@ -39,35 +44,38 @@ const Profile = () => {
         <Input
           type={"text"}
           placeholder={"Имя"}
-          name={"Имя"}
-          value={nameValue}
-          onChange={onChangeName}
-          icon={undefined}
+          name={"name"}
+          value={form.name}
+          onChange={onChange}
+          icon={"EditIcon"}
           onIconClick={undefined}
           error={false}
           errorText={"Ошибка"}
           size={"default"}
-          extraClass="mb-6"
+          extraClass="pb-6"
           required
         />
         <EmailInput
-          value={emailValue}
-          onChange={onChangeEmail}
+          value={form.email}
+          onChange={onChange}
           name={"email"}
           placeholder="E-mail"
-          isIcon={false}
-          extraClass="mb-6"
+          isIcon={true}
+          extraClass="pb-6"
           required
         />
         <PasswordInput
-          value={passwordValue}
-          onChange={onChangePassword}
-          name={"Пароль"}
-          extraClass="mb-6"
+          value={form.password}
+          onChange={onChange}
+          name={"password"}
+          icon="EditIcon"
+          extraClass="pb-6"
           required
         />
       </form>
     </div>
+  ) : (
+    <p>Ждите!</p>
   );
 };
 
