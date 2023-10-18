@@ -19,10 +19,12 @@ export function loginRequest(email, password) {
     })
       .then((res) => checkResponse(res))
       .then((data) => {
+        localStorage.setItem('accessToken', data.accessToken)
+        localStorage.setItem('refreshToken', data.refreshToken)
         dispatch({
           type: LOGIN_SUCCESS,
           success: data.success,
-          accessToken: data.accessToken,
+          userData: data.user,
         });
       })
       .catch((error) => {

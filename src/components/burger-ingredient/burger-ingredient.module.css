@@ -29,3 +29,8 @@
     white-space: normal;
     text-align: center;
 }
+
+.link {
+    color: inherit;
+    text-decoration: inherit;
+}

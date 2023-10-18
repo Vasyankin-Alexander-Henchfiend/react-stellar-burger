@@ -4,13 +4,13 @@ export const PROFILE_REQUEST = "PROFILE_REQUEST";
 export const PROFILE_SUCCESS = "PROFILE_SUCCESS";
 export const PROFILE_FAILED = "PROFILE_FAILED";
 
-export function profileRequest(accessToken) {
+export function profileRequest() {
   return function (dispatch) {
     dispatch({ type: PROFILE_REQUEST });
     fetch(BASE_URL + "/auth/user", {
       headers: {
         "Content-type": "application/json",
-        authorization: accessToken
+        authorization: localStorage.getItem('accessToken'),
       },
       body: JSON.stringify(),
     })
@@ -19,8 +19,7 @@ export function profileRequest(accessToken) {
         dispatch({
           type: PROFILE_SUCCESS,
           success: data.success,
-          name: data.user.name,
-          email: data.user.email
+          userData: data.user,
         });
       })
       .catch((error) => {

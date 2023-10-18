@@ -3,15 +3,32 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAILED,
   } from "../actions/login";
+
+  import {
+    PROFILE_REQUEST,
+    PROFILE_SUCCESS,
+    PROFILE_FAILED,
+  } from "../actions/profile";
+
+  import {
+    SET_AUTH_CHECKED,
+    SET_USER
+  } from "../actions/auth";
   
   const initialState = {
-    accessToken: null,
+    userData: null,
+    isAuthChecked: false,
+
     loginSuccess: false,
     loginRequest: false,
     loginFailed: false,
+
+    profileSuccess: false,
+    profileRequest: false,
+    profileFailed: false,
   };
   
-  export const loginReduser = (state = initialState, action) => {
+  export const userDataReduser = (state = initialState, action) => {
     switch (action.type) {
       case LOGIN_REQUEST:
         return {
@@ -22,7 +39,7 @@ import {
         return {
           ...state,
           loginSuccess: action.success,
-          accessToken: action.accessToken,
+          userData: action.userData,
           loginRequest: false,
           loginFailed: false,
         };
@@ -32,6 +49,35 @@ import {
           loginRequest: false,
           loginFailed: true,
         };
+        case PROFILE_REQUEST:
+          return {
+            ...state,
+            profileRequest: true,
+          };
+        case PROFILE_SUCCESS:
+          return {
+            ...state,
+            userData: action.userData,
+            profileRequest: false,
+            profileFailed: false,
+            profileSuccess: action.success,
+          };
+        case PROFILE_FAILED:
+          return {
+            ...state,
+            profileRequest: false,
+            profileFailed: true,
+          };
+        case SET_AUTH_CHECKED:
+          return {
+            ...state,
+            isAuthChecked: action.payload,
+          };
+        case SET_USER: 
+        return {
+          ...state,
+          userData: action.payload,
+        }
       default:
         return state;
     }

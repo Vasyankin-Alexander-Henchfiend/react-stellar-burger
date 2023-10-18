@@ -4,31 +4,24 @@ import {
   EmailInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "./profile.module.css";
-import { useDispatch, useSelector } from "react-redux";
-import { profileRequest } from "../../services/actions/profile";
+import { useSelector } from "react-redux";
+
 
 const Profile = () => {
-  const accessToken = useSelector((store) => store.login.accessToken);
-  const { userName, userEmail } = useSelector((store) => store.profile);
-
-  const dispath = useDispatch();
+  const { userData } = useSelector((store) => store.user);
 
   const [form, setValue] = useState({
-    name: userName,
-    email: userEmail,
+    name: userData.name,
+    email: userData.email,
     password: "123456",
   });
   const onChange = (e) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  useEffect(() => {
-    dispath(profileRequest(accessToken));
-  }, [dispath, accessToken]);
-
-  return userName && userEmail ? (
+  return userData ? (
     <div className={styles[`profile-container`]}>
       <div className={styles[`link-container`]}>
         <NavLink className="mb-7 text text_type_main-medium">Профиль</NavLink>

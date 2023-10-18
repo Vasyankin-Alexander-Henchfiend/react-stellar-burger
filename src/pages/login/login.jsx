@@ -11,7 +11,7 @@ import { FORGOT_PASSWORD_PAGE, REGISTER_PAGE } from "../../utils/consts";
 import { loginRequest } from "../../services/actions/login";
 
 const Login = () => {
-  const loginRequestSuccess = useSelector((store) => store.login.loginSuccess)
+  const loginRequestSuccess = useSelector((store) => store.user.loginSuccess)
   const [form, setValue] = useState({ email: '', password: '' });
 
   const onChange = e => {
