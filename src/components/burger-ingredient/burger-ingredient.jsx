@@ -3,23 +3,16 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-ingredient.module.css";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import ingredientPropType from "../../utils/prop-types";
 import { useDrag } from "react-dnd";
 import { useMemo } from "react";
-import { SET_CURRENT_INGREDIENT } from "../../services/actions/ingredient-details";
 import { Link, useLocation } from "react-router-dom";
 
 const BurgerIngredient = ({ ingredient }) => {
   const { bun, ingredients } = useSelector(
     (store) => store.selectedItems.selectedItems
   );
-  const dispatch = useDispatch();
-
-  const openIngredientDetails = () => {
-    dispatch({ type: SET_CURRENT_INGREDIENT, currentIngredient: ingredient });
-  };
-  
 
   const [{ opacity }, dragRef] = useDrag({
     type: "ingredient",
@@ -49,13 +42,8 @@ const BurgerIngredient = ({ ingredient }) => {
       to={`/ingredients/${id}`}
       state={{ background: location }}
       className={styles.link}
-      >
-      <li
-        ref={dragRef}
-        style={{ opacity }}
-        className={styles.card}
-        onClick={() => openIngredientDetails()}
-      >
+    >
+      <li ref={dragRef} style={{ opacity }} className={styles.card}>
         {countNumder > 0 ? (
           <Counter
             count={countNumder}
