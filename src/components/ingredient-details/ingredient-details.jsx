@@ -5,8 +5,9 @@ import { useSelector } from "react-redux";
 const IngredientDetails = () => {
   const { id } = useParams();
   const data = useSelector((store) =>
-    store.items.items.find((item) => item._id === id)
+  store.items.items.find((item) => item._id === id)
   );
+
 
   return (
     <div className={styles[`ingredient-details`]}>

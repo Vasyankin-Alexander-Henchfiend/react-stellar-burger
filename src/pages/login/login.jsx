@@ -18,12 +18,12 @@ const Login = () => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const sendLoginData = e => {
     e.preventDefault();
-    dispath(loginRequest(form.email, form.password));
+    dispatch(loginRequest(form.email, form.password));
   }
 
   useEffect(() => {

@@ -3,6 +3,9 @@ import { BASE_URL, checkResponse } from "../../utils/consts";
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILED = "LOGIN_FAILED";
+export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
+export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
+export const LOGOUT_FAILED = "LOGOUT_FAILED";
 
 export function loginRequest(email, password) {
   return function (dispatch) {
@@ -14,13 +17,13 @@ export function loginRequest(email, password) {
       },
       body: JSON.stringify({
         email,
-        password
+        password,
       }),
     })
       .then((res) => checkResponse(res))
       .then((data) => {
-        localStorage.setItem('accessToken', data.accessToken)
-        localStorage.setItem('refreshToken', data.refreshToken)
+        localStorage.setItem("accessToken", data.accessToken);
+        localStorage.setItem("refreshToken", data.refreshToken);
         dispatch({
           type: LOGIN_SUCCESS,
           success: data.success,
@@ -30,6 +33,38 @@ export function loginRequest(email, password) {
       .catch((error) => {
         dispatch({
           type: LOGIN_FAILED,
+        });
+        console.log(error);
+      });
+  };
+}
+
+const refreshToken = localStorage.getItem('refreshToken');
+
+
+export function logoutRequest() {
+  return function (dispatch) {
+    dispatch({ type: LOGOUT_REQUEST });
+    fetch(BASE_URL + "/auth/logout", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify({'token': refreshToken}),
+    })
+      .then((res) => checkResponse(res))
+      .then((data) => {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        dispatch({
+          type: LOGOUT_SUCCESS,
+          success: data.success,
+          userData: null,
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          type: LOGOUT_FAILED,
         });
         console.log(error);
       });

@@ -2,12 +2,15 @@ import {
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
     LOGIN_FAILED,
+    LOGOUT_REQUEST,
+    LOGOUT_SUCCESS,
+    LOGOUT_FAILED,
   } from "../actions/login";
 
   import {
-    PROFILE_REQUEST,
-    PROFILE_SUCCESS,
-    PROFILE_FAILED,
+    PATCH_PROFILE_REQUEST,
+    PATCH_PROFILE_SUCCESS,
+    PATCH_PROFILE_FAILED,
   } from "../actions/profile";
 
   import {
@@ -23,9 +26,13 @@ import {
     loginRequest: false,
     loginFailed: false,
 
-    profileSuccess: false,
-    profileRequest: false,
-    profileFailed: false,
+    patchProfileSuccess: false,
+    patchProfileRequest: false,
+    patchProfileFailed: false,
+
+    logoutSuccess: false,
+    logoutRequest: false,
+    logoutFailed: false,
   };
   
   export const userDataReduser = (state = initialState, action) => {
@@ -49,24 +56,43 @@ import {
           loginRequest: false,
           loginFailed: true,
         };
-        case PROFILE_REQUEST:
+        case LOGOUT_REQUEST:
+        return {
+          ...state,
+          logoutRequest: true,
+        };
+      case LOGOUT_SUCCESS:
+        return {
+          ...state,
+          logoutSuccess: action.success,
+          userData: action.userData,
+          logoutRequest: false,
+          loginFailed: false,
+        };
+      case LOGOUT_FAILED:
+        return {
+          ...state,
+          logoutRequest: false,
+          logoutFailed: true,
+        };
+        case PATCH_PROFILE_REQUEST:
           return {
             ...state,
-            profileRequest: true,
+            patchProfileRequest: true,
           };
-        case PROFILE_SUCCESS:
+        case PATCH_PROFILE_SUCCESS:
           return {
             ...state,
+            patchProfileSuccess: action.success,
             userData: action.userData,
-            profileRequest: false,
-            profileFailed: false,
-            profileSuccess: action.success,
+            patchProfileRequest: false,
+            patchProfileFailed: false,
           };
-        case PROFILE_FAILED:
+        case PATCH_PROFILE_FAILED:
           return {
             ...state,
-            profileRequest: false,
-            profileFailed: true,
+            patchProfileRequest: false,
+            patchProfileFailed: true,
           };
         case SET_AUTH_CHECKED:
           return {
