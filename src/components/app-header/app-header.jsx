@@ -17,17 +17,17 @@ const AppHeader = () => {
       </div>
       <nav className={styles.items}>
         <div className={styles.container}>
-          <NavLink to={HOME} className={styles.link}>
+          <NavLink to={HOME} className={(({ isActive }) => !isActive ? styles[`link-inactive`] : styles.link)}>
             <BurgerIcon type="primary" />
             <span className="text text_type_main-default">Конструктор</span>
           </NavLink>
-          <NavLink to={HOME} className={styles[`link-inactive`]}>
-            <ListIcon type="secondary" />
+          <NavLink to='*' className={(({ isActive }) => !isActive ? styles[`link-inactive`] : styles.link)}>
+            <ListIcon type="primary" />
             <span className="text text_type_main-default">Лента заказов</span>
           </NavLink>
         </div>
-        <NavLink to={PROFILE_PAGE} className={styles[`link-inactive`]}>
-          <ProfileIcon type="secondary" />
+        <NavLink to={PROFILE_PAGE} className={(({ isActive }) => !isActive ? styles[`link-inactive`] : styles.link)}>
+          <ProfileIcon type="primary" />
           <span className="text text_type_main-default">Личный кабинет</span>
         </NavLink>
       </nav>

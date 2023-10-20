@@ -1,6 +1,6 @@
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import styles from "./profile.module.css";
-import { ORDERS_HISTORY_PAGE, PROFILE_PAGE } from "../../utils/consts";
+import { LOGIN_PAGE, ORDERS_HISTORY_PAGE, PROFILE_PAGE } from "../../utils/consts";
 import { useDispatch } from "react-redux";
 import { logoutRequest } from "../../services/actions/login";
 
@@ -16,12 +16,12 @@ const Profile = () => {
   return (
     <div className={styles[`profile-container`]}>
       <div className={styles[`link-container`]}>
-        <NavLink to={PROFILE_PAGE} className="mb-7 text text_type_main-medium">Профиль</NavLink>
-        <NavLink to={ORDERS_HISTORY_PAGE} className="mb-7 text text_type_main-medium">
+        <NavLink to={PROFILE_PAGE} className={(({ isActive }) => !isActive ? styles[`link-inactive`] : styles.link)}end>Профиль</NavLink>
+        <NavLink to={ORDERS_HISTORY_PAGE} className={(({ isActive }) => !isActive ? styles[`link-inactive`] : styles.link)}>
           История заказов
         </NavLink>
-        <NavLink className='mb-5 text text_type_main-medium' onClick={logout}>Выход</NavLink>
-        <p className="mt-20 text text_type_main-default">
+        <NavLink to={LOGIN_PAGE} className={(({ isActive }) => !isActive ? styles[`link-inactive`] : styles.link)} onClick={logout}>Выход</NavLink>
+        <p className={`mt-20 text text_type_main-default ${styles.discription}`}>
           В этом разделе вы можете изменить свои персональные данные
         </p>
       </div>

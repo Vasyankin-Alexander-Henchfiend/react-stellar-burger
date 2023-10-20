@@ -14,8 +14,20 @@
     align-items: flex-start;
 }
 
-.logout-button {
+.link {
+  composes: text text_type_main-medium from global;
+  text-decoration: none;
+  color: #F2F2F3;
+  cursor: pointer;
+
+  margin-bottom: 28px;
+}
+
+.link-inactive {
+    composes: link;
+    color:#8585AD;
+}
+
+.discription {
     color: #8585AD;
-    background: none;
-    border: none;
 }
