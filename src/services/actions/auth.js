@@ -15,14 +15,13 @@ export const setUser = (user) => ({
 
 function getUser() {
   return (dispatch) => {
-    return fetch(BASE_URL + "/auth/user", {
+    return fetchWithRefresh(BASE_URL + "/auth/user", {
       headers: {
         "Content-type": "application/json",
         authorization: localStorage.getItem("accessToken"),
       },
       body: JSON.stringify(),
     })
-      .then((res) => checkResponse(res))
       .then((data) => {
         dispatch(setUser(data.user));
       });
@@ -43,4 +42,37 @@ export const checkUserAuth = () => {
       dispatch(setAuthChecked(true));
     }
   };
+};
+
+export const refreshToken = () => {
+  return fetch(BASE_URL + '/auth/token', {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+    },
+    body: JSON.stringify({
+      token: localStorage.getItem("refreshToken"),
+    }),
+  }).then((res) => checkResponse(res));
+};
+
+export const fetchWithRefresh = async (url, options) => {
+  try {
+    const res = await fetch(url, options);
+    return await checkResponse(res);
+  } catch (err) {
+    if (err.message === "jwt expired") {
+      const refreshData = await refreshToken();
+      if (!refreshData.success) {
+        return Promise.reject(refreshData);
+      }
+      localStorage.setItem("refreshToken", refreshData.refreshToken);
+      localStorage.setItem("accessToken", refreshData.accessToken);
+      options.headers.authorization = refreshData.accessToken;
+      const res = await fetch(url, options);
+      return await checkResponse(res);
+    } else {
+      return Promise.reject(err);
+    }
+  }
 };
