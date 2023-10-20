@@ -33,7 +33,7 @@ const App = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const background = location.state && location.state.background;
-  const itemsRequest = useSelector((store) => store.items.itemsRequest);
+  const { itemsRequest, items } = useSelector((store) => store.items);
 
   const handleModalClose = () => {
     navigate(-1);
@@ -48,7 +48,7 @@ const App = () => {
     <div className={styles.app}>
       <pre className={styles.pre}>
         <AppHeader />
-        {!itemsRequest ? (
+        {!itemsRequest && items.length > 0 ? (
           <main>
             <Routes location={background || location}>
               <Route path={HOME} element={<HomePage />} />
@@ -76,7 +76,10 @@ const App = () => {
                 <Route path={ORDERS_HISTORY_PAGE} element={<OdersHistory />} />
               </Route>
               <Route path="*" element={<NotFound404 />} />
-              <Route path={INGREDIENT_DETAILS_PAGE} element={<IngredientDetails />} />
+              <Route
+                path={INGREDIENT_DETAILS_PAGE}
+                element={<IngredientDetails />}
+              />
             </Routes>
             {background && (
               <Routes>
