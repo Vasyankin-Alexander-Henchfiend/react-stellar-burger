@@ -39,18 +39,16 @@ export function loginRequest(email, password) {
   };
 }
 
-const refreshToken = localStorage.getItem('refreshToken');
-
-
 export function logoutRequest() {
+  const refreshToken = localStorage.getItem("refreshToken");
   return function (dispatch) {
     dispatch({ type: LOGOUT_REQUEST });
     fetch(BASE_URL + "/auth/logout", {
       method: "POST",
       headers: {
-        "Content-type": "application/json"
+        "Content-type": "application/json",
       },
-      body: JSON.stringify({'token': refreshToken}),
+      body: JSON.stringify({ token: refreshToken }),
     })
       .then((res) => checkResponse(res))
       .then((data) => {

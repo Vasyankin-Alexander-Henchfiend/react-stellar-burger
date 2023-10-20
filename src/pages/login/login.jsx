@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./login.module.css";
-import { FORGOT_PASSWORD_PAGE, REGISTER_PAGE } from "../../utils/consts";
+import { FORGOT_PASSWORD_PAGE, HOME, REGISTER_PAGE } from "../../utils/consts";
 import { loginRequest } from "../../services/actions/login";
 
 const Login = () => {
@@ -28,9 +28,9 @@ const Login = () => {
 
   useEffect(() => {
     return (
-      loginRequestSuccess ? navigate('/') : null
+      loginRequestSuccess ? navigate(HOME) : null
     )
-  })
+  }, [navigate, loginRequestSuccess])
 
   return (
     <div className={styles[`login-container`]}>

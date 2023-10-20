@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import styles from "./profile.module.css";
 import { ORDERS_HISTORY_PAGE, PROFILE_PAGE } from "../../utils/consts";
 import { useDispatch } from "react-redux";
@@ -11,6 +11,7 @@ const Profile = () => {
     e.preventDefault();
     dispatch(logoutRequest())
   }
+  
 
   return (
     <div className={styles[`profile-container`]}>
@@ -19,7 +20,7 @@ const Profile = () => {
         <NavLink to={ORDERS_HISTORY_PAGE} className="mb-7 text text_type_main-medium">
           История заказов
         </NavLink>
-        <button className={`mb-5 text text_type_main-medium ${styles[`logout-button`]}`} onClick={logout}>Выход</button>
+        <NavLink className='mb-5 text text_type_main-medium' onClick={logout}>Выход</NavLink>
         <p className="mt-20 text text_type_main-default">
           В этом разделе вы можете изменить свои персональные данные
         </p>

@@ -46,6 +46,7 @@ import {
         return {
           ...state,
           loginSuccess: action.success,
+          logoutSuccess: false,
           userData: action.userData,
           loginRequest: false,
           loginFailed: false,
@@ -65,6 +66,7 @@ import {
         return {
           ...state,
           logoutSuccess: action.success,
+          loginSuccess: false,
           userData: action.userData,
           logoutRequest: false,
           loginFailed: false,
