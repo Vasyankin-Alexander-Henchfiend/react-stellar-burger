@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./login.module.css";
 import { FORGOT_PASSWORD_PAGE, HOME, REGISTER_PAGE } from "../../utils/consts";
-import { loginRequest } from "../../services/actions/login";
+import { loginRequest } from "../../services/actions/user/login";
 
 const Login = () => {
   const loginRequestSuccess = useSelector((store) => store.user.loginSuccess)

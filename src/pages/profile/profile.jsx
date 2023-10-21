@@ -2,7 +2,7 @@ import { NavLink, Outlet } from "react-router-dom";
 import styles from "./profile.module.css";
 import { LOGIN_PAGE, ORDERS_HISTORY_PAGE, PROFILE_PAGE } from "../../utils/consts";
 import { useDispatch } from "react-redux";
-import { logoutRequest } from "../../services/actions/login";
+import { logoutRequest } from "../../services/actions/user/login";
 
 const Profile = () => {
 

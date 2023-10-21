@@ -1,4 +1,4 @@
-import { BASE_URL, checkResponse } from "../../utils/consts";
+import { BASE_URL, checkResponse } from "../../../utils/consts";
 
 export const SET_AUTH_CHECKED = "SET_AUTH_CHECKED";
 export const SET_USER = "SET_USER";

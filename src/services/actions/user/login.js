@@ -1,4 +1,4 @@
-import { BASE_URL, checkResponse } from "../../utils/consts";
+import { BASE_URL, checkResponse } from "../../../utils/consts";
 
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";

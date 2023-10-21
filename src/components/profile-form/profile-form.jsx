@@ -7,7 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { patchProfileRequest } from "../../services/actions/profile";
+import { patchProfileRequest } from "../../services/actions/user/profile";
 
 const ProfileForm = () => {
   const dispatch = useDispatch();
@@ -37,10 +37,14 @@ const ProfileForm = () => {
     });
   };
 
-  const patchProfile = e => {
+  const patchProfile = (e) => {
     e.preventDefault();
-    dispatch(patchProfileRequest(form.name, form.email));
-  }
+    dispatch(patchProfileRequest(form));
+    setValue({
+      ...form,
+      password: "123456",
+    });
+  };
 
   return (
     <div className={styles[`form-container`]}>

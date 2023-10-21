@@ -7,28 +7,23 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styles from "./register.module.css";
-import { LOGIN_PAGE } from "../../utils/consts";
+import { HOME, LOGIN_PAGE } from "../../utils/consts";
 import { useDispatch, useSelector } from "react-redux";
-import { registerRequest } from "../../services/actions/register";
+import { registerRequest } from "../../services/actions/user/register";
 
 const Register = () => {
   const sendRegisterDataSuccess = useSelector(
-    (store) => store.register.registerSuccess
+    (store) => store.user.registerSuccess
   );
 
-  const [nameValue, setNameValue] = useState("");
-  const onChangeName = (e) => {
-    setNameValue(e.target.value);
-  };
+  const [form, setValue] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
 
-  const [emailValue, setEmailValue] = useState("");
-  const onChangeEmail = (e) => {
-    setEmailValue(e.target.value);
-  };
-
-  const [passwordValue, setPasswordValue] = useState("");
-  const onChangePassword = (e) => {
-    setPasswordValue(e.target.value);
+  const onChange = (e) => {
+    setValue({ ...form, [e.target.name]: e.target.value });
   };
 
   const dispath = useDispatch();
@@ -36,11 +31,11 @@ const Register = () => {
 
   const sendRegisterData = (e) => {
     e.preventDefault();
-    dispath(registerRequest(emailValue, passwordValue, nameValue));
+    dispath(registerRequest(form));
   };
 
   useEffect(() => {
-    return sendRegisterDataSuccess ? navigate(LOGIN_PAGE) : null;
+    return sendRegisterDataSuccess ? navigate(HOME) : null;
   }, [navigate, sendRegisterDataSuccess]);
 
   return (
@@ -50,9 +45,9 @@ const Register = () => {
         <Input
           type={"text"}
           placeholder={"Имя"}
-          name={"Имя"}
-          value={nameValue}
-          onChange={onChangeName}
+          name={"name"}
+          value={form.name}
+          onChange={onChange}
           icon={undefined}
           onIconClick={undefined}
           error={false}
@@ -62,8 +57,8 @@ const Register = () => {
           required
         />
         <EmailInput
-          value={emailValue}
-          onChange={onChangeEmail}
+          value={form.email}
+          onChange={onChange}
           name={"email"}
           placeholder="E-mail"
           isIcon={false}
@@ -71,9 +66,9 @@ const Register = () => {
           required
         />
         <PasswordInput
-          value={passwordValue}
-          onChange={onChangePassword}
-          name={"Пароль"}
+          value={form.password}
+          onChange={onChange}
+          name={"password"}
           extraClass="mb-6"
           required
         />

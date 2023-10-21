@@ -25,7 +25,7 @@ import {
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
-import { checkUserAuth } from "../../services/actions/auth";
+import { checkUserAuth } from "../../services/actions/user/auth";
 import { getItems } from "../../services/actions/burger-ingredients";
 
 const App = () => {
