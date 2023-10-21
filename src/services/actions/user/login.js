@@ -7,18 +7,15 @@ export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 export const LOGOUT_FAILED = "LOGOUT_FAILED";
 
-export function loginRequest(email, password) {
-  return function (dispatch) {
+export function loginRequest(form) {
+  return (dispatch) => {
     dispatch({ type: LOGIN_REQUEST });
     fetch(BASE_URL + "/auth/login", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
+      body: JSON.stringify(form),
     })
       .then((res) => checkResponse(res))
       .then((data) => {
@@ -41,7 +38,7 @@ export function loginRequest(email, password) {
 
 export function logoutRequest() {
   const refreshToken = localStorage.getItem("refreshToken");
-  return function (dispatch) {
+  return (dispatch) => {
     dispatch({ type: LOGOUT_REQUEST });
     fetch(BASE_URL + "/auth/logout", {
       method: "POST",

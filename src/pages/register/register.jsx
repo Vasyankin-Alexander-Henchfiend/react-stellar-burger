@@ -41,7 +41,7 @@ const Register = () => {
   return (
     <div className={styles[`register-container`]}>
       <h2 className="text text_type_main-medium mb-6">Регистрация</h2>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={sendRegisterData}>
         <Input
           type={"text"}
           placeholder={"Имя"}
@@ -72,15 +72,14 @@ const Register = () => {
           extraClass="mb-6"
           required
         />
-      </form>
       <Button
-        htmlType="button"
+        htmlType="submit"
         type="primary"
         size="medium"
-        onClick={sendRegisterData}
       >
         Зарегистрироваться
       </Button>
+      </form>
       <p className="text text_type_main-default mb-4 mt-20">
         Уже зарегистрированы? <Link to={LOGIN_PAGE}>Войти</Link>
       </p>

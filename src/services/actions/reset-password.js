@@ -19,6 +19,7 @@ export function resetPasswordRequest(password, token) {
     })
       .then((res) => checkResponse(res))
       .then((data) => {
+        localStorage.removeItem('isForgotPasswordSuccess')
         dispatch({
           type: RESET_PASSWORD_SUCCESS,
           success: data.success,

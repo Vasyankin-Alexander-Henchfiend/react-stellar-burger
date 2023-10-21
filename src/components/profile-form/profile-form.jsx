@@ -48,7 +48,7 @@ const ProfileForm = () => {
 
   return (
     <div className={styles[`form-container`]}>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={patchProfile} onReset={cancelAllChanges}>
         <Input
           type={"text"}
           placeholder={"Имя"}
@@ -81,27 +81,25 @@ const ProfileForm = () => {
           extraClass="pb-6"
           required
         />
-      </form>
       <div>
         <Button
           hidden={!isInputChange ? true : false}
-          htmlType="button"
+          htmlType="reset"
           type="secondary"
           size="medium"
-          onClick={cancelAllChanges}
         >
           Отмена
         </Button>
         <Button
           hidden={!isInputChange ? true : false}
-          htmlType="button"
+          htmlType="submit"
           type="primary"
           size="medium"
-          onClick={patchProfile}
         >
           Сохранить
         </Button>
       </div>
+      </form>
     </div>
   );
 };

@@ -4,22 +4,20 @@ import { LOGIN_PAGE, HOME } from "../../utils/consts";
 
 const Protected = ({ onlyUnAuth = false, component }) => {
 
-  const isAuthChecked = useSelector((store) => store.user.isAuthChecked);
-  const user = useSelector((store) => store.user.userData);
+  const { isAuthChecked, userData } = useSelector((store) => store.user);
+
   const location = useLocation();
 
   if (!isAuthChecked) {
-
     return <p>Жди чел!</p>;
   }
 
-  if (onlyUnAuth && user) {
-
+  if (onlyUnAuth && userData) {
     const { from } = location.state || { from: { pathname: HOME } };
     return <Navigate to={from} />;
   }
 
-  if (!onlyUnAuth && !user) {
+  if (!onlyUnAuth && !userData) {
     return <Navigate to={LOGIN_PAGE} state={{ from: location }} />;
   }
 

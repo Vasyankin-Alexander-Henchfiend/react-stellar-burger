@@ -3,15 +3,14 @@ import {
   EmailInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import styles from "./login.module.css";
-import { FORGOT_PASSWORD_PAGE, HOME, REGISTER_PAGE } from "../../utils/consts";
+import { FORGOT_PASSWORD_PAGE, REGISTER_PAGE } from "../../utils/consts";
 import { loginRequest } from "../../services/actions/user/login";
 
 const Login = () => {
-  const loginRequestSuccess = useSelector((store) => store.user.loginSuccess)
   const [form, setValue] = useState({ email: '', password: '' });
 
   const onChange = e => {
@@ -19,23 +18,16 @@ const Login = () => {
   };
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const sendLoginData = e => {
     e.preventDefault();
-    dispatch(loginRequest(form.email, form.password));
+    dispatch(loginRequest(form));
   }
-
-  useEffect(() => {
-    return (
-      loginRequestSuccess ? navigate(HOME) : null
-    )
-  }, [navigate, loginRequestSuccess])
 
   return (
     <div className={styles[`login-container`]}>
       <h2 className="text text_type_main-medium mb-6">Вход</h2>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={sendLoginData}>
         <EmailInput
           onChange={onChange}
           value={form.email}
@@ -52,10 +44,10 @@ const Login = () => {
           extraClass="mb-6"
           required
         />
-      </form>
-      <Button htmlType="button" type="primary" size="medium" onClick={sendLoginData}>
+      <Button htmlType="submit" type="primary" size="medium">
         Войти
       </Button>
+      </form>
       <p className="text text_type_main-default mb-4 mt-20">
         Вы — новый пользователь?{" "}
         <Link to={REGISTER_PAGE}>Зарегистрироваться</Link>

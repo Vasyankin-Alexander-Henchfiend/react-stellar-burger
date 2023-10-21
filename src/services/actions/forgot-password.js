@@ -18,6 +18,7 @@ export function forgotPasswordRequest(email) {
     })
       .then((res) => checkResponse(res))
       .then((data) => {
+        localStorage.setItem('isForgotPasswordSuccess', true)
         dispatch({
           type: FORGOT_PASSWORD_SUCCESS,
           success: data.success,

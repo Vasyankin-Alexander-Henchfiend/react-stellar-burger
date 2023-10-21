@@ -13,31 +13,17 @@ export const setUser = (user) => ({
   payload: user,
 });
 
-function getUser() {
-  return (dispatch) => {
-    return fetchWithRefresh(BASE_URL + "/auth/user", {
-      headers: {
-        "Content-type": "application/json",
-        authorization: localStorage.getItem("accessToken"),
-      },
-      body: JSON.stringify(),
-    })
-      .then((data) => {
-        dispatch(setUser(data.user));
-      });
-  };
-}
 
 export const checkUserAuth = () => {
   return (dispatch) => {
     if (localStorage.getItem("accessToken")) {
       dispatch(getUser())
-        .catch(() => {
-          localStorage.removeItem("accessToken");
-          localStorage.removeItem("refreshToken");
-          dispatch(setUser(null));
-        })
-        .finally(() => dispatch(setAuthChecked(true)));
+      .catch(() => {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        dispatch(setUser(null));
+      })
+      .finally(() => dispatch(setAuthChecked(true)));
     } else {
       dispatch(setAuthChecked(true));
     }
@@ -55,6 +41,21 @@ export const refreshToken = () => {
     }),
   }).then((res) => checkResponse(res));
 };
+
+export function getUser() {
+  return (dispatch) => {
+    return fetchWithRefresh(BASE_URL + "/auth/user", {
+      headers: {
+        "Content-type": "application/json",
+        authorization: localStorage.getItem("accessToken"),
+      },
+      body: JSON.stringify(),
+    })
+      .then((data) => {
+        dispatch(setUser(data.user));
+      });
+  };
+}
 
 export const fetchWithRefresh = async (url, options) => {
   try {

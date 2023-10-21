@@ -6,7 +6,7 @@ export const PATCH_PROFILE_SUCCESS = "PATCH_PROFILE_SUCCESS";
 export const PATCH_PROFILE_FAILED = "PATCH_PROFILE_FAILED";
 
 export function patchProfileRequest(form) {
-  return function (dispatch) {
+  return (dispatch) => {
     dispatch({ type: PATCH_PROFILE_REQUEST });
     fetchWithRefresh(BASE_URL + "/auth/user", {
       method: "PATCH",

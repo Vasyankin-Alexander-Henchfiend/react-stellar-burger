@@ -3,10 +3,10 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styles from "./reset-password.module.css";
-import { LOGIN_PAGE } from "../../utils/consts";
+import { HOME, LOGIN_PAGE } from "../../utils/consts";
 import { useDispatch, useSelector } from "react-redux";
 import { resetPasswordRequest } from "../../services/actions/reset-password";
 
@@ -31,10 +31,12 @@ const ResetPassword = () => {
     return resetPasswordSuccess ? navigate(LOGIN_PAGE) : null;
   }, [navigate, resetPasswordSuccess]);
 
-  return (
+  if(!localStorage.getItem('isForgotPasswordSuccess')) {
+    return <Navigate to={HOME} />
+  } else return (
     <div className={styles[`reset-password-container`]}>
       <h2 className="text text_type_main-medium mb-6">Восстановление пароля</h2>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={sendNewPasswordData}>
         <PasswordInput
           onChange={onChange}
           value={form.password}
@@ -57,15 +59,14 @@ const ResetPassword = () => {
           extraClass="mb-6"
           required
         />
-      </form>
       <Button
-        htmlType="button"
+        htmlType="submit"
         type="primary"
         size="medium"
-        onClick={sendNewPasswordData}
       >
         Сохранить
       </Button>
+      </form>
       <p className="text text_type_main-default mt-20">
         Вспомнили пароль? <Link to={LOGIN_PAGE}>Войти</Link>
       </p>

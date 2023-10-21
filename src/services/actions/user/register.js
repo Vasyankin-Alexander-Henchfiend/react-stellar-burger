@@ -5,7 +5,7 @@ export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAILED = "REGISTER_FAILED";
 
 export function registerRequest(form) {
-  return function (dispatch) {
+  return (dispatch) => {
     dispatch({ type: REGISTER_REQUEST });
     fetch(BASE_URL + "/auth/register", {
       method: "POST",
