@@ -3,21 +3,16 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-ingredient.module.css";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import ingredientPropType from "../../utils/prop-types";
 import { useDrag } from "react-dnd";
 import { useMemo } from "react";
-import { SET_CURRENT_INGREDIENT } from "../../services/actions/ingredient-details";
+import { Link, useLocation } from "react-router-dom";
 
 const BurgerIngredient = ({ ingredient }) => {
   const { bun, ingredients } = useSelector(
     (store) => store.selectedItems.selectedItems
   );
-  const dispatch = useDispatch();
-
-  const openIngredientDetails = () => {
-    dispatch({ type: SET_CURRENT_INGREDIENT, currentIngredient: ingredient });
-  };
 
   const [{ opacity }, dragRef] = useDrag({
     type: "ingredient",
@@ -38,35 +33,40 @@ const BurgerIngredient = ({ ingredient }) => {
     } else return 0;
   }, [bun, ingredients, ingredient]);
 
+  const location = useLocation();
+  const id = ingredient[`_id`];
+
   return (
-    <li
-      ref={dragRef}
-      style={{ opacity }}
-      className={styles.card}
-      onClick={() => openIngredientDetails()}
+    <Link
+      key={id}
+      to={`/ingredients/${id}`}
+      state={{ background: location }}
+      className={styles.link}
     >
-      {countNumder > 0 ? (
-        <Counter
-          count={countNumder}
-          size="default"
-          extraClass={styles.counter}
+      <li ref={dragRef} style={{ opacity }} className={styles.card}>
+        {countNumder > 0 ? (
+          <Counter
+            count={countNumder}
+            size="default"
+            extraClass={styles.counter}
+          />
+        ) : null}
+        <img
+          src={ingredient.image}
+          alt={ingredient.name}
+          className={styles.image}
         />
-      ) : null}
-      <img
-        src={ingredient.image}
-        alt={ingredient.name}
-        className={styles.image}
-      />
-      <div className={styles[`price-container`]}>
-        <span className="text text_type_digits-default">
-          {ingredient.price}
-        </span>
-        <CurrencyIcon type="primary" />
-      </div>
-      <h3 className={`${styles.name} text text_type_main-default`}>
-        {ingredient.name}
-      </h3>
-    </li>
+        <div className={styles[`price-container`]}>
+          <span className="text text_type_digits-default">
+            {ingredient.price}
+          </span>
+          <CurrencyIcon type="primary" />
+        </div>
+        <h3 className={`${styles.name} text text_type_main-default`}>
+          {ingredient.name}
+        </h3>
+      </li>
+    </Link>
   );
 };
 

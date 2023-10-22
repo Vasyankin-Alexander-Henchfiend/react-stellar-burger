@@ -1,30 +1,17 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
-import Modal from "../modal/modal";
-import IngredientDetails from "../ingredient-details/ingredient-details";
 import styles from "./burger-ingredients.module.css";
 import { useState, useMemo, useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getItems } from "../../services/actions/burger-ingredients";
-import { DELETE_CURRENT_INGREDIENT } from "../../services/actions/ingredient-details";
+import { useSelector } from "react-redux";
 
 const BurgerIngredients = () => {
   const data = useSelector((store) => store.items.items);
-  const currentIngredient = useSelector(
-    (store) => store.currentIngredient.currentIngredient
-  );
 
   const sausesRef = useRef();
   const mainsRef = useRef();
   const ingredientsListRef = useRef();
 
   const [current, setCurrent] = useState("bun");
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getItems());
-  }, [dispatch]);
 
   useEffect(() => {
     ingredientsListRef.current.addEventListener("scroll", () => {
@@ -97,16 +84,6 @@ const BurgerIngredients = () => {
         </h2>
         <ul className={styles[`grid-container`]}>{mains}</ul>
       </div>
-      {currentIngredient && (
-        <Modal
-          title="Детали ингредиента"
-          onClose={() => {
-            dispatch({ type: DELETE_CURRENT_INGREDIENT });
-          }}
-        >
-          <IngredientDetails />
-        </Modal>
-      )}
     </section>
   );
 };

@@ -1,0 +1,15 @@
+.link {
+    color: rebeccapurple;
+    text-decoration: inherit;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.text {
+    text-align: center;
+}

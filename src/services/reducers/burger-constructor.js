@@ -1,4 +1,4 @@
-import { GET_ITEM, DELETE_ITEM } from "../actions/burger-constructor";
+import { GET_ITEM, DELETE_ITEM, REMOVE_ALL } from "../actions/burger-constructor";
 
 const initialState = {
   selectedItems: {
@@ -48,6 +48,14 @@ export const burgerConstructorReducer = (state = initialState, action) => {
           ),
         },
       };
+    case REMOVE_ALL:
+      return {
+        ...state,
+        selectedItems: {
+          bun: null,
+          ingredients: [],
+        }
+      }
     default:
       return state;
   }

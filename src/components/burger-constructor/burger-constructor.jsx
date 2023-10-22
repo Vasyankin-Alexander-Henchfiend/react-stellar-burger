@@ -1,3 +1,7 @@
+import styles from "./burger-constructor.module.css";
+import { useCallback, useMemo } from "react";
+import { useDrop } from "react-dnd";
+import { useNavigate } from "react-router-dom";
 import {
   CurrencyIcon,
   Button,
@@ -5,21 +9,24 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import styles from "./burger-constructor.module.css";
-import { useCallback, useMemo } from "react";
 import { getOrderId } from "../../services/actions/order-details";
 import { DELETE_ORDER_ID } from "../../services/actions/order-details";
 import { useDispatch, useSelector } from "react-redux";
-import { addIngredient } from "../../services/actions/burger-constructor";
-import { useDrop } from "react-dnd";
+import {
+  REMOVE_ALL,
+  addIngredient,
+} from "../../services/actions/burger-constructor";
 import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
+import { LOGIN_PAGE } from "../../utils/consts";
 
 const BurgerConstructor = () => {
   const { bun, ingredients } = useSelector(
     (store) => store.selectedItems.selectedItems
   );
   const orderId = useSelector((store) => store.orderID.number);
+  const { userData } = useSelector((store) => store.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [{ isHover }, dropTarget] = useDrop({
     accept: "ingredient",
@@ -44,8 +51,13 @@ const BurgerConstructor = () => {
   }, [bun, ingredients]);
 
   const placeAnOrder = useCallback(() => {
-    dispatch(getOrderId(bun, ingredients));
-  }, [dispatch, bun, ingredients]);
+    if (!userData) {
+      return navigate(LOGIN_PAGE);
+    } else {
+      dispatch(getOrderId(bun, ingredients));
+      dispatch({ type: REMOVE_ALL });
+    }
+  }, [navigate, dispatch, bun, ingredients, userData]);
 
   return (
     <section className={`mt-15 ${styles[`constructor-container`]}`}>
@@ -96,6 +108,7 @@ const BurgerConstructor = () => {
           <CurrencyIcon />
         </div>
         <Button
+          disabled={bun ? false : true}
           htmlType="button"
           type="primary"
           size="large"
