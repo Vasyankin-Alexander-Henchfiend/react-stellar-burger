@@ -12,6 +12,7 @@ import { OnlyAuth, OnlyUnAuth } from "../protected-route/protected-route";
 import NotFound404 from "../../pages/not-found-404/not-found-404";
 import OdersHistory from "../oders-history/orders-history";
 import ProfileForm from "../profile-form/profile-form";
+import Feed from "../../pages/feed/feed";
 import {
   FORGOT_PASSWORD_PAGE,
   HOME,
@@ -21,6 +22,7 @@ import {
   PROFILE_PAGE,
   REGISTER_PAGE,
   RESET_PASSWORD_PAGE,
+  FEED_PAGE,
 } from "../../utils/consts";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -68,6 +70,7 @@ const App = () => {
                 path={RESET_PASSWORD_PAGE}
                 element={<OnlyUnAuth component={<ResetPassword />} />}
               />
+              <Route path={FEED_PAGE} element={<Feed />} />
               <Route
                 path={PROFILE_PAGE}
                 element={<OnlyAuth component={<Profile />} />}

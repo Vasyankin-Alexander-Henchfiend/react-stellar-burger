@@ -7,6 +7,7 @@ export const PROFILE_PAGE = '/profile';
 export const ORDERS_HISTORY_PAGE = '/profile/orders';
 export const INGREDIENT_DETAILS_PAGE = '/ingredients/:id'
 export const REGISTER_PAGE = '/register';
+export const FEED_PAGE = '/feed';
 
 export const checkResponse = (res) => {
   if (res.ok) {
