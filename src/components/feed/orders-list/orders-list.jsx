@@ -1,35 +1,21 @@
-import styles from './orders-list.module.css'
-import {
-    CurrencyIcon,
-    FormattedDate,
-  } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from 'react-redux';
+import styles from "./orders-list.module.css";
+import { useMemo } from "react";
+import OrderCard from "../order-card/order-card";
 
 const OrdersList = ({ data }) => {
-    const { orders=[] } = data;
-    const { items } = useSelector((store) => store.items);
+  const { orders = [] } = data;
 
+  const ordersList = useMemo(() => {
+    return orders.map((order) => {
+      return <OrderCard order={order} />;
+    });
+  }, [orders]);
 
-    return ( 
-        <section>
-            <ul>
-              <li>
-                <div>
-                  <div>
-                    <span></span>
-                    <span></span>
-                  </div>
-                  <h2>Content</h2>
-                  <div>
-                    <div></div>
-                    <span></span>
-                    <CurrencyIcon type="primary" />
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </section>
-     );
-}
- 
+  return (
+    <section>
+      <ul className={styles.list}>{ordersList}</ul>
+    </section>
+  );
+};
+
 export default OrdersList;

@@ -3,6 +3,7 @@ export const FEED_WS_CONNECTION_SUCCESS = "FEED_WS_CONNECTION_SUCCESS";
 export const FEED_WS_CONNECTION_ERROR = "FEED_WS_CONNECTION_ERROR";
 export const FEED_WS_CONNECTION_CLOSED = "FEED_WS_CONNECTION_CLOSED";
 export const FEED_WS_GET_DATA = "FEED_WS_GET_DATA";
+export const FEED_WS_CONNECTION_FINISHED = 'FEED_WS_CONNECTION_FINISHED'
 
 export const wsConnectionSuccess = () => {
   return {
@@ -19,6 +20,12 @@ export const wsConnectionError = () => {
 export const wsConnectionClosed = () => {
   return {
     type: FEED_WS_CONNECTION_CLOSED,
+  };
+};
+
+export const wsConnectionFinished = () => {
+  return {
+    type: FEED_WS_CONNECTION_FINISHED,
   };
 };
 

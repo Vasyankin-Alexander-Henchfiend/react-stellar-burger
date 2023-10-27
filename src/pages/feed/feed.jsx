@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   FEED_WS_CONNECTION_START,
-  wsConnectionClosed,
+  wsConnectionFinished,
 } from "../../services/actions/feed";
 import OrdersStatus from "../../components/feed/orders-status/orders-status";
 import OrdersList from "../../components/feed/orders-list/orders-list";
@@ -12,10 +12,11 @@ import OrdersList from "../../components/feed/orders-list/orders-list";
 const Feed = () => {
   const dispatch = useDispatch();
   const { data } = useSelector((store) => store.feed);
+  
 
   useEffect(() => {
     dispatch({ type: FEED_WS_CONNECTION_START });
-    return () => dispatch(wsConnectionClosed());
+    return () => dispatch(wsConnectionFinished());
   }, [dispatch]);
 
   if (!data) {

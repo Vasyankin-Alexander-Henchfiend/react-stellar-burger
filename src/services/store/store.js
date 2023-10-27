@@ -7,7 +7,7 @@ import thunk from "redux-thunk";
 import { resetPasswordReduser } from "../reducers/reset-password";
 import { userDataReduser } from "../reducers/user";
 import { socketMiddleware } from "../middleware/wsMiddleware";
-import { FEED_WS_CONNECTION_CLOSED, FEED_WS_CONNECTION_ERROR, FEED_WS_CONNECTION_START, FEED_WS_CONNECTION_SUCCESS, FEED_WS_GET_DATA } from "../actions/feed";
+import { FEED_WS_CONNECTION_CLOSED, FEED_WS_CONNECTION_ERROR, FEED_WS_CONNECTION_START, FEED_WS_CONNECTION_SUCCESS, FEED_WS_GET_DATA, FEED_WS_CONNECTION_FINISHED } from "../actions/feed";
 import { feedReducer } from "../reducers/feed";
 
 const composeEnhancers =
@@ -21,7 +21,8 @@ const wsActions = {
   onOpen: FEED_WS_CONNECTION_SUCCESS,
   onClose: FEED_WS_CONNECTION_CLOSED,
   onError: FEED_WS_CONNECTION_ERROR,
-  onMessage: FEED_WS_GET_DATA
+  onMessage: FEED_WS_GET_DATA,
+  wsClose: FEED_WS_CONNECTION_FINISHED
 }
 
 const enhancer = composeEnhancers(applyMiddleware(thunk, socketMiddleware(wsUrl, wsActions)));
