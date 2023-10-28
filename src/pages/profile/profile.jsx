@@ -14,7 +14,7 @@ const Profile = () => {
   
 
   return (
-    <div className={styles[`profile-container`]}>
+    <section className={styles[`profile-container`]}>
       <div className={styles[`link-container`]}>
         <NavLink to={PROFILE_PAGE} className={(({ isActive }) => !isActive ? styles[`link-inactive`] : styles.link)}end>Профиль</NavLink>
         <NavLink to={ORDERS_HISTORY_PAGE} className={(({ isActive }) => !isActive ? styles[`link-inactive`] : styles.link)}>
@@ -26,7 +26,7 @@ const Profile = () => {
         </p>
       </div>
       <Outlet />
-    </div>
+    </section>
   );
 };
 

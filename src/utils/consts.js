@@ -9,6 +9,13 @@ export const INGREDIENT_DETAILS_PAGE = '/ingredients/:id'
 export const REGISTER_PAGE = '/register';
 export const FEED_PAGE = '/feed';
 
+export const cleanTokenHeader = () => {
+  const token = localStorage.getItem('accessToken')
+  if (token && token.indexOf("Bearer") === 0) {
+    return token.split("Bearer ")[1];
+  }
+};
+
 export const checkResponse = (res) => {
   if (res.ok) {
     return res.json();

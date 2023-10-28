@@ -5,31 +5,31 @@ export const FEED_WS_CONNECTION_CLOSED = "FEED_WS_CONNECTION_CLOSED";
 export const FEED_WS_GET_DATA = "FEED_WS_GET_DATA";
 export const FEED_WS_CONNECTION_FINISHED = 'FEED_WS_CONNECTION_FINISHED'
 
-export const wsConnectionSuccess = () => {
+export const wsFeedConnectionSuccess = () => {
   return {
     type: FEED_WS_CONNECTION_SUCCESS,
   };
 };
 
-export const wsConnectionError = () => {
+export const wsFeedConnectionError = () => {
   return {
     type: FEED_WS_CONNECTION_ERROR,
   };
 };
 
-export const wsConnectionClosed = () => {
+export const wsFeedConnectionClosed = () => {
   return {
     type: FEED_WS_CONNECTION_CLOSED,
   };
 };
 
-export const wsConnectionFinished = () => {
+export const wsFeedConnectionFinished = () => {
   return {
     type: FEED_WS_CONNECTION_FINISHED,
   };
 };
 
-export const wsGetData = (message) => {
+export const wsFeedGetData = (message) => {
   return {
     type: FEED_WS_GET_DATA,
     payload: message,

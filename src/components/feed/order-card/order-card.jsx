@@ -7,7 +7,7 @@ import { useMemo } from "react";
 import { useSelector } from "react-redux";
 
 const OrderCard = ({ order }) => {
-  const { number, createdAt, name, ingredients } = order;
+  const { number, createdAt, name, ingredients, status } = order;
   const { items } = useSelector((store) => store.items);
   const filtredIngredients = useMemo(() => {
     return ingredients
@@ -28,26 +28,26 @@ const OrderCard = ({ order }) => {
     return filtredIngredients.map((item) => {
       return (<img className={styles.image} src={item.image} alt={item.name}/>)
     })
-  })
+  }, [filtredIngredients])
   
 
   return (
     <li className={styles.card}>
       <div>
         <div className={styles[`number-date-wrapper`]}>
-          <span className={styles.number}>#{number}</span>
-          <span className={styles.date}>{createdAt}</span>
+          <p className={styles.number}>#{number}</p>
+          <p className={styles.date}>{createdAt}</p>
         </div>
         <h2 className={styles.name}>{name}</h2>
         <div>
           <div>
             {ingredientsImages}
           </div>
-          <span className={styles.price}>{totalPrice}</span>
+          <p className={styles.price}>{totalPrice}</p>
           <CurrencyIcon type="primary" />
         </div>
       </div>
-    </li>
+    </li> 
   );
 };
 

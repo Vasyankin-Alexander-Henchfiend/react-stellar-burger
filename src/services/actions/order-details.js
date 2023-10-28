@@ -12,6 +12,7 @@ export function getOrderId(bun, ingredients) {
       method: "POST",
       headers: {
         "Content-type": "application/json",
+        authorization: localStorage.getItem("accessToken"),
       },
       body: JSON.stringify({
         ingredients: ingredientsId(bun, ingredients),
