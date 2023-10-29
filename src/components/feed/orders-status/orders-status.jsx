@@ -34,11 +34,11 @@ const OrdersStatus = ({ data }) => {
       </div>
       <div className={styles[`total-number-wrapper`]}>
         <p className="text text_type_main-medium">Выполнено за все время:</p>
-        <p className="text text_type_digits-large">{total}</p>
+        <p className={`text text_type_digits-large ${styles[`orders-sum`]}`}>{total}</p>
       </div>
       <div className={styles[`total-number-wrapper`]}>
         <p className="text text_type_main-medium">Выполнено за сегодня:</p>
-        <p className="text text_type_digits-large">{totalToday}</p>
+        <p className={`text text_type_digits-large ${styles[`orders-sum`]}`}>{totalToday}</p>
       </div>
     </section>
   );

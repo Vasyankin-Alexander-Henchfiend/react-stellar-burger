@@ -1,6 +1,6 @@
 import styles from "./orders-list.module.css";
 import { useMemo } from "react";
-import OrderCard from "../order-card/order-card";
+import OrderCard from "../../order-card/order-card";
 
 const OrdersList = ({ data }) => {
   const { orders = [] } = data;

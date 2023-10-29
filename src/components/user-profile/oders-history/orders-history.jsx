@@ -5,7 +5,7 @@ import {
 } from "../../../services/actions/orders-history";
 import styles from "./orders-history.module.css";
 import { useEffect, useMemo } from "react";
-import OrderCard from "../../feed/order-card/order-card";
+import OrderCard from "../../order-card/order-card";
 import Preloader from "../../preloader/preloader";
 
 const OdersHistory = () => {

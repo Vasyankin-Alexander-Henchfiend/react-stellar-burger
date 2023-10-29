@@ -1,5 +1,5 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import BurgerIngredient from "../burger-ingredient/burger-ingredient";
+import BurgerIngredient from "./burger-ingredient/burger-ingredient";
 import styles from "./burger-ingredients.module.css";
 import { useState, useMemo, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";

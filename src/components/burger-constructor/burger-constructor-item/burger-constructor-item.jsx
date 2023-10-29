@@ -4,7 +4,7 @@ import {
   } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './burger-constructor-item.module.css';
 import { useRef } from 'react'
-import { DELETE_ITEM, GET_ITEM } from '../../services/actions/burger-constructor';
+import { DELETE_ITEM, GET_ITEM } from '../../../services/actions/burger-constructor';
 import { useDispatch, useSelector } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
 

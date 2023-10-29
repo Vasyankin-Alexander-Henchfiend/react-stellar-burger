@@ -16,7 +16,7 @@ import {
   REMOVE_ALL,
   addIngredient,
 } from "../../services/actions/burger-constructor";
-import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
+import BurgerConstructorItem from "./burger-constructor-item/burger-constructor-item";
 import { LOGIN_PAGE } from "../../utils/consts";
 
 const BurgerConstructor = () => {
