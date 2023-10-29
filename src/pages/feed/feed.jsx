@@ -8,6 +8,7 @@ import {
 } from "../../services/actions/feed";
 import OrdersStatus from "../../components/feed/orders-status/orders-status";
 import OrdersList from "../../components/feed/orders-list/orders-list";
+import Preloader from "../../components/preloader/preloader";
 
 const Feed = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const Feed = () => {
   }, [dispatch]);
 
   if (!data) {
-    return <div>Ждите!</div>;
+    return <Preloader />;
   }
 
   return (

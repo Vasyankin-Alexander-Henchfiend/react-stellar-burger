@@ -25,8 +25,16 @@ const OrderCard = ({ order }) => {
   }, [filtredIngredients]);
 
   const ingredientsImages = useMemo(() => {
-    return filtredIngredients.map((item) => {
-      return <img className={styles.image} src={item.image} alt={item.name} />;
+    return filtredIngredients.map((item, index) => {
+      return (
+        <li key={`${item._id} + ${index}`} className={styles[`image-wrapper`]} style={{ zIndex: 1000 - index }}>
+          <img
+            className={styles.image}
+            src={item.image}
+            alt={item.name}
+          />
+        </li>
+      );
     });
   }, [filtredIngredients]);
 
@@ -39,12 +47,12 @@ const OrderCard = ({ order }) => {
         <p
           className={`text text_type_main-default text_color_inactive ${styles.date}`}
         >
-          {createdAt}
+          <FormattedDate date={new Date(createdAt)} />
         </p>
       </div>
       <h2 className={`text text_type_main-medium ${styles.name}`}>{name}</h2>
       <div className={styles[`image-price-container`]}>
-        <div>{ingredientsImages}</div>
+        <ul className={styles[`image-list`]}>{ingredientsImages}</ul>
         <div className={styles[`price-wrapper`]}>
           <p className={`text text_type_digits-default ${styles.price}`}>
             {totalPrice}

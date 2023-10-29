@@ -6,14 +6,14 @@ const OrdersList = ({ data }) => {
   const { orders = [] } = data;
 
   const ordersList = useMemo(() => {
-    return orders.map((order) => {
-      return <OrderCard order={order} />;
+    return orders.map((order, index) => {
+      return <OrderCard key={`${order._id} + ${index}`} order={order} />;
     });
   }, [orders]);
 
   return (
-    <section>
-      <ul className={styles.list}>{ordersList}</ul>
+    <section className={styles[`list-wrapper`]}>
+      <ul className={`${styles.list} custom-scroll`}>{ordersList}</ul>
     </section>
   );
 };

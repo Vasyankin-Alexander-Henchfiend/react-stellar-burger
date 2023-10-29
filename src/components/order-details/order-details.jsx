@@ -1,6 +1,7 @@
 import styles from "./order-details.module.css";
 import done from "../../images/done.png";
 import { useSelector } from "react-redux";
+import Preloader from "../preloader/preloader";
 
 const OrderDetails = () => {
   const { orderNumber, orderNumberRequestSuccess } = useSelector(
@@ -8,7 +9,7 @@ const OrderDetails = () => {
   );
 
   if (!orderNumberRequestSuccess) {
-    return <div>Ждите!</div>;
+    return <Preloader/>;
   }
   return (
     <div className={styles[`order-details`]}>

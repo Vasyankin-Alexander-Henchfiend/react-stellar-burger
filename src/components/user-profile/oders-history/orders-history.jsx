@@ -6,6 +6,7 @@ import {
 import styles from "./orders-history.module.css";
 import { useEffect, useMemo } from "react";
 import OrderCard from "../../feed/order-card/order-card";
+import Preloader from "../../preloader/preloader";
 
 const OdersHistory = () => {
   const dispatch = useDispatch();
@@ -13,8 +14,8 @@ const OdersHistory = () => {
   const orders = data?.orders;
 
   const ordersList = useMemo(() => {
-    return orders?.map((order) => {
-      return <OrderCard order={order} />;
+    return orders?.map((order, index) => {
+      return <OrderCard key={`${order._id} + ${index}`} order={order} />;
     });
   }, [orders]);
 
@@ -24,7 +25,7 @@ const OdersHistory = () => {
   }, [dispatch]);
 
   if (!data || !Array.isArray(data.orders)) {
-    return <div>Ждите!</div>;
+    return <Preloader />
   }
   return (
     <section className={styles[`list-container`]}>

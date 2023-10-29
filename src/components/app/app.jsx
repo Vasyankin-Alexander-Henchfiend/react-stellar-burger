@@ -29,6 +29,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { checkUserAuth } from "../../services/actions/user/auth";
 import { getItems } from "../../services/actions/burger-ingredients";
+import Preloader from "../preloader/preloader";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -101,9 +102,7 @@ const App = () => {
             )}
           </main>
         ) : (
-          <p className={`text_type_main-large ${styles.preloader}`}>
-            Ждем загрузки...
-          </p>
+          <Preloader />
         )}
       </pre>
     </div>

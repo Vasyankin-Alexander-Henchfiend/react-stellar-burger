@@ -8,7 +8,7 @@ const OrdersStatus = ({ data }) => {
     return orders
       .filter(({ status }) => status === "done")
       .map((item) => {
-        return <li key={item._id} className={styles[`order-number-complite`]}>{item.number}</li>;
+        return <li key={item._id} className={`text text_type_digits-default ${styles[`order-number-complite`]}`}>{item.number}</li>;
       });
   }, [orders]);
 
@@ -16,7 +16,7 @@ const OrdersStatus = ({ data }) => {
     return orders
       .filter(({ status }) => status !== "done")
       .map((item) => {
-        return <li key={item._id} className={''}>{item.number}</li>;
+        return <li key={item._id} className='text text_type_digits-default'>{item.number}</li>;
       });
   }, [orders]);
 
