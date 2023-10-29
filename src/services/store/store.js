@@ -25,7 +25,7 @@ import {
   ORDERS_HISTORY_WS_CONNECTION_FINISHED,
 } from "../actions/orders-history";
 import { ordersHistoryReducer } from "../reducers/orders-history";
-import { cleanTokenHeader } from "../../utils/consts";
+
 
 const composeEnhancers =
   typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -43,8 +43,8 @@ const feedWsActions = {
 };
 
 
-const cleanAccessToken = cleanTokenHeader();
-const ordersHistoryWsUrl = "wss://norma.nomoreparties.space/orders" + `?token=${cleanAccessToken}`;
+
+const ordersHistoryWsUrl = "wss://norma.nomoreparties.space/orders";
 const ordersHistoryWsActions = {
   wsInit: ORDERS_HISTORY_WS_CONNECTION_START,
   onOpen: ORDERS_HISTORY_WS_CONNECTION_SUCCESS,

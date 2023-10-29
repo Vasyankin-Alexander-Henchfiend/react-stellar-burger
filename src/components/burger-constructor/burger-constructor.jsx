@@ -23,7 +23,9 @@ const BurgerConstructor = () => {
   const { bun, ingredients } = useSelector(
     (store) => store.selectedItems.selectedItems
   );
-  const orderId = useSelector((store) => store.orderID.number);
+  const { orderNumberRequest, orderNumberRequestSuccess } = useSelector(
+    (store) => store.orderID
+  );
   const { userData } = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -117,7 +119,7 @@ const BurgerConstructor = () => {
           Оформить заказ
         </Button>
       </div>
-      {orderId && (
+      {(orderNumberRequest || orderNumberRequestSuccess) && (
         <Modal
           title=""
           onClose={() => {

@@ -26,28 +26,33 @@ const OrderCard = ({ order }) => {
 
   const ingredientsImages = useMemo(() => {
     return filtredIngredients.map((item) => {
-      return (<img className={styles.image} src={item.image} alt={item.name}/>)
-    })
-  }, [filtredIngredients])
-  
+      return <img className={styles.image} src={item.image} alt={item.name} />;
+    });
+  }, [filtredIngredients]);
 
   return (
     <li className={styles.card}>
-      <div>
-        <div className={styles[`number-date-wrapper`]}>
-          <p className={styles.number}>#{number}</p>
-          <p className={styles.date}>{createdAt}</p>
-        </div>
-        <h2 className={styles.name}>{name}</h2>
-        <div>
-          <div>
-            {ingredientsImages}
-          </div>
-          <p className={styles.price}>{totalPrice}</p>
+      <div className={styles[`number-date-wrapper`]}>
+        <p className={`text text_type_main-default ${styles.number}`}>
+          #{number}
+        </p>
+        <p
+          className={`text text_type_main-default text_color_inactive ${styles.date}`}
+        >
+          {createdAt}
+        </p>
+      </div>
+      <h2 className={`text text_type_main-medium ${styles.name}`}>{name}</h2>
+      <div className={styles[`image-price-container`]}>
+        <div>{ingredientsImages}</div>
+        <div className={styles[`price-wrapper`]}>
+          <p className={`text text_type_digits-default ${styles.price}`}>
+            {totalPrice}
+          </p>
           <CurrencyIcon type="primary" />
         </div>
       </div>
-    </li> 
+    </li>
   );
 };
 

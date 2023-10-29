@@ -3,10 +3,14 @@ export const socketMiddleware = (wsUrl, wsActions) => {
     let socket = null;
     return (next) => (action) => {
       const { dispatch } = store;
-      const { type } = action;
-      const { wsInit, onOpen, onError, onMessage, onClose, wsClose } = wsActions;
+      const { type, accessToken } = action;
+      const { wsInit, onOpen, onError, onMessage, onClose, wsClose } =
+        wsActions;
       if (type === wsInit) {
         socket = new WebSocket(wsUrl);
+      }
+      if (type === wsInit && accessToken) {
+        socket = new WebSocket(`${wsUrl}?token=${accessToken}`);
       }
       if (socket) {
         socket.onopen = (e) => {
@@ -25,9 +29,9 @@ export const socketMiddleware = (wsUrl, wsActions) => {
         socket.onclose = (e) => {
           dispatch({ type: onClose, payload: e });
         };
-      if (type === wsClose) {
-        socket.close(1000, "работа закончена")
-      }
+        if (type === wsClose) {
+          socket.close(1000, "работа закончена");
+        }
       }
       next(action);
     };

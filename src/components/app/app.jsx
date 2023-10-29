@@ -10,8 +10,8 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import { OnlyAuth, OnlyUnAuth } from "../protected-route/protected-route";
 import NotFound404 from "../../pages/not-found-404/not-found-404";
-import OdersHistory from "../oders-history/orders-history";
-import ProfileForm from "../profile-form/profile-form";
+import OdersHistory from "../user-profile/oders-history/orders-history";
+import ProfileForm from "../user-profile/profile-form/profile-form";
 import Feed from "../../pages/feed/feed";
 import {
   FORGOT_PASSWORD_PAGE,

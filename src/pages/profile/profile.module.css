@@ -1,15 +1,13 @@
-.profile-container {
+.profile {
     display: flex;
-    align-items: center;
     justify-content: flex-start;
     gap: 60px;
     margin: 120px 380px 0;
-    max-width: 1240px;
+    width: 1240px;
 }
 
 .link-container {
-    white-space: normal;
-    max-width: 320px;
+    width: 320px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -20,7 +18,6 @@
   text-decoration: none;
   color: #F2F2F3;
   cursor: pointer;
-
   margin-bottom: 28px;
 }
 
@@ -31,4 +28,6 @@
 
 .discription {
     color: #8585AD;
+    white-space: normal;
 }
+

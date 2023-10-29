@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
-  ORDERS_HISTORY_WS_CONNECTION_START,
   wsOrdersHistoryConnectionFinished,
-} from "../../services/actions/orders-history";
+  wsOrdersHistoryConnectionStart,
+} from "../../../services/actions/orders-history";
 import styles from "./orders-history.module.css";
 import { useEffect, useMemo } from "react";
-import OrderCard from "../feed/order-card/order-card";
+import OrderCard from "../../feed/order-card/order-card";
 
 const OdersHistory = () => {
   const dispatch = useDispatch();
@@ -19,14 +19,18 @@ const OdersHistory = () => {
   }, [orders]);
 
   useEffect(() => {
-    dispatch({ type: ORDERS_HISTORY_WS_CONNECTION_START });
+    dispatch(wsOrdersHistoryConnectionStart());
     return () => dispatch(wsOrdersHistoryConnectionFinished());
   }, [dispatch]);
 
   if (!data || !Array.isArray(data.orders)) {
     return <div>Ждите!</div>;
   }
-  return <ul className={` ${styles.list}`}>{ordersList}</ul>;
+  return (
+    <section className={styles[`list-container`]}>
+      <ul className={`${styles.list} custom-scroll`}>{ordersList}</ul>
+    </section>
+  );
 };
 
 export default OdersHistory;

@@ -8,7 +8,7 @@ export const GET_ORDER_ID_FAILED = "GET_ORDER_ID_FAILED";
 export function getOrderId(bun, ingredients) {
   return function (dispatch) {
     dispatch({ type: GET_ORDER_ID_REQUEST });
-    fetch(BASE_URL + '/orders', {
+    fetch(BASE_URL + "/orders", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -23,6 +23,7 @@ export function getOrderId(bun, ingredients) {
         dispatch({
           type: GET_ORDER_ID_SUCCESS,
           number: data.order.number,
+          success: data.success,
         });
       })
       .catch((error) => {
