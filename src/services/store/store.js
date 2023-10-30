@@ -25,6 +25,7 @@ import {
   ORDERS_HISTORY_WS_CONNECTION_FINISHED,
 } from "../actions/orders-history";
 import { ordersHistoryReducer } from "../reducers/orders-history";
+import { orderInformationReducer } from "../reducers/order-information";
 
 
 const composeEnhancers =
@@ -71,6 +72,7 @@ export const rootreducer = combineReducers({
   user: userDataReduser,
   feed: feedReducer,
   ordersHistory: ordersHistoryReducer,
+  currentOrder: orderInformationReducer
 });
 
 

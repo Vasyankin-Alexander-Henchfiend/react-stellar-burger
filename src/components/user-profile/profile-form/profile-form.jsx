@@ -47,7 +47,7 @@ const ProfileForm = () => {
   };
 
   return (
-    <div className={styles[`form-container`]}>
+    <section className={`pt-20 ${styles[`form-container`]}`}>
       <form
         className={styles.form}
         onSubmit={patchProfile}
@@ -104,7 +104,7 @@ const ProfileForm = () => {
           </Button>
         </div>
       </form>
-    </div>
+    </section>
   );
 };
 

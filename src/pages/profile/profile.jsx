@@ -17,7 +17,7 @@ const Profile = () => {
 
   return (
     <div className={styles.profile}>
-      <section className={styles[`link-container`]}>
+      <section className={`pt-20 ${styles[`link-container`]}`}>
           <NavLink
             to={PROFILE_PAGE}
             className={({ isActive }) =>

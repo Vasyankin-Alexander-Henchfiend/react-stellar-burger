@@ -4,11 +4,14 @@ import {
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useMemo } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setOrder } from "../../services/actions/order-information";
 
-const OrderCard = ({ order }) => {
-  const { number, createdAt, name, ingredients, status } = order;
+const OrderCard = ({ displayStatus, order }) => {
+  const { number, createdAt, name, ingredients } = order;
   const { items } = useSelector((store) => store.items);
+  const dispatch = useDispatch();
+
   const filtredIngredients = useMemo(() => {
     return ingredients
       .map((id) => {
@@ -16,6 +19,13 @@ const OrderCard = ({ order }) => {
       })
       .flat(2);
   }, [items, ingredients]);
+
+  const uniqFiltredIngredients = filtredIngredients.reduce((acc, item) => {
+    if (acc.includes(item)) {
+      return acc;
+    }
+    return [...acc, item];
+  }, []);
 
   const totalPrice = useMemo(() => {
     return filtredIngredients.reduce(
@@ -25,21 +35,33 @@ const OrderCard = ({ order }) => {
   }, [filtredIngredients]);
 
   const ingredientsImages = useMemo(() => {
-    return filtredIngredients.map((item, index) => {
+    return uniqFiltredIngredients.map((item, index) => {
+      if (index > 5) {
+        return null;
+      }
       return (
-        <li key={`${item._id} + ${index}`} className={styles[`image-wrapper`]} style={{ zIndex: 1000 - index }}>
-          <img
-            className={styles.image}
-            src={item.image}
-            alt={item.name}
-          />
+        <li
+          key={`${item._id} + ${index}`}
+          className={styles[`image-wrapper`]}
+          style={{ zIndex: 100 - index }}
+        >
+          <img className={styles.image} src={item.image} alt={item.name} />
+          {index >= 5 && uniqFiltredIngredients.length - 6 !== 0 && (
+            <p className={`text text_type_digits-default ${styles.counter}`}>
+              +{uniqFiltredIngredients.length - 6}
+            </p>
+          )}
         </li>
       );
     });
-  }, [filtredIngredients]);
+  }, [uniqFiltredIngredients]);
+
+  const setCurrentOrder = () => {
+    return dispatch(setOrder(order))
+  }
 
   return (
-    <li className={styles.card}>
+    <li className={styles.card} onClick={setCurrentOrder}>
       <div className={styles[`number-date-wrapper`]}>
         <p className={`text text_type_main-default ${styles.number}`}>
           #{number}
@@ -50,7 +72,12 @@ const OrderCard = ({ order }) => {
           <FormattedDate date={new Date(createdAt)} />
         </p>
       </div>
-      <h2 className={`text text_type_main-medium ${styles.name}`}>{name}</h2>
+      <div>
+        <h2 className={`text text_type_main-medium ${styles.name}`}>{name}</h2>
+        {displayStatus ? (
+          <p style={{ color: '#00CCCC' }} className="text text_type_main-default mt-2">{order.status === 'done' ? 'Выполнено' : 'Готовится'}</p>
+        ) : null}
+      </div>
       <div className={styles[`image-price-container`]}>
         <ul className={styles[`image-list`]}>{ingredientsImages}</ul>
         <div className={styles[`price-wrapper`]}>

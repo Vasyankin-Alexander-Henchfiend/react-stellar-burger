@@ -30,6 +30,7 @@ import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { checkUserAuth } from "../../services/actions/user/auth";
 import { getItems } from "../../services/actions/burger-ingredients";
 import Preloader from "../preloader/preloader";
+import OrderImformation from "../order-information/order-information";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -44,15 +45,18 @@ const App = () => {
 
   useEffect(() => {
     dispatch(checkUserAuth());
+    //после монтирования приложения ставим таймер на проверку авторизации, чтобы обновить подключение через 19,5 минут
+    setInterval(() => {
+      dispatch(checkUserAuth());
+    }, 1170000);
     dispatch(getItems());
   }, [dispatch]);
 
   return (
     <div className={styles.app}>
-      <pre className={styles.pre}>
         <AppHeader />
         {!itemsRequest && items.length > 0 ? (
-          <main>
+          <main className={styles.main}>
             <Routes location={background || location}>
               <Route path={HOME} element={<HomePage />} />
               <Route
@@ -98,13 +102,35 @@ const App = () => {
                     </Modal>
                   }
                 />
+                <Route
+                  path='feed/:id'
+                  element={
+                    <Modal
+                      title=""
+                      onClose={handleModalClose}
+                    >
+                      <OrderImformation />
+                    </Modal>
+                  }
+                />
+                <Route
+                  path='profile/orders/:id'
+                  element={
+                    <Modal
+                      title=""
+                      onClose={handleModalClose}
+                    >
+                      <OrderImformation />
+                    </Modal>
+                  }
+                />
               </Routes>
+              
             )}
           </main>
         ) : (
           <Preloader />
         )}
-      </pre>
     </div>
   );
 };
