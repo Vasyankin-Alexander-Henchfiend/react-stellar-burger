@@ -5,7 +5,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setOrder } from "../../services/actions/order-information";
+import { getOrder } from "../../services/actions/order-information";
 
 const OrderCard = ({ displayStatus, order }) => {
   const { number, createdAt, name, ingredients } = order;
@@ -56,12 +56,12 @@ const OrderCard = ({ displayStatus, order }) => {
     });
   }, [uniqFiltredIngredients]);
 
-  const setCurrentOrder = () => {
-    return dispatch(setOrder(order))
+  const getOrderDetails = () => {
+    return dispatch(getOrder(number))
   }
 
   return (
-    <li className={styles.card} onClick={setCurrentOrder}>
+    <li className={styles.card} onClick={getOrderDetails}>
       <div className={styles[`number-date-wrapper`]}>
         <p className={`text text_type_main-default ${styles.number}`}>
           #{number}

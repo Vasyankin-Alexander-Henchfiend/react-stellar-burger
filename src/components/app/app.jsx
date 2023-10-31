@@ -54,83 +54,75 @@ const App = () => {
 
   return (
     <div className={styles.app}>
-        <AppHeader />
-        {!itemsRequest && items.length > 0 ? (
-          <main className={styles.main}>
-            <Routes location={background || location}>
-              <Route path={HOME} element={<HomePage />} />
-              <Route
-                path={LOGIN_PAGE}
-                element={<OnlyUnAuth component={<Login />} />}
-              />
-              <Route
-                path={REGISTER_PAGE}
-                element={<OnlyUnAuth component={<Register />} />}
-              />
-              <Route
-                path={FORGOT_PASSWORD_PAGE}
-                element={<OnlyUnAuth component={<ForgotPassword />} />}
-              />
-              <Route
-                path={RESET_PASSWORD_PAGE}
-                element={<OnlyUnAuth component={<ResetPassword />} />}
-              />
-              <Route path={FEED_PAGE} element={<Feed />} />
-              <Route
-                path={PROFILE_PAGE}
-                element={<OnlyAuth component={<Profile />} />}
-              >
-                <Route index element={<ProfileForm />} />
-                <Route path={ORDERS_HISTORY_PAGE} element={<OdersHistory />} />
-              </Route>
-              <Route path="*" element={<NotFound404 />} />
+      <AppHeader />
+      {!itemsRequest && items.length > 0 ? (
+        <main className={styles.main}>
+          <Routes location={background || location}>
+            <Route path={HOME} element={<HomePage />} />
+            <Route path="feed/:orderNumber" element={<OrderImformation />} />
+            <Route path="profile/orders/:orderNumber" element={<OrderImformation />} />
+            <Route
+              path={LOGIN_PAGE}
+              element={<OnlyUnAuth component={<Login />} />}
+            />
+            <Route
+              path={REGISTER_PAGE}
+              element={<OnlyUnAuth component={<Register />} />}
+            />
+            <Route
+              path={FORGOT_PASSWORD_PAGE}
+              element={<OnlyUnAuth component={<ForgotPassword />} />}
+            />
+            <Route
+              path={RESET_PASSWORD_PAGE}
+              element={<OnlyUnAuth component={<ResetPassword />} />}
+            />
+            <Route path={FEED_PAGE} element={<Feed />} />
+            <Route
+              path={PROFILE_PAGE}
+              element={<OnlyAuth component={<Profile />} />}
+            >
+              <Route index element={<ProfileForm />} />
+              <Route path={ORDERS_HISTORY_PAGE} element={<OdersHistory />} />
+            </Route>
+            <Route path="*" element={<NotFound404 />} />
+            <Route
+              path={INGREDIENT_DETAILS_PAGE}
+              element={<IngredientDetails />}
+            />
+          </Routes>
+          {background && (
+            <Routes>
               <Route
                 path={INGREDIENT_DETAILS_PAGE}
-                element={<IngredientDetails />}
+                element={
+                  <Modal title="Детали ингредиента" onClose={handleModalClose}>
+                    <IngredientDetails />
+                  </Modal>
+                }
+              />
+              <Route
+                path="feed/:orderNumber"
+                element={
+                  <Modal title="" onClose={handleModalClose}>
+                    <OrderImformation />
+                  </Modal>
+                }
+              />
+              <Route
+                path="profile/orders/:orderNumber"
+                element={
+                  <Modal title="" onClose={handleModalClose}>
+                    <OrderImformation />
+                  </Modal>
+                }
               />
             </Routes>
-            {background && (
-              <Routes>
-                <Route
-                  path={INGREDIENT_DETAILS_PAGE}
-                  element={
-                    <Modal
-                      title="Детали ингредиента"
-                      onClose={handleModalClose}
-                    >
-                      <IngredientDetails />
-                    </Modal>
-                  }
-                />
-                <Route
-                  path='feed/:id'
-                  element={
-                    <Modal
-                      title=""
-                      onClose={handleModalClose}
-                    >
-                      <OrderImformation />
-                    </Modal>
-                  }
-                />
-                <Route
-                  path='profile/orders/:id'
-                  element={
-                    <Modal
-                      title=""
-                      onClose={handleModalClose}
-                    >
-                      <OrderImformation />
-                    </Modal>
-                  }
-                />
-              </Routes>
-              
-            )}
-          </main>
-        ) : (
-          <Preloader />
-        )}
+          )}
+        </main>
+      ) : (
+        <Preloader />
+      )}
     </div>
   );
 };

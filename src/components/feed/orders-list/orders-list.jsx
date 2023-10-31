@@ -12,7 +12,7 @@ const OrdersList = ({ data }) => {
       return (
         <Link
           key={`${order._id} + ${index}`}
-          to={`/feed/${order._id}`}
+          to={`/feed/${order.number}`}
           className={styles.link}
           state={{ background: location }}
         >

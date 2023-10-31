@@ -20,7 +20,7 @@ const OdersHistory = () => {
       return (
         <Link
           key={`${order._id} + ${index}`}
-          to={`/profile/orders/${order._id}`}
+          to={`/profile/orders/${order.number}`}
           className={styles.link}
           state={{ background: location }}
         >

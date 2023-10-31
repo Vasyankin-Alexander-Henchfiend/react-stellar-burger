@@ -3,46 +3,58 @@ import {
   CurrencyIcon,
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getOrder } from "../../services/actions/order-information";
+import Preloader from "../preloader/preloader";
 
-const OrderImformation = () => {
-  const { id } = useParams();
+const OrderImformation = ({ number }) => {
+  const { orderNumber } = useParams();
+  number = orderNumber;
   const { order } = useSelector((store) => store.currentOrder);
-  order._id = id;
-  const { number, createdAt, name, ingredients, status } = order;
+  console.log(order);
+
+  const createdAt = order?.createdAt;
+  const ingredients = order?.ingredients;
+  const status = order?.status;
+  const name = order?.name;
   const { items } = useSelector((store) => store.items);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getOrder(number));
+  }, [dispatch, number]);
 
   const filtredIngredients = useMemo(() => {
     return ingredients
-      .map((id) => {
+      ?.map((id) => {
         return items.filter(({ _id }) => _id === id);
       })
       .flat(2);
   }, [items, ingredients]);
 
   const totalPrice = useMemo(() => {
-    return filtredIngredients.reduce(
+    return filtredIngredients?.reduce(
       (totalAll, item) => totalAll + item.price,
       0
     );
   }, [filtredIngredients]);
 
-  const uniqFiltredIngredients = filtredIngredients.reduce((acc, item) => {
+  const uniqFiltredIngredients = filtredIngredients?.reduce((acc, item) => {
     if (acc.includes(item)) {
       return acc;
     }
     return [...acc, item];
   }, []);
 
-  const countIngredients = ingredients.reduce((count, item) => {
+  const countIngredients = ingredients?.reduce((count, item) => {
     count[item] = (count[item] || 0) + 1;
     return count;
-  }, {});
+  }, []);
 
   const ingredientsList = useMemo(() => {
-    return uniqFiltredIngredients.map((item, index) => {
+    return uniqFiltredIngredients?.map((item, index) => {
       return (
         <li key={index} className={`mb-4 ${styles[`image-list-item`]}`}>
           <div className={styles[`name-image-wrapper`]}>
@@ -67,6 +79,9 @@ const OrderImformation = () => {
     });
   }, [uniqFiltredIngredients, countIngredients]);
 
+  if (!order) {
+    return <Preloader />;
+  }
   return (
     <div className={`${styles[`container-wrapper`]} `}>
       <p className={`text text_type_main-default mb-10 ${styles.number}`}>
@@ -75,7 +90,11 @@ const OrderImformation = () => {
       <h2 className={`text text_type_main-medium mb-3 ${styles.name}`}>
         {name}
       </h2>
-      <p style={{ color: '#00CCCC' }} className="text text_type_main-default mb-15">{status === 'done' ? 'Выполнено' : 'Готовится'}</p>
+      <p
+        className={`text text_type_main-default mb-15 ${styles.status}`}
+      >
+        {status === "done" ? "Выполнено" : "Готовится"}
+      </p>
       <p className={`text text_type_main-medium mb-6 ${styles.b}`}>Состав:</p>
       <ul className={`custom-scroll ${styles[`image-list`]}`}>
         {ingredientsList}

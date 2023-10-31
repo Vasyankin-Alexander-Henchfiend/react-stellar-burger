@@ -60,3 +60,8 @@
     display: flex;
     flex-direction: row;
 }
+
+.status {
+    color: rgba(0, 204, 204, 1);
+    ;
+}
