@@ -75,7 +75,7 @@ const OrderCard = ({ displayStatus, order }) => {
       <div>
         <h2 className={`text text_type_main-medium ${styles.name}`}>{name}</h2>
         {displayStatus ? (
-          <p style={{ color: '#00CCCC' }} className="text text_type_main-default mt-2">{order.status === 'done' ? 'Выполнено' : 'Готовится'}</p>
+          <p className={`text text_type_main-default mt-2 ${styles.status}`}>{order.status === 'done' ? 'Выполнено' : 'Готовится'}</p>
         ) : null}
       </div>
       <div className={styles[`image-price-container`]}>
