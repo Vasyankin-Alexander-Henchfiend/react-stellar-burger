@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
 import { LOGIN_PAGE, HOME } from "../../utils/consts";
+import Preloader from "../preloader/preloader";
 
 const Protected = ({ onlyUnAuth = false, component }) => {
 
@@ -9,7 +10,7 @@ const Protected = ({ onlyUnAuth = false, component }) => {
   const location = useLocation();
 
   if (!isAuthChecked) {
-    return <p>Жди чел!</p>;
+    return <Preloader />;
   }
 
   if (onlyUnAuth && userData) {

@@ -1,4 +1,8 @@
-import { BASE_URL, checkResponse } from "../../../utils/consts";
+import {
+  BASE_URL,
+  checkResponse,
+  cleanTokenHeader,
+} from "../../../utils/consts";
 
 export const SET_AUTH_CHECKED = "SET_AUTH_CHECKED";
 export const SET_USER = "SET_USER";
@@ -13,17 +17,17 @@ export const setUser = (user) => ({
   payload: user,
 });
 
-
 export const checkUserAuth = () => {
   return (dispatch) => {
     if (localStorage.getItem("accessToken")) {
       dispatch(getUser())
-      .catch(() => {
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
-        dispatch(setUser(null));
-      })
-      .finally(() => dispatch(setAuthChecked(true)));
+        .catch(() => {
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("cleanAccessToken");
+          localStorage.removeItem("refreshToken");
+          dispatch(setUser(null));
+        })
+        .finally(() => dispatch(setAuthChecked(true)));
     } else {
       dispatch(setAuthChecked(true));
     }
@@ -31,7 +35,7 @@ export const checkUserAuth = () => {
 };
 
 export const refreshToken = () => {
-  return fetch(BASE_URL + '/auth/token', {
+  return fetch(BASE_URL + "/auth/token", {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
@@ -50,10 +54,9 @@ export function getUser() {
         authorization: localStorage.getItem("accessToken"),
       },
       body: JSON.stringify(),
-    })
-      .then((data) => {
-        dispatch(setUser(data.user));
-      });
+    }).then((data) => {
+      dispatch(setUser(data.user));
+    });
   };
 }
 
@@ -69,6 +72,10 @@ export const fetchWithRefresh = async (url, options) => {
       }
       localStorage.setItem("refreshToken", refreshData.refreshToken);
       localStorage.setItem("accessToken", refreshData.accessToken);
+      localStorage.setItem(
+        "cleanAccessToken",
+        cleanTokenHeader(refreshData.accessToken)
+      );
       options.headers.authorization = refreshData.accessToken;
       const res = await fetch(url, options);
       return await checkResponse(res);

@@ -7,7 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app-header.module.css";
 import { NavLink } from "react-router-dom";
-import { HOME, PROFILE_PAGE } from "../../utils/consts";
+import { FEED_PAGE, HOME, PROFILE_PAGE } from "../../utils/consts";
 
 const AppHeader = () => {
   return (
@@ -21,7 +21,7 @@ const AppHeader = () => {
             <BurgerIcon type="primary" />
             <span className="text text_type_main-default">Конструктор</span>
           </NavLink>
-          <NavLink to='*' className={(({ isActive }) => !isActive ? styles[`link-inactive`] : styles.link)}>
+          <NavLink to={FEED_PAGE} className={(({ isActive }) => !isActive ? styles[`link-inactive`] : styles.link)}>
             <ListIcon type="primary" />
             <span className="text text_type_main-default">Лента заказов</span>
           </NavLink>

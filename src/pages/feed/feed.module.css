@@ -1,0 +1,14 @@
+.main {
+    margin: 40px 380px 0;
+    width: 1240px;
+}
+
+.header {
+    text-align: left;
+}
+
+.sections-container {
+    display: flex;
+    gap: 60px;
+}
+

@@ -1,19 +1,17 @@
 .app {
   display: flex;
   flex-direction: column;
+  align-items: center;
   height: 100vh;
+  width: 2000px;
   background-color: #131316;
   color: #f2f2f3;
-}
-
-.pre {
   margin: 0;
-  font-size: "1.5rem";
 }
 
-.preloader {
+.main {
+  width: 1240px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  margin-top: 250px;
 }

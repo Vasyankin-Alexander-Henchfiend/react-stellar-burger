@@ -7,7 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { patchProfileRequest } from "../../services/actions/user/profile";
+import { patchProfileRequest } from "../../../services/actions/user/profile";
 
 const ProfileForm = () => {
   const dispatch = useDispatch();
@@ -47,8 +47,12 @@ const ProfileForm = () => {
   };
 
   return (
-    <div className={styles[`form-container`]}>
-      <form className={styles.form} onSubmit={patchProfile} onReset={cancelAllChanges}>
+    <section className={`pt-20 ${styles[`form-container`]}`}>
+      <form
+        className={styles.form}
+        onSubmit={patchProfile}
+        onReset={cancelAllChanges}
+      >
         <Input
           type={"text"}
           placeholder={"Имя"}
@@ -81,26 +85,26 @@ const ProfileForm = () => {
           extraClass="pb-6"
           required
         />
-      <div>
-        <Button
-          hidden={!isInputChange ? true : false}
-          htmlType="reset"
-          type="secondary"
-          size="medium"
-        >
-          Отмена
-        </Button>
-        <Button
-          hidden={!isInputChange ? true : false}
-          htmlType="submit"
-          type="primary"
-          size="medium"
-        >
-          Сохранить
-        </Button>
-      </div>
+        <div>
+          <Button
+            hidden={!isInputChange ? true : false}
+            htmlType="reset"
+            type="secondary"
+            size="medium"
+          >
+            Отмена
+          </Button>
+          <Button
+            hidden={!isInputChange ? true : false}
+            htmlType="submit"
+            type="primary"
+            size="medium"
+          >
+            Сохранить
+          </Button>
+        </div>
       </form>
-    </div>
+    </section>
   );
 };
 

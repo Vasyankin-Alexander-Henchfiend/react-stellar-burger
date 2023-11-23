@@ -1,4 +1,8 @@
-import { BASE_URL, checkResponse } from "../../../utils/consts";
+import {
+  BASE_URL,
+  checkResponse,
+  cleanTokenHeader,
+} from "../../../utils/consts";
 
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
@@ -20,6 +24,10 @@ export function loginRequest(form) {
       .then((res) => checkResponse(res))
       .then((data) => {
         localStorage.setItem("accessToken", data.accessToken);
+        localStorage.setItem(
+          "cleanAccessToken",
+          cleanTokenHeader(data.accessToken)
+        );
         localStorage.setItem("refreshToken", data.refreshToken);
         dispatch({
           type: LOGIN_SUCCESS,
@@ -50,6 +58,7 @@ export function logoutRequest() {
       .then((res) => checkResponse(res))
       .then((data) => {
         localStorage.removeItem("accessToken");
+        localStorage.removeItem("cleanAccessToken");
         localStorage.removeItem("refreshToken");
         dispatch({
           type: LOGOUT_SUCCESS,

@@ -1,0 +1,22 @@
+.list-container {
+    display: flex;
+    width: 860px;
+    height: 916px;
+    overflow: hidden;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 860px;
+    overflow-y: scroll;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.link {
+    color: inherit;
+    text-decoration: inherit;
+}

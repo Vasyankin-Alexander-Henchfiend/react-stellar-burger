@@ -1,0 +1,52 @@
+.order-status-section {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    width: 580px;
+}
+
+.total-number-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.order-status-table {
+    display: flex;
+    gap: 36px;
+}
+
+.list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 272px;
+    height: 304px;
+    overflow-x: auto;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.list::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+.list::-webkit-scrollbar-thumb {
+    background: #8585AD;
+    border: 3px solid #2F2F37;
+    border-radius: 6px;
+}
+
+.list::-webkit-scrollbar-track {
+    background: #2F2F37;
+}
+
+.order-number-complite {
+    color: rgba(0, 204, 204, 1)
+}
+
+.orders-sum {
+    text-shadow: 0 0 16px rgba(51, 51, 255, .25), 4px 0 8px rgba(51, 51, 255, .25), 0 4px 32px rgba(51, 51, 255, .5);
+}

@@ -6,9 +6,10 @@ import {
 } from "../actions/order-details";
 
 const initialState = {
-  number: null,
-  numberRequest: false,
-  numberFailed: false,
+  orderNumber: null,
+  orderNumberRequest: false,
+  orderNumberRequestSuccess: false,
+  orderNumberFailed: false,
 };
 
 export const orderDetailsReducer = (state = initialState, action) => {
@@ -16,25 +17,28 @@ export const orderDetailsReducer = (state = initialState, action) => {
     case GET_ORDER_ID_REQUEST:
       return {
         ...state,
-        numberRequest: true,
+        orderNumberRequest: true,
       };
     case GET_ORDER_ID_SUCCESS:
       return {
         ...state,
-        number: action.number,
-        numberRequest: false,
-        numberFailed: false,
+        orderNumber: action.number,
+        orderNumberRequestSuccess: action.success,
+        orderNumberRequest: false,
+        orderNumberFailed: false,
       };
     case GET_ORDER_ID_FAILED:
       return {
         ...state,
-        numberRequest: false,
-        numberFailed: true,
+        orderNumberRequest: false,
+        orderNumberFailed: true,
       };
     case DELETE_ORDER_ID:
       return {
         ...state,
-        number: null,
+        orderNumber: null,
+        orderNumberRequest: false,
+        orderNumberRequestSuccess: false,
       };
     default:
       return state;
