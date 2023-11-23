@@ -1,6 +1,6 @@
 import styles from "./order-details.module.css";
 import done from "../../images/done.png";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/hooks/hooks";
 import Preloader from "../preloader/preloader";
 
 const OrderDetails = () => {

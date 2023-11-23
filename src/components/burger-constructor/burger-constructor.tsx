@@ -11,13 +11,30 @@ import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import { getOrderId } from "../../services/actions/order-details";
 import { DELETE_ORDER_ID } from "../../services/actions/order-details";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   REMOVE_ALL,
   addIngredient,
 } from "../../services/actions/burger-constructor";
 import BurgerConstructorItem from "./burger-constructor-item/burger-constructor-item";
 import { LOGIN_PAGE } from "../../utils/consts";
+import { useSelector } from "../../services/hooks/hooks";
+
+type TItem = {
+  _id: string;
+  name: string;
+  type: string;
+  proteinse: number;
+  fate: number;
+  carbohydrates: number;
+  calories: number;
+  price: number;
+  imagee: string;
+  image_mobile: string;
+  image_large: string;
+  __v: number;
+  uniqueId: string;
+};
 
 const BurgerConstructor = () => {
   const { bun, ingredients } = useSelector(
@@ -42,7 +59,7 @@ const BurgerConstructor = () => {
 
   const totalPrice = useMemo(() => {
     const ingredientsSum = ingredients.reduce(
-      (totalAll, item) => totalAll + item.price,
+      (totalAll: number, item: TItem) => totalAll + item.price,
       0
     );
     if (bun) {
@@ -84,7 +101,7 @@ const BurgerConstructor = () => {
         </li>
         {ingredients.length > 0 && (
           <ul className={`${styles[`list-wrapper`]} custom-scroll`}>
-            {ingredients.map((item) => {
+            {ingredients.map((item: TItem) => {
               return (
                 <BurgerConstructorItem ingredient={item} key={item.uniqueId} />
               );
@@ -107,7 +124,7 @@ const BurgerConstructor = () => {
       <div className={`pr-6 ${styles[`price-container`]}`}>
         <span className="text text_type_digits-medium">{totalPrice}</span>
         <div className={`ml-2 mr-10 ${styles[`price-icon`]}`}>
-          <CurrencyIcon />
+          <CurrencyIcon type="primary" />
         </div>
         <Button
           disabled={bun ? false : true}

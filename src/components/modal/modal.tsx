@@ -1,13 +1,19 @@
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useEffect } from "react";
+import { useEffect, ReactNode } from "react";
 import ReactDom from "react-dom";
 import styles from "./modal.module.css";
 import ModalOverlay from "./modal-overlay/modal-overlay";
 import PropTypes from "prop-types";
 
-const Modal = ({ children, title, onClose }) => {
+type TModal = {
+  children: ReactNode;
+  onClose: () => void;
+  title: string;
+}
+
+const Modal = ({ children, title, onClose }: TModal) => {
   useEffect(() => {
-    const closeByEscape = (e) => {
+    const closeByEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         onClose();
       }
@@ -29,7 +35,7 @@ const Modal = ({ children, title, onClose }) => {
       </div>
       <ModalOverlay onClose={onClose} />
     </div>,
-    document.getElementById("modal-root"),
+    document.getElementById("modal-root") as HTMLElement
   );
 };
 
