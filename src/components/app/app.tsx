@@ -23,14 +23,17 @@ import {
   REGISTER_PAGE,
   RESET_PASSWORD_PAGE,
   FEED_PAGE,
+  FEED_PAGE_ORDER_NUMBER,
+  PROFILE_PAGE_ORDERS_ORDER_NUMBER,
 } from "../../utils/consts";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { checkUserAuth } from "../../services/actions/user/auth";
 import { getItems } from "../../services/actions/burger-ingredients";
 import Preloader from "../preloader/preloader";
 import OrderImformation from "../order-information/order-information";
+import { useSelector } from "../../services/hooks/hooks";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -59,11 +62,11 @@ const App = () => {
         <main className={styles.main}>
           <Routes location={background || location}>
             <Route path={HOME} element={<HomePage />} />
-            <Route path="feed/:orderNumber" element={<OrderImformation />} />
-            <Route path="profile/orders/:orderNumber" element={<OrderImformation />} />
+            <Route path={FEED_PAGE_ORDER_NUMBER} element={<OrderImformation/>} />
+            <Route path={PROFILE_PAGE_ORDERS_ORDER_NUMBER} element={<OrderImformation/>} />
             <Route
               path={LOGIN_PAGE}
-              element={<OnlyUnAuth component={<Login />} />}
+              element= {<OnlyUnAuth component= {<Login />} />}
             />
             <Route
               path={REGISTER_PAGE}
@@ -102,18 +105,18 @@ const App = () => {
                 }
               />
               <Route
-                path="feed/:orderNumber"
+                path={FEED_PAGE_ORDER_NUMBER}
                 element={
                   <Modal title="" onClose={handleModalClose}>
-                    <OrderImformation />
+                    <OrderImformation/>
                   </Modal>
                 }
               />
               <Route
-                path="profile/orders/:orderNumber"
+                path={PROFILE_PAGE_ORDERS_ORDER_NUMBER}
                 element={
                   <Modal title="" onClose={handleModalClose}>
-                    <OrderImformation />
+                    <OrderImformation/>
                   </Modal>
                 }
               />

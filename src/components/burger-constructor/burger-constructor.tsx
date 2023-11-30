@@ -17,24 +17,9 @@ import {
   addIngredient,
 } from "../../services/actions/burger-constructor";
 import BurgerConstructorItem from "./burger-constructor-item/burger-constructor-item";
-import { LOGIN_PAGE } from "../../utils/consts";
+import { LOGIN_PAGE, getTotalPrice } from "../../utils/consts";
 import { useSelector } from "../../services/hooks/hooks";
-
-type TItem = {
-  _id: string;
-  name: string;
-  type: string;
-  proteinse: number;
-  fate: number;
-  carbohydrates: number;
-  calories: number;
-  price: number;
-  imagee: string;
-  image_mobile: string;
-  image_large: string;
-  __v: number;
-  uniqueId: string;
-};
+import { TIngredient } from "../ui/types";
 
 const BurgerConstructor = () => {
   const { bun, ingredients } = useSelector(
@@ -58,10 +43,7 @@ const BurgerConstructor = () => {
   });
 
   const totalPrice = useMemo(() => {
-    const ingredientsSum = ingredients.reduce(
-      (totalAll: number, item: TItem) => totalAll + item.price,
-      0
-    );
+    const ingredientsSum = getTotalPrice(ingredients);
     if (bun) {
       return bun.price * 2 + ingredientsSum;
     } else {
@@ -101,7 +83,7 @@ const BurgerConstructor = () => {
         </li>
         {ingredients.length > 0 && (
           <ul className={`${styles[`list-wrapper`]} custom-scroll`}>
-            {ingredients.map((item: TItem) => {
+            {ingredients.map((item: TIngredient) => {
               return (
                 <BurgerConstructorItem ingredient={item} key={item.uniqueId} />
               );

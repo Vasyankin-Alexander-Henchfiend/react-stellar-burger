@@ -4,31 +4,32 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import styles from "./reset-password.module.css";
 import { HOME, LOGIN_PAGE } from "../../utils/consts";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { resetPasswordRequest } from "../../services/actions/reset-password";
+import { useSelector } from "../../services/hooks/hooks";
 
 const ResetPassword = () => {
-  const resetPasswordSuccess = useSelector(
-    (store) => store.resetPassword.resetPasswordSuccess
+  const {resetPasswordSuccess} = useSelector(
+    (store) => store.resetPassword
   );
 
   const [ form, setValue ] = useState({ password: '', token: '' });
-  const onChange = e => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
   const navigate = useNavigate();
   const dispath = useDispatch();
-  const sendNewPasswordData = (e) => {
+  const sendNewPasswordData = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispath(resetPasswordRequest(form.password, form.token));
   };
 
   useEffect(() => {
-    return resetPasswordSuccess ? navigate(LOGIN_PAGE) : null;
+    if (resetPasswordSuccess) navigate(LOGIN_PAGE);
   }, [navigate, resetPasswordSuccess]);
 
   if(!localStorage.getItem('isForgotPasswordSuccess')) {

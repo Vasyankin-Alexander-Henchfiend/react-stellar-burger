@@ -2,58 +2,67 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredient from "./burger-ingredient/burger-ingredient";
 import styles from "./burger-ingredients.module.css";
 import { useState, useMemo, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/hooks/hooks";
+import { TIngredient } from "../ui/types";
 
 const BurgerIngredients = () => {
-  const data = useSelector((store) => store.items.items);
+  const { items } = useSelector((store) => store.items);
 
-  const sausesRef = useRef();
-  const mainsRef = useRef();
-  const ingredientsListRef = useRef();
+  const sausesRef = useRef<HTMLHeadingElement>(null);
+  const mainsRef = useRef<HTMLHeadingElement>(null);
+  const ingredientsListRef = useRef<HTMLDivElement>(null);
 
   const [current, setCurrent] = useState("bun");
 
   useEffect(() => {
-    ingredientsListRef.current.addEventListener("scroll", () => {
-      const sausesTitle = sausesRef.current.getBoundingClientRect().top;
-      const mainTitle = mainsRef.current.getBoundingClientRect().top;
-      const ingredientsListPanel = Math.abs(
-        ingredientsListRef.current.getBoundingClientRect().top + 80
-      );
+    if (ingredientsListRef.current) {
+      ingredientsListRef.current.addEventListener("scroll", () => {
+        if (
+          sausesRef.current &&
+          mainsRef.current &&
+          ingredientsListRef.current
+        ) {
+          const sausesTitle = sausesRef.current.getBoundingClientRect().top;
+          const mainTitle = mainsRef.current.getBoundingClientRect().top;
+          const ingredientsListPanel = Math.abs(
+            ingredientsListRef.current.getBoundingClientRect().top + 80
+          );
 
-      if (sausesTitle > ingredientsListPanel) {
-        setCurrent("bun");
-      } else if (mainTitle > ingredientsListPanel) {
-        setCurrent("sauce");
-      } else {
-        setCurrent("main");
-      }
-    });
+          if (sausesTitle > ingredientsListPanel) {
+            setCurrent("bun");
+          } else if (mainTitle > ingredientsListPanel) {
+            setCurrent("sauce");
+          } else {
+            setCurrent("main");
+          }
+        }
+      });
+    }
   }, []);
 
   const buns = useMemo(() => {
-    return data.map((item) => {
+    return items.map((item: TIngredient) => {
       if (item.type === "bun") {
         return <BurgerIngredient key={item._id} ingredient={item} />;
       } else return null;
     });
-  }, [data]);
+  }, [items]);
 
   const sauces = useMemo(() => {
-    return data.map((item) => {
+    return items.map((item: TIngredient) => {
       if (item.type === "sauce") {
         return <BurgerIngredient key={item._id} ingredient={item} />;
       } else return null;
     });
-  }, [data]);
+  }, [items]);
 
   const mains = useMemo(() => {
-    return data.map((item) => {
+    return items.map((item: TIngredient) => {
       if (item.type === "main") {
         return <BurgerIngredient key={item._id} ingredient={item} />;
       } else return null;
     });
-  }, [data]);
+  }, [items]);
 
   return (
     <section className={styles[`ingredients-list`]}>

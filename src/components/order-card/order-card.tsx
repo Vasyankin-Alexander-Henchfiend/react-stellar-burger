@@ -4,38 +4,31 @@ import {
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getOrder } from "../../services/actions/order-information";
+import { useSelector } from "../../services/hooks/hooks";
+import { TOrderCard } from "./order-card.types";
+import { TIngredient } from "../ui/types";
+import {
+  getTotalPrice,
+  getUniqFiltredIngredients,
+  getFiltredIngredients,
+} from "../../utils/consts";
 
-const OrderCard = ({ displayStatus, order }) => {
+const OrderCard = ({ displayStatus, order }: TOrderCard) => {
   const { number, createdAt, name, ingredients } = order;
-  const { items } = useSelector((store) => store.items);
-  const dispatch = useDispatch();
+  const items: TIngredient[] = useSelector((store) => store.items.items);
 
   const filtredIngredients = useMemo(() => {
-    return ingredients
-      .map((id) => {
-        return items.filter(({ _id }) => _id === id);
-      })
-      .flat(2);
+    return getFiltredIngredients(ingredients, items);
   }, [items, ingredients]);
 
-  const uniqFiltredIngredients = filtredIngredients.reduce((acc, item) => {
-    if (acc.includes(item)) {
-      return acc;
-    }
-    return [...acc, item];
-  }, []);
+  const uniqFiltredIngredients = getUniqFiltredIngredients(filtredIngredients);
 
   const totalPrice = useMemo(() => {
-    return filtredIngredients.reduce(
-      (totalAll, item) => totalAll + item.price,
-      0
-    );
+    return getTotalPrice(filtredIngredients);
   }, [filtredIngredients]);
 
   const ingredientsImages = useMemo(() => {
-    return uniqFiltredIngredients.map((item, index) => {
+    return uniqFiltredIngredients?.map((item: TIngredient, index: number) => {
       if (index > 5) {
         return null;
       }
@@ -56,12 +49,8 @@ const OrderCard = ({ displayStatus, order }) => {
     });
   }, [uniqFiltredIngredients]);
 
-  const getOrderDetails = () => {
-    return dispatch(getOrder(number))
-  }
-
   return (
-    <li className={styles.card} onClick={getOrderDetails}>
+    <li className={styles.card}>
       <div className={styles[`number-date-wrapper`]}>
         <p className={`text text_type_main-default ${styles.number}`}>
           #{number}
@@ -75,7 +64,9 @@ const OrderCard = ({ displayStatus, order }) => {
       <div>
         <h2 className={`text text_type_main-medium ${styles.name}`}>{name}</h2>
         {displayStatus ? (
-          <p className={`text text_type_main-default mt-2 ${styles.status}`}>{order.status === 'done' ? 'Выполнено' : 'Готовится'}</p>
+          <p className={`text text_type_main-default mt-2 ${styles.status}`}>
+            {order.status === "done" ? "Выполнено" : "Готовится"}
+          </p>
         ) : null}
       </div>
       <div className={styles[`image-price-container`]}>

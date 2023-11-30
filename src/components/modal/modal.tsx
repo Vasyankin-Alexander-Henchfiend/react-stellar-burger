@@ -4,12 +4,7 @@ import ReactDom from "react-dom";
 import styles from "./modal.module.css";
 import ModalOverlay from "./modal-overlay/modal-overlay";
 import PropTypes from "prop-types";
-
-type TModal = {
-  children: ReactNode;
-  onClose: () => void;
-  title: string;
-}
+import { TModal } from "./modal.types";
 
 const Modal = ({ children, title, onClose }: TModal) => {
   useEffect(() => {

@@ -3,13 +3,15 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-ingredient.module.css";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../../services/hooks/hooks";
 import ingredientPropType from "../../../utils/prop-types";
 import { useDrag } from "react-dnd";
 import { useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { TIngredientItem } from "./burger-ingredient.types";
+import { TIngredient } from "../../ui/types";
 
-const BurgerIngredient = ({ ingredient }) => {
+const BurgerIngredient = ({ ingredient }: TIngredientItem) => {
   const { bun, ingredients } = useSelector(
     (store) => store.selectedItems.selectedItems
   );
@@ -27,7 +29,7 @@ const BurgerIngredient = ({ ingredient }) => {
       return 2;
     } else if (ingredients.length > 0) {
       const ingredientArray = ingredients.filter(
-        (item) => item._id === ingredient._id
+        (item: TIngredient) => item._id === ingredient._id
       );
       return ingredientArray.length;
     } else return 0;

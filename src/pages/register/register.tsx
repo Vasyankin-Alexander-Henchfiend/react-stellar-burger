@@ -5,11 +5,12 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import styles from "./register.module.css";
 import { HOME, LOGIN_PAGE } from "../../utils/consts";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { registerRequest } from "../../services/actions/user/register";
+import { useSelector } from "../../services/hooks/hooks";
 
 const Register = () => {
   const sendRegisterDataSuccess = useSelector(
@@ -22,20 +23,20 @@ const Register = () => {
     password: "",
   });
 
-  const onChange = (e) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
   const dispath = useDispatch();
   const navigate = useNavigate();
 
-  const sendRegisterData = (e) => {
+  const sendRegisterData = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispath(registerRequest(form));
   };
 
   useEffect(() => {
-    return sendRegisterDataSuccess ? navigate(HOME) : null;
+    if (sendRegisterDataSuccess) navigate(HOME);
   }, [navigate, sendRegisterDataSuccess]);
 
   return (

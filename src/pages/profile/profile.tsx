@@ -10,7 +10,7 @@ import { logoutRequest } from "../../services/actions/user/login";
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const logout = (e) => {
+  const logout = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
     dispatch(logoutRequest());
   };

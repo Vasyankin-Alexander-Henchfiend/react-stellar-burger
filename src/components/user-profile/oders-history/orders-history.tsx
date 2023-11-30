@@ -1,13 +1,15 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import {
   wsOrdersHistoryConnectionFinished,
   wsOrdersHistoryConnectionStart,
 } from "../../../services/actions/orders-history";
 import styles from "./orders-history.module.css";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import OrderCard from "../../order-card/order-card";
 import Preloader from "../../preloader/preloader";
 import { Link, useLocation } from "react-router-dom";
+import { useSelector } from "../../../services/hooks/hooks";
+import { TOrder } from "../../ui/types";
 
 const OdersHistory = () => {
   const dispatch = useDispatch();
@@ -15,8 +17,7 @@ const OdersHistory = () => {
   const { data } = useSelector((store) => store.ordersHistory);
   const orders = data?.orders;
 
-  const ordersList = useMemo(() => {
-    return orders?.map((order, index) => {
+  const ordersList = orders?.map((order: TOrder, index: number) => {
       return (
         <Link
           key={`${order._id} + ${index}`}
@@ -28,9 +29,8 @@ const OdersHistory = () => {
         </Link>
       );
     });
-  }, [orders, location]);
 
-  useEffect(() => {
+  useEffect((): () => void => {
     dispatch(wsOrdersHistoryConnectionStart());
     return () => dispatch(wsOrdersHistoryConnectionFinished());
   }, [dispatch]);

@@ -4,7 +4,7 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { useDispatch } from "react-redux";
 import styles from "./login.module.css";
 import { FORGOT_PASSWORD_PAGE, REGISTER_PAGE } from "../../utils/consts";
@@ -13,13 +13,13 @@ import { loginRequest } from "../../services/actions/user/login";
 const Login = () => {
   const [form, setValue] = useState({ email: '', password: '' });
 
-  const onChange = e => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
   const dispatch = useDispatch();
 
-  const sendLoginData = e => {
+  const sendLoginData = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(loginRequest(form));
   }

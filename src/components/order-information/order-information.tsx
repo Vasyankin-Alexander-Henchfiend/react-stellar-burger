@@ -5,21 +5,25 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useMemo, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getOrder } from "../../services/actions/order-information";
 import Preloader from "../preloader/preloader";
+import { useSelector } from "../../services/hooks/hooks";
+import { TOrderNumber } from "./order-information.types";
+import { TIngredient, TOrder } from "../ui/types";
+import {
+  getFiltredIngredients,
+  getTotalPrice,
+  getUniqFiltredIngredients,
+} from "../../utils/consts";
 
-const OrderImformation = ({ number }) => {
+const OrderImformation = ({ number }: TOrderNumber) => {
   const { orderNumber } = useParams();
   number = orderNumber;
-  const { order } = useSelector((store) => store.currentOrder);
-  console.log(order);
+  const order: TOrder = useSelector((store) => store.currentOrder.order);
 
-  const createdAt = order?.createdAt;
   const ingredients = order?.ingredients;
-  const status = order?.status;
-  const name = order?.name;
-  const { items } = useSelector((store) => store.items);
+  const items: TIngredient[] = useSelector((store) => store.items.items);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -27,34 +31,25 @@ const OrderImformation = ({ number }) => {
   }, [dispatch, number]);
 
   const filtredIngredients = useMemo(() => {
-    return ingredients
-      ?.map((id) => {
-        return items.filter(({ _id }) => _id === id);
-      })
-      .flat(2);
+    return getFiltredIngredients(ingredients, items);
   }, [items, ingredients]);
 
   const totalPrice = useMemo(() => {
-    return filtredIngredients?.reduce(
-      (totalAll, item) => totalAll + item.price,
-      0
-    );
+    return getTotalPrice(filtredIngredients);
   }, [filtredIngredients]);
 
-  const uniqFiltredIngredients = filtredIngredients?.reduce((acc, item) => {
-    if (acc.includes(item)) {
-      return acc;
-    }
-    return [...acc, item];
-  }, []);
+  const uniqFiltredIngredients = getUniqFiltredIngredients(filtredIngredients);
 
-  const countIngredients = ingredients?.reduce((count, item) => {
-    count[item] = (count[item] || 0) + 1;
-    return count;
-  }, []);
+  const countIngredients = ingredients?.reduce(
+    (count: { [key: string]: number }, item: string) => {
+      count[item] = (count[item] || 0) + 1;
+      return count;
+    },
+    {}
+  );
 
   const ingredientsList = useMemo(() => {
-    return uniqFiltredIngredients?.map((item, index) => {
+    return uniqFiltredIngredients?.map((item: TIngredient, index: number) => {
       return (
         <li key={index} className={`mb-4 ${styles[`image-list-item`]}`}>
           <div className={styles[`name-image-wrapper`]}>
@@ -88,12 +83,10 @@ const OrderImformation = ({ number }) => {
         #{number}
       </p>
       <h2 className={`text text_type_main-medium mb-3 ${styles.name}`}>
-        {name}
+        {order.name}
       </h2>
-      <p
-        className={`text text_type_main-default mb-15 ${styles.status}`}
-      >
-        {status === "done" ? "Выполнено" : "Готовится"}
+      <p className={`text text_type_main-default mb-15 ${styles.status}`}>
+        {order.status === "done" ? "Выполнено" : "Готовится"}
       </p>
       <p className={`text text_type_main-medium mb-6 ${styles.b}`}>Состав:</p>
       <ul className={`custom-scroll ${styles[`image-list`]}`}>
@@ -103,7 +96,7 @@ const OrderImformation = ({ number }) => {
         <p
           className={`text text_type_main-default text_color_inactive ${styles.date}`}
         >
-          <FormattedDate date={new Date(createdAt)} />
+          <FormattedDate date={new Date(order.createdAt)} />
         </p>
         <div className={styles[`price-wrapper`]}>
           <p className={`text text_type_digits-default mr-2 ${styles.price}`}>
