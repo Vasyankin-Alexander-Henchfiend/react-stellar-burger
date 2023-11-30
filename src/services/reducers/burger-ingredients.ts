@@ -3,14 +3,16 @@ import {
   GET_ITEMS_SUCCESS,
   GET_ITEMS_FAILED,
 } from "../actions/burger-ingredients";
+import { TBurgerIngredientsState, TBurgerIngredientsActions } from "../types/burger-ingredients";
 
-const initialState = {
+
+const initialState: TBurgerIngredientsState = {
   items: [],
   itemsRequest: false,
   itemsFailed: false,
 };
 
-export const burgerIngredientsReducer = (state = initialState, action) => {
+export const burgerIngredientsReducer = (state = initialState, action: TBurgerIngredientsActions) => {
   switch (action.type) {
     case GET_ITEMS_REQUEST:
       return {

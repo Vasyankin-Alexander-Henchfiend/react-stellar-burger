@@ -1,11 +1,12 @@
 import { BASE_URL } from "../../../utils/consts";
 import { fetchWithRefresh } from "./auth";
+import { TForm } from "../../types/user.types";
 
 export const PATCH_PROFILE_REQUEST = "PATCH_PROFILE_REQUEST";
 export const PATCH_PROFILE_SUCCESS = "PATCH_PROFILE_SUCCESS";
 export const PATCH_PROFILE_FAILED = "PATCH_PROFILE_FAILED";
 
-export function patchProfileRequest(form) {
+export function patchProfileRequest(form: TForm) {
   return (dispatch) => {
     dispatch({ type: PATCH_PROFILE_REQUEST });
     fetchWithRefresh(BASE_URL + "/auth/user", {

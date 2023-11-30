@@ -3,12 +3,13 @@ import {
   checkResponse,
   cleanTokenHeader,
 } from "../../../utils/consts";
+import { TForm } from "../../types/user.types";
 
 export const REGISTER_REQUEST = "REGISTER_REQUEST";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAILED = "REGISTER_FAILED";
 
-export function registerRequest(form) {
+export function registerRequest(form: TForm) {
   return (dispatch) => {
     dispatch({ type: REGISTER_REQUEST });
     fetch(BASE_URL + "/auth/register", {

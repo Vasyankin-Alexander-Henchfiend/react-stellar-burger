@@ -7,6 +7,7 @@ import { useRef } from "react";
 import {
   DELETE_ITEM,
   GET_ITEM,
+  MOVE_ITEM,
 } from "../../../services/actions/burger-constructor";
 import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
@@ -35,7 +36,7 @@ const BurgerConstructorItem = ({
     const newCards = [...ingredients];
     newCards.splice(dragIndex, 1);
     newCards.splice(hoverIndex, 0, dragCard);
-    dispatch({ type: GET_ITEM, newIngredient: [...newCards] });
+    dispatch({ type: MOVE_ITEM, movedIngredient: [...newCards] });
   };
   const [, dropRef] = useDrop({
     accept: "item",

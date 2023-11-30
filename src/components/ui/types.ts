@@ -34,3 +34,8 @@ export type TOrder = {
   number: number;
 };
 
+export type TRefreshTokenResponse = {
+  success: boolean,
+  accessToken: string,
+  refreshToken: string
+}

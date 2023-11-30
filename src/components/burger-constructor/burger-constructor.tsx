@@ -22,8 +22,11 @@ import { useSelector } from "../../services/hooks/hooks";
 import { TIngredient } from "../ui/types";
 
 const BurgerConstructor = () => {
-  const { bun, ingredients } = useSelector(
-    (store) => store.selectedItems.selectedItems
+  const bun: TIngredient = useSelector(
+    (store) => store.selectedItems.selectedItems.bun
+  );
+  const ingredients: TIngredient[] = useSelector(
+    (store) => store.selectedItems.selectedItems.ingredients
   );
   const { orderNumberRequest, orderNumberRequestSuccess } = useSelector(
     (store) => store.orderID
@@ -37,7 +40,7 @@ const BurgerConstructor = () => {
     collect: (monitor) => ({
       isHover: monitor.isOver(),
     }),
-    drop: (ingredient) => {
+    drop: (ingredient: TIngredient) => {
       dispatch(addIngredient(ingredient));
     },
   });

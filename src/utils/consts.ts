@@ -14,9 +14,9 @@ export const FEED_PAGE_ORDER_NUMBER = "feed/:orderNumber";
 export const PROFILE_PAGE_ORDERS_ORDER_NUMBER = "profile/orders/:orderNumber";
 
 export const cleanTokenHeader = (token: string) => {
-  if (token && token !== undefined && token.indexOf("Bearer") === 0) {
+  if (token && token.indexOf("Bearer") === 0) {
     return token.split("Bearer ")[1];
-  }
+  } return ''
 };
 
 export const checkResponse = (res: Response) => {

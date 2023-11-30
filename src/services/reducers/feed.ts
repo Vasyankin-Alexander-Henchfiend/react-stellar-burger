@@ -4,15 +4,16 @@ import {
   FEED_WS_CONNECTION_SUCCESS,
   FEED_WS_GET_DATA,
 } from "../actions/feed";
+import { TFeedActions, TFeedState } from "../types/feed";
 
-const initialState = {
+const initialState: TFeedState = {
   feedWsConnected: false,
   feedWsError: false,
   data: null,
 };
 
-export const feedReducer = (state = initialState, action) => {
-  switch ((action.type)) {
+export const feedReducer = (state = initialState, action: TFeedActions) => {
+  switch (action.type) {
     case FEED_WS_CONNECTION_SUCCESS:
       return {
         ...state,

@@ -1,24 +1,25 @@
-import { GET_ITEM, DELETE_ITEM, REMOVE_ALL } from "../actions/burger-constructor";
+import {
+  GET_ITEM,
+  DELETE_ITEM,
+  REMOVE_ALL,
+  MOVE_ITEM,
+} from "../actions/burger-constructor";
+import { TBurgerConstructorState, TBurgerConstructorActions } from "../types/burger-constructor";
 
-const initialState = {
+const initialState: TBurgerConstructorState = {
   selectedItems: {
     bun: null,
     ingredients: [],
   },
 };
 
-export const burgerConstructorReducer = (state = initialState, action) => {
+export const burgerConstructorReducer = (
+  state = initialState,
+  action: TBurgerConstructorActions
+) => {
   switch (action.type) {
     case GET_ITEM:
-      if (action.newIngredient.length > 0) {
-        return {
-          ...state,
-          selectedItems: {
-            ...state.selectedItems,
-            ingredients: action.newIngredient,
-          },
-        };
-      } else if (action.newIngredient.type === "bun") {
+      if (action.newIngredient.type === "bun") {
         return {
           ...state,
           selectedItems: {
@@ -38,6 +39,14 @@ export const burgerConstructorReducer = (state = initialState, action) => {
           },
         };
       }
+    case MOVE_ITEM:
+      return {
+        ...state,
+        selectedItems: {
+          ...state.selectedItems,
+          ingredients: action.movedIngredient,
+        },
+      };
     case DELETE_ITEM:
       return {
         ...state,
@@ -54,8 +63,8 @@ export const burgerConstructorReducer = (state = initialState, action) => {
         selectedItems: {
           bun: null,
           ingredients: [],
-        }
-      }
+        },
+      };
     default:
       return state;
   }

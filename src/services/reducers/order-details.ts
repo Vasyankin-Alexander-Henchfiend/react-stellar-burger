@@ -4,15 +4,16 @@ import {
   GET_ORDER_ID_REQUEST,
   GET_ORDER_ID_SUCCESS,
 } from "../actions/order-details";
+import { TOrderDetailsActions, TOrderDetailsState } from "../types/order-details";
 
-const initialState = {
+const initialState: TOrderDetailsState = {
   orderNumber: null,
   orderNumberRequest: false,
   orderNumberRequestSuccess: false,
   orderNumberFailed: false,
 };
 
-export const orderDetailsReducer = (state = initialState, action) => {
+export const orderDetailsReducer = (state = initialState, action: TOrderDetailsActions) => {
   switch (action.type) {
     case GET_ORDER_ID_REQUEST:
       return {
