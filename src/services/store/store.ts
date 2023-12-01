@@ -1,9 +1,8 @@
-import { combineReducers, createStore, applyMiddleware, compose } from "redux";
+import { combineReducers, Store } from "redux";
 import { burgerIngredientsReducer } from "../reducers/burger-ingredients";
 import { orderDetailsReducer } from "../reducers/order-details";
 import { burgerConstructorReducer } from "../reducers/burger-constructor";
 import { forgotPasswordReduser } from "../reducers/forgot-password";
-import thunk from "redux-thunk";
 import { resetPasswordReduser } from "../reducers/reset-password";
 import { userDataReduser } from "../reducers/user";
 import { socketMiddleware } from "../middleware/wsMiddleware";
@@ -26,15 +25,10 @@ import {
 } from "../actions/orders-history";
 import { ordersHistoryReducer } from "../reducers/orders-history";
 import { orderInformationReducer } from "../reducers/order-information";
-
-
-const composeEnhancers =
-  typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-    : compose;
+import { configureStore } from "@reduxjs/toolkit";
 
 const feedWsUrl = "wss://norma.nomoreparties.space/orders/all";
-const feedWsActions = {
+export const feedWsActions = {
   wsInit: FEED_WS_CONNECTION_START,
   onOpen: FEED_WS_CONNECTION_SUCCESS,
   onClose: FEED_WS_CONNECTION_CLOSED,
@@ -43,10 +37,8 @@ const feedWsActions = {
   wsClose: FEED_WS_CONNECTION_FINISHED,
 };
 
-
-
 const ordersHistoryWsUrl = "wss://norma.nomoreparties.space/orders";
-const ordersHistoryWsActions = {
+export const ordersHistoryWsActions = {
   wsInit: ORDERS_HISTORY_WS_CONNECTION_START,
   onOpen: ORDERS_HISTORY_WS_CONNECTION_SUCCESS,
   onClose: ORDERS_HISTORY_WS_CONNECTION_CLOSED,
@@ -54,14 +46,6 @@ const ordersHistoryWsActions = {
   onMessage: ORDERS_HISTORY_WS_GET_DATA,
   wsClose: ORDERS_HISTORY_WS_CONNECTION_FINISHED,
 };
-
-const enhancer = composeEnhancers(
-  applyMiddleware(
-    thunk,
-    socketMiddleware(feedWsUrl, feedWsActions),
-    socketMiddleware(ordersHistoryWsUrl, ordersHistoryWsActions)
-  )
-);
 
 export const rootreducer = combineReducers({
   items: burgerIngredientsReducer,
@@ -75,5 +59,11 @@ export const rootreducer = combineReducers({
   currentOrder: orderInformationReducer
 });
 
-
-export const store = createStore(rootreducer, enhancer);
+export const store: Store = configureStore({
+  reducer: rootreducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat([
+      socketMiddleware(feedWsUrl, feedWsActions),
+      socketMiddleware(ordersHistoryWsUrl, ordersHistoryWsActions),
+    ]),
+});

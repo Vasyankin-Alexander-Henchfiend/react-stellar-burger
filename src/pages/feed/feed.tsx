@@ -1,7 +1,6 @@
 import styles from "./feed.module.css";
 
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import {
   FEED_WS_CONNECTION_START,
   wsFeedConnectionFinished,
@@ -9,7 +8,7 @@ import {
 import OrdersStatus from "../../components/feed/orders-status/orders-status";
 import OrdersList from "../../components/feed/orders-list/orders-list";
 import Preloader from "../../components/preloader/preloader";
-import { useSelector } from "../../services/hooks/hooks";
+import { useSelector, useDispatch } from "../../services/hooks/hooks";
 import { TOrdersData } from "../../components/ui/types";
 
 const Feed = () => {

@@ -5,7 +5,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 import { useState, ChangeEvent, FormEvent } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../services/hooks/hooks";
 import styles from "./login.module.css";
 import { FORGOT_PASSWORD_PAGE, REGISTER_PAGE } from "../../utils/consts";
 import { loginRequest } from "../../services/actions/user/login";

@@ -20,8 +20,9 @@ import {
 } from "../actions/user/profile";
 
 import { SET_AUTH_CHECKED, SET_USER } from "../actions/user/auth";
+import { TUserActions, TUserState } from "../types/user";
 
-const initialState = {
+const initialState: TUserState = {
   userData: null,
   isAuthChecked: false,
 
@@ -42,7 +43,7 @@ const initialState = {
   registerFailed: false,
 };
 
-export const userDataReduser = (state = initialState, action) => {
+export const userDataReduser = (state = initialState, action: TUserActions) => {
   switch (action.type) {
     case LOGIN_REQUEST:
       return {

@@ -1,6 +1,6 @@
 export type TForm = {
     email: string,
-    name: string,
+    name?: string,
     password: string
 }
 

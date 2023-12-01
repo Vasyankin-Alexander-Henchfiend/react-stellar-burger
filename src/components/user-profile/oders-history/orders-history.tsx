@@ -1,4 +1,3 @@
-import { useDispatch} from "react-redux";
 import {
   wsOrdersHistoryConnectionFinished,
   wsOrdersHistoryConnectionStart,
@@ -8,7 +7,7 @@ import { useEffect } from "react";
 import OrderCard from "../../order-card/order-card";
 import Preloader from "../../preloader/preloader";
 import { Link, useLocation } from "react-router-dom";
-import { useSelector } from "../../../services/hooks/hooks";
+import { useSelector, useDispatch } from "../../../services/hooks/hooks";
 import { TOrder } from "../../ui/types";
 
 const OdersHistory = () => {

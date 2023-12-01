@@ -9,20 +9,15 @@ export type TBurgerIngredientsState = {
 
 export type TGetItemRequestAction = {
   readonly type: typeof GET_ITEMS_REQUEST;
-  itemsRequest: boolean;
 };
 
 export type TGetItemSuccessAction = {
   readonly type: typeof GET_ITEMS_SUCCESS;
-  itemsFailed: boolean;
   items: Array<TIngredient>;
-  itemsRequest: boolean;
 };
 
 export type TGetItemFailedAction = {
   readonly type: typeof GET_ITEMS_FAILED;
-  itemsFailed: boolean;
-  itemsRequest: boolean;
 };
 
 export type TBurgerIngredientsActions =

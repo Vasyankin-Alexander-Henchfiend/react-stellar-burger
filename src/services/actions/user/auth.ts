@@ -4,10 +4,11 @@ import {
   checkResponse,
   cleanTokenHeader,
 } from "../../../utils/consts";
+import { AppThunk } from "../../types";
 import { TUser } from "../../types/user.types";
 
-export const SET_AUTH_CHECKED = "SET_AUTH_CHECKED";
-export const SET_USER = "SET_USER";
+export const SET_AUTH_CHECKED: "SET_AUTH_CHECKED" = "SET_AUTH_CHECKED";
+export const SET_USER: "SET_USER" = "SET_USER";
 
 export const setAuthChecked = (value: boolean) => ({
   type: SET_AUTH_CHECKED,
@@ -19,29 +20,27 @@ export const setUser = (user: TUser) => ({
   payload: user,
 });
 
-export const checkUserAuth = () => {
-  return (dispatch) => {
-    if (localStorage.getItem("accessToken")) {
-      dispatch(getUser())
-        .catch(() => {
-          localStorage.removeItem("accessToken");
-          localStorage.removeItem("cleanAccessToken");
-          localStorage.removeItem("refreshToken");
-          dispatch(setUser(null));
-        })
-        .finally(() => dispatch(setAuthChecked(true)));
-    } else {
-      dispatch(setAuthChecked(true));
-    }
-  };
+export const checkUserAuth = (): AppThunk => (dispatch) => {
+  if (localStorage.getItem("accessToken")) {
+    return (dispatch(getUser()) as any)
+      .catch(() => {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("cleanAccessToken");
+        localStorage.removeItem("refreshToken");
+        dispatch(setUser(null)) ;
+      })
+      .finally(() => dispatch(setAuthChecked(true)));
+  } else {
+    dispatch(setAuthChecked(true));
+  }
 };
 
-export function getUser() {
+export function getUser(): AppThunk {
   return (dispatch) => {
     return fetchWithRefresh(BASE_URL + "/auth/user", {
       headers: {
         "Content-type": "application/json",
-        authorization: localStorage.getItem("accessToken"),
+        authorization: localStorage.getItem("accessToken") ?? "",
       },
     }).then((data) => {
       dispatch(setUser(data.user));
@@ -61,7 +60,6 @@ export const refreshToken = (): Promise<TRefreshTokenResponse> => {
   }).then((res) => checkResponse(res));
 };
 
-
 export const fetchWithRefresh = async (url: string, options: RequestInit) => {
   try {
     const res = await fetch(url, options);
@@ -79,8 +77,9 @@ export const fetchWithRefresh = async (url: string, options: RequestInit) => {
         cleanTokenHeader(refreshData.accessToken)
       );
       if (options.headers) {
-        options.headers.authorization = refreshData.accessToken;
-      } 
+        (options.headers as { [key: string]: string }).authorization =
+          refreshData.accessToken;
+      }
       const res = await fetch(url, options);
       return await checkResponse(res);
     } else {
@@ -88,4 +87,3 @@ export const fetchWithRefresh = async (url: string, options: RequestInit) => {
     }
   }
 };
-

@@ -27,13 +27,12 @@ import {
   PROFILE_PAGE_ORDERS_ORDER_NUMBER,
 } from "../../utils/consts";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { checkUserAuth } from "../../services/actions/user/auth";
 import { getItems } from "../../services/actions/burger-ingredients";
 import Preloader from "../preloader/preloader";
 import OrderImformation from "../order-information/order-information";
-import { useSelector } from "../../services/hooks/hooks";
+import { useSelector, useDispatch } from "../../services/hooks/hooks";
 
 const App = () => {
   const dispatch = useDispatch();

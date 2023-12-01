@@ -2,7 +2,6 @@ import { DELETE_ORDER_ID, GET_ORDER_ID_FAILED, GET_ORDER_ID_REQUEST, GET_ORDER_I
 
 export type TDeleteOrderIDAction = {
     readonly type: typeof DELETE_ORDER_ID
-    number: null,
 }
 
 export type TGetOrderIDFailedAction = {

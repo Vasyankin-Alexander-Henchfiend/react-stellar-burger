@@ -3,17 +3,19 @@ import {
   checkResponse,
   cleanTokenHeader,
 } from "../../../utils/consts";
+import { AppThunk } from "../../types";
 import { TForm } from "../../types/user.types";
 
-export const LOGIN_REQUEST = "LOGIN_REQUEST";
-export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
-export const LOGIN_FAILED = "LOGIN_FAILED";
-export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
-export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
-export const LOGOUT_FAILED = "LOGOUT_FAILED";
+export const LOGIN_REQUEST: "LOGIN_REQUEST" = "LOGIN_REQUEST";
+export const LOGIN_SUCCESS: "LOGIN_SUCCESS" = "LOGIN_SUCCESS";
+export const LOGIN_FAILED: "LOGIN_FAILED" = "LOGIN_FAILED";
+export const LOGOUT_REQUEST: "LOGOUT_REQUEST" = "LOGOUT_REQUEST";
+export const LOGOUT_SUCCESS: "LOGOUT_SUCCESS" = "LOGOUT_SUCCESS";
+export const LOGOUT_FAILED: "LOGOUT_FAILED" = "LOGOUT_FAILED";
 
-export function loginRequest(form: TForm) {
-  return (dispatch) => {
+export const loginRequest =
+  (form: TForm): AppThunk =>
+  (dispatch) => {
     dispatch({ type: LOGIN_REQUEST });
     fetch(BASE_URL + "/auth/login", {
       method: "POST",
@@ -43,9 +45,8 @@ export function loginRequest(form: TForm) {
         console.log(error);
       });
   };
-}
 
-export function logoutRequest() {
+export function logoutRequest(): AppThunk {
   const refreshToken = localStorage.getItem("refreshToken");
   return (dispatch) => {
     dispatch({ type: LOGOUT_REQUEST });

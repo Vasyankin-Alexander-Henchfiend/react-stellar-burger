@@ -11,14 +11,13 @@ import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import { getOrderId } from "../../services/actions/order-details";
 import { DELETE_ORDER_ID } from "../../services/actions/order-details";
-import { useDispatch } from "react-redux";
 import {
   REMOVE_ALL,
   addIngredient,
 } from "../../services/actions/burger-constructor";
 import BurgerConstructorItem from "./burger-constructor-item/burger-constructor-item";
 import { LOGIN_PAGE, getTotalPrice } from "../../utils/consts";
-import { useSelector } from "../../services/hooks/hooks";
+import { useSelector, useDispatch } from "../../services/hooks/hooks";
 import { TIngredient } from "../ui/types";
 
 const BurgerConstructor = () => {

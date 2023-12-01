@@ -6,12 +6,10 @@ import styles from "./burger-constructor-item.module.css";
 import { useRef } from "react";
 import {
   DELETE_ITEM,
-  GET_ITEM,
   MOVE_ITEM,
 } from "../../../services/actions/burger-constructor";
-import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
-import { useSelector } from "../../../services/hooks/hooks";
+import { useSelector, useDispatch } from "../../../services/hooks/hooks";
 import {
   TBurgerConstructorIngredient,
   TDropItem,
@@ -87,7 +85,7 @@ const BurgerConstructorItem = ({
         price={ingredient.price}
         thumbnail={ingredient.image}
         handleClose={() => {
-          dispatch({ type: DELETE_ITEM, id: ingredient.uniqueId });
+          dispatch({type: DELETE_ITEM, id: ingredient.uniqueId});
         }}
       />
     </li>

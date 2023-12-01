@@ -7,8 +7,7 @@ import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import styles from "./forgot-password.module.css";
 import { LOGIN_PAGE, RESET_PASSWORD_PAGE } from "../../utils/consts";
 import { forgotPasswordRequest } from "../../services/actions/forgot-password";
-import { useDispatch } from "react-redux";
-import { useSelector } from "../../services/hooks/hooks";
+import { useSelector, useDispatch } from "../../services/hooks/hooks";
 
 const ForgotPassword = () => {
   const sendEmailDataSuccess = useSelector(

@@ -34,6 +34,7 @@ export type TFeedWsGetDataAction = {
 };
 
 export type TFeedActions = 
+| TFeedWsConnectionStartAction
 | TFeedWsConnectionClosedAction
 | TFeedWsConnectionErrorAction
 | TFeedWsConnectionFinishedAction

@@ -18,7 +18,7 @@ export type TMoveItemAction = {
 
 export type TDeleteItemAction = {
   readonly type: typeof DELETE_ITEM;
-  id: string;
+  id: string | undefined
 };
 
 export type TRemoveAllAction = {

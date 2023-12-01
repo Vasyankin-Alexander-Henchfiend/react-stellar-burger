@@ -8,9 +8,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import styles from "./register.module.css";
 import { HOME, LOGIN_PAGE } from "../../utils/consts";
-import { useDispatch } from "react-redux";
 import { registerRequest } from "../../services/actions/user/register";
-import { useSelector } from "../../services/hooks/hooks";
+import { useSelector, useDispatch } from "../../services/hooks/hooks";
 
 const Register = () => {
   const sendRegisterDataSuccess = useSelector(

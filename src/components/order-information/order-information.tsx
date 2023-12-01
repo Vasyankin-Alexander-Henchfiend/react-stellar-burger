@@ -5,10 +5,9 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useMemo, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { getOrder } from "../../services/actions/order-information";
 import Preloader from "../preloader/preloader";
-import { useSelector } from "../../services/hooks/hooks";
+import { useSelector, useDispatch } from "../../services/hooks/hooks";
 import { TOrderNumber } from "./order-information.types";
 import { TIngredient, TOrder } from "../ui/types";
 import {

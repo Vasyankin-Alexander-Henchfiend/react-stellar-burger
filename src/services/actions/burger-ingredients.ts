@@ -1,11 +1,12 @@
 
 import { BASE_URL, checkResponse } from "../../utils/consts";
+import { AppThunk } from "../types";
 
 export const GET_ITEMS_REQUEST: "GET_ITEMS_REQUEST" = "GET_ITEMS_REQUEST";
 export const GET_ITEMS_SUCCESS: "GET_ITEMS_SUCCESS" = "GET_ITEMS_SUCCESS";
 export const GET_ITEMS_FAILED: "GET_ITEMS_FAILED" = "GET_ITEMS_FAILED";
 
-export function getItems() {
+export function getItems(): AppThunk {
   return function (dispatch) {
     dispatch({ type: GET_ITEMS_REQUEST });
     fetch(BASE_URL + '/ingredients')

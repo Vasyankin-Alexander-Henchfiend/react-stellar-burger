@@ -6,9 +6,8 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState, ChangeEvent, FormEvent } from "react";
-import { useDispatch } from "react-redux";
 import { patchProfileRequest } from "../../../services/actions/user/profile";
-import { useSelector } from "../../../services/hooks/hooks";
+import { useSelector, useDispatch } from "../../../services/hooks/hooks";
 
 const ProfileForm = () => {
   const dispatch = useDispatch();

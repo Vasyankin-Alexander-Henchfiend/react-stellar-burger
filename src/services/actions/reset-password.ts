@@ -1,10 +1,11 @@
 import { BASE_URL, checkResponse } from "../../utils/consts";
+import { AppThunk } from "../types";
 
-export const RESET_PASSWORD_REQUEST = "RESET_PASSWORD_REQUEST";
-export const RESET_PASSWORD_SUCCESS = "RESET_PASSWORD_SUCCESS";
-export const RESET_PASSWORD_FAILED = "RESET_PASSWORD_FAILED";
+export const RESET_PASSWORD_REQUEST: "RESET_PASSWORD_REQUEST" = "RESET_PASSWORD_REQUEST";
+export const RESET_PASSWORD_SUCCESS: "RESET_PASSWORD_SUCCESS" = "RESET_PASSWORD_SUCCESS";
+export const RESET_PASSWORD_FAILED: "RESET_PASSWORD_FAILED" = "RESET_PASSWORD_FAILED";
 
-export function resetPasswordRequest(password, token) {
+export function resetPasswordRequest(password: string, token: string): AppThunk {
   return function (dispatch) {
     dispatch({ type: RESET_PASSWORD_REQUEST });
     fetch(BASE_URL + "/password-reset/reset", {
@@ -19,7 +20,6 @@ export function resetPasswordRequest(password, token) {
     })
       .then((res) => checkResponse(res))
       .then((data) => {
-        localStorage.removeItem('isForgotPasswordSuccess')
         dispatch({
           type: RESET_PASSWORD_SUCCESS,
           success: data.success,

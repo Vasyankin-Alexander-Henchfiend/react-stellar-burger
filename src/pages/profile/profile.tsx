@@ -5,7 +5,7 @@ import {
   ORDERS_HISTORY_PAGE,
   PROFILE_PAGE,
 } from "../../utils/consts";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../services/hooks/hooks";
 import { logoutRequest } from "../../services/actions/user/login";
 
 const Profile = () => {
