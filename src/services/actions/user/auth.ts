@@ -22,7 +22,7 @@ export const setUser = (user: TUser) => ({
 
 export const checkUserAuth = (): AppThunk => (dispatch) => {
   if (localStorage.getItem("accessToken")) {
-    return (dispatch(getUser()) as any)
+    return (dispatch(getUser()))
       .catch(() => {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("cleanAccessToken");
@@ -35,7 +35,7 @@ export const checkUserAuth = (): AppThunk => (dispatch) => {
   }
 };
 
-export function getUser(): AppThunk {
+export function getUser(): AppThunk<Promise<unknown>> {
   return (dispatch) => {
     return fetchWithRefresh(BASE_URL + "/auth/user", {
       headers: {
