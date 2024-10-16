@@ -1,8 +1,8 @@
 {
-  "homepage": "https://vasyankin-alexander-henchfiend.github.io/react-stellar-burger",
   "name": "react-burger-starter",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://vasyankin-alexander-henchfiend.github.io/react-stellar-burger",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "@ya.praktikum/react-developer-burger-ui-components": "^1.14.0",
