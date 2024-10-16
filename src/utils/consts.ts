@@ -2,13 +2,13 @@ import { TIngredient } from "../components/ui/types";
 
 export const BASE_URL = "https://norma.nomoreparties.space/api";
 export const HOME = "react-stellar-burger/";
-export const LOGIN_PAGE = "/login";
+export const LOGIN_PAGE = "react-stellar-burger/login";
 export const FORGOT_PASSWORD_PAGE = "/forgot-password";
 export const RESET_PASSWORD_PAGE = "/reset-password";
 export const PROFILE_PAGE = "react-stellar-burger/profile";
 export const ORDERS_HISTORY_PAGE = "react-stellar-burger/profile/orders";
 export const INGREDIENT_DETAILS_PAGE = "react-stellar-burger/ingredients/:id";
-export const REGISTER_PAGE = "/register";
+export const REGISTER_PAGE = "react-stellar-burger/register";
 export const FEED_PAGE = "react-stellar-burger/feed";
 export const FEED_PAGE_ORDER_NUMBER = "feed/:orderNumber";
 export const PROFILE_PAGE_ORDERS_ORDER_NUMBER = "profile/orders/:orderNumber";
